@@ -9,14 +9,14 @@ CEngine::CEngine(HINSTANCE hInstance, int showCmd)
 {
 }
 
-common::TResult CEngine::Initialize(rhi::EFramework framework)
+common::TResult CEngine::Initialize(rhi::EBackend backend)
 {
   common::TResult result = InitializeWindow();
 
   if (result.IsError())
     return result;
 
-  return Initialize3DFramework(framework);
+  return InitializeRHI(backend);
 }
 
 //static
@@ -93,7 +93,7 @@ common::TResult CEngine::InitializeWindow()
   return common::TResult();
 }
 
-common::TResult CEngine::Initialize3DFramework(rhi::EFramework framework)
+common::TResult CEngine::InitializeRHI(rhi::EBackend framework)
 {
   return common::TResult();
 }
@@ -131,6 +131,9 @@ void CEngine::Stop() const
 
 void CEngine::Render()
 {
+  m_timer.Update();
+
+  float deltaTime = m_timer.GetDeltaTime();
 }
 
 HWND CEngine::GetHwnd() const

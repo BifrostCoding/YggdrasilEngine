@@ -1,6 +1,7 @@
 #pragma once
 
 #include <RHI/RHI.h>
+#include <Common/Timer.h>
 
 namespace yggdrasil
 {
@@ -13,7 +14,7 @@ public:
 
   CEngine(const CEngine&) = delete;
 
-  common::TResult Initialize(rhi::EFramework framework);
+  common::TResult Initialize(rhi::EBackend backend);
   void Render();
   int Start();
   void Stop() const;
@@ -24,13 +25,13 @@ public:
 private:
 
   common::TResult InitializeWindow();
-  common::TResult Initialize3DFramework(rhi::EFramework framework);
+  common::TResult InitializeRHI(rhi::EBackend backend);
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
   HWND m_hwnd;
   HINSTANCE m_hInstance;
   int m_showCmd;
-  //CTimer m_timer;
+  common::CTimer m_timer;
 };
 }

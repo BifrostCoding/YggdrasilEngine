@@ -6,15 +6,17 @@ namespace yggdrasil
 {
 namespace rhi
 {
-enum class EFramework
+enum class EBackend
 {
   DX11,
-  Vulkan
+  Vk
 };
 
 class IRHI
 {
 
 };
+
+std::unique_ptr<IRHI> CreateInstance(EBackend backend);
 }
 }
