@@ -9,14 +9,14 @@ CEngine::CEngine(HINSTANCE hInstance, int showCmd)
 {
 }
 
-TResult CEngine::Initialize(EFramework Renderer)
+common::TResult CEngine::Initialize(rhi::EFramework framework)
 {
-  TResult result = InitializeWindow();
+  common::TResult result = InitializeWindow();
 
   if (result.IsError())
     return result;
 
-  return Initialize3DFramework(Renderer);
+  return Initialize3DFramework(framework);
 }
 
 //static
@@ -44,24 +44,24 @@ LRESULT CALLBACK CEngine::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
   return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-TResult CEngine::InitializeWindow()
+common::TResult CEngine::InitializeWindow()
 {
   LPCTSTR wndClassName = TEXT("mainwindow");
 
-  WNDCLASSEX wc;
+  WNDCLASSEX wc{};
 
-  wc.cbSize = sizeof(WNDCLASSEX);
-  wc.style = CS_HREDRAW | CS_VREDRAW;
-  wc.lpfnWndProc = WndProc;
-  wc.cbClsExtra = NULL;
-  wc.cbWndExtra = NULL;
-  wc.hInstance = m_hInstance;
-  wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-  wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wc.cbSize        = sizeof(WNDCLASSEX);
+  wc.style         = CS_HREDRAW | CS_VREDRAW;
+  wc.lpfnWndProc   = WndProc;
+  wc.cbClsExtra    = NULL;
+  wc.cbWndExtra    = NULL;
+  wc.hInstance     = m_hInstance;
+  wc.hIcon         = LoadIcon(NULL, IDI_WINLOGO);
+  wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-  wc.lpszMenuName = NULL;
+  wc.lpszMenuName  = NULL;
   wc.lpszClassName = wndClassName;
-  wc.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
+  wc.hIconSm       = LoadIcon(NULL, IDI_WINLOGO);
 
   if (!RegisterClassEx(&wc))
   {
@@ -71,11 +71,11 @@ TResult CEngine::InitializeWindow()
   m_hwnd = CreateWindowEx(
     NULL,
     wndClassName,
-    TEXT("DX Engine"),
+    TEXT("Yggdrasil"),
     WS_OVERLAPPEDWINDOW,
     CW_USEDEFAULT, CW_USEDEFAULT,
-    WIDTH,
-    HEIGHT,
+    common::WIDTH,
+    common::HEIGHT,
     NULL,
     NULL,
     m_hInstance,
@@ -90,12 +90,12 @@ TResult CEngine::InitializeWindow()
   ShowWindow(m_hwnd, m_showCmd);
   UpdateWindow(m_hwnd);
 
-  return TResult();
+  return common::TResult();
 }
 
-TResult CEngine::Initialize3DFramework(EFramework framework)
+common::TResult CEngine::Initialize3DFramework(rhi::EFramework framework)
 {
-  return TResult();
+  return common::TResult();
 }
 
 int CEngine::Start() {

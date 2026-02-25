@@ -1,3 +1,7 @@
 /.vs
 /x64/Debug
 /YggdrasilEngine/x64
+/Application/x64
+/Common/x64
+/Engine/x64
+/RHI/x64

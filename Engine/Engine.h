@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EngineGlobals.h"
+#include <RHI/RHI.h>
 
 namespace yggdrasil
 {
@@ -13,7 +13,7 @@ public:
 
   CEngine(const CEngine&) = delete;
 
-  TResult Initialize(EFramework Renderer);
+  common::TResult Initialize(rhi::EFramework framework);
   void Render();
   int Start();
   void Stop() const;
@@ -23,8 +23,8 @@ public:
 
 private:
 
-  TResult InitializeWindow();
-  TResult Initialize3DFramework(EFramework framework);
+  common::TResult InitializeWindow();
+  common::TResult Initialize3DFramework(rhi::EFramework framework);
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 

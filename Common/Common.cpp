@@ -1,6 +1,8 @@
-#include "EngineGlobals.h"
+#include "Common.h"
 
 namespace yggdrasil
+{
+namespace common
 {
 //------------------------------------------------------
 // TResult
@@ -34,35 +36,6 @@ bool TResult::IsError() const
 std::string TResult::GetText() const
 {
   return m_text + "\nFILE: " + m_file + "\nLINE: " + std::to_string(m_line);
-}
-
-//------------------------------------------------------
-// TStaticMeshVertex
-//------------------------------------------------------
-
-TStaticMeshVertex::TStaticMeshVertex()
-{
-}
-
-TStaticMeshVertex::TStaticMeshVertex(float x, float y, float z, float u, float v, float nx, float ny, float nz)
-  : m_position(x, y, z)
-  , m_uv(u, v)
-  , m_normal(nx, ny, nz)
-{
-}
-
-//------------------------------------------------------
-// TUIVertexColor
-//------------------------------------------------------
-
-TUIVertexColor::TUIVertexColor()
-{
-}
-
-TUIVertexColor::TUIVertexColor(float x, float y, float z, float r, float g, float b, float a)
-  : m_position(x, y, z)
-  , m_color(r, g, b, a)
-{
 }
 
 //------------------------------------------------------
@@ -105,5 +78,6 @@ TVector3::TVector3(float x, float y, float z)
   , m_y(y)
   , m_z(z)
 {
+}
 }
 }
