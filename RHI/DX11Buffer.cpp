@@ -1,0 +1,61 @@
+#include "DX11Buffer.h"
+
+namespace yggdrasil
+{
+namespace rhi
+{
+CDX11Buffer::CDX11Buffer(ID3D11Device* pDevice)
+  : m_pDevice(pDevice)
+  , m_pBuffer(nullptr)
+{
+}
+
+CDX11Buffer::~CDX11Buffer()
+{
+  RELEASE_PTR(m_pBuffer);
+}
+
+common::TResult CDX11Buffer::Initialize(const TBufferData& bufferData)
+{
+  D3D11_BUFFER_DESC vertexBufferDesc{};
+
+  vertexBufferDesc.Usage          = GetDX11Usage(bufferData.m_usage);
+  vertexBufferDesc.BindFlags      = GetDX11BindFlag(bufferData.m_bufferType);
+  vertexBufferDesc.ByteWidth      = bufferData.m_dataSize;
+  vertexBufferDesc.CPUAccessFlags = 0;
+  vertexBufferDesc.MiscFlags      = 0;
+
+  D3D11_SUBRESOURCE_DATA subresourceData{};
+
+  subresourceData.pSysMem = bufferData.m_pData;
+
+  HRESULT hr = m_pDevice->CreateBuffer(&vertexBufferDesc, &subresourceData, &m_pBuffer);
+
+  if (hr != S_OK)
+    return ERROR_RESULT("Failed to initialize Buffer");
+
+  return common::TResult();
+}
+
+D3D11_USAGE CDX11Buffer::GetDX11Usage(const EBufferUsage bufferUsage) const
+{
+  switch (bufferUsage)
+  {
+    case EBufferUsage::Default  : return D3D11_USAGE_DEFAULT;
+    case EBufferUsage::Immutable: return D3D11_USAGE_IMMUTABLE;
+    case EBufferUsage::Dynamic  : return D3D11_USAGE_DYNAMIC;
+    case EBufferUsage::Staging  : return D3D11_USAGE_STAGING;
+  }
+}
+
+D3D11_BIND_FLAG CDX11Buffer::GetDX11BindFlag(const EBufferType bufferType) const
+{
+  switch (bufferType)
+  {
+    case EBufferType::VertexBuffer  : return D3D11_BIND_VERTEX_BUFFER;
+    case EBufferType::IndexBuffer   : return D3D11_BIND_INDEX_BUFFER;
+    case EBufferType::ConstantBuffer: return D3D11_BIND_CONSTANT_BUFFER;
+  }
+}
+}
+}

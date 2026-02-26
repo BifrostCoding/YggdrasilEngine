@@ -13,24 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\Backends">
+      <UniqueIdentifier>{ca04a9b4-40d9-4ce7-84e8-27d2a6374191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Backends">
+      <UniqueIdentifier>{dba7000c-2154-47d6-b40f-35f65d91d475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Backends\DX11">
+      <UniqueIdentifier>{7f6a3059-84c5-480c-a8e7-0d3e3c613504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Backends\Vk">
+      <UniqueIdentifier>{2933572b-6a01-48b8-8e15-0a73f1458b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Backends\DX11">
+      <UniqueIdentifier>{860529bb-645e-4a4c-9541-fab02ab960da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Backends\Vk">
+      <UniqueIdentifier>{fba48d84-4864-42c9-b3d5-5b4cb2301980}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RHI.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="DX11Common.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
     <ClInclude Include="VulkanCommon.h">
+      <Filter>Headerdateien\Backends\Vk</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Buffer.h">
+      <Filter>Headerdateien\Backends\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11RHI.h">
+      <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DX11Common.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="RHI.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Common.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Buffer.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11RHI.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <RHI/RHI.h>
 #include <Common/Timer.h>
+#include <RHI/RHI.h>
+#include <RHI/DX11Common.h>
 
 namespace yggdrasil
 {
@@ -14,7 +15,7 @@ public:
 
   CEngine(const CEngine&) = delete;
 
-  common::TResult Initialize(rhi::EBackend backend);
+  common::TResult Initialize(common::TWindowData& windowData, rhi::EBackend backend);
   void Render();
   int Start();
   void Stop() const;
@@ -24,14 +25,14 @@ public:
 
 private:
 
-  common::TResult InitializeWindow();
-  common::TResult InitializeRHI(rhi::EBackend backend);
+  common::TResult InitializeWindow(const common::TWindowData& windowData);
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-  HWND m_hwnd;
-  HINSTANCE m_hInstance;
-  int m_showCmd;
+  std::unique_ptr<rhi::IRHI> m_pRHI;
   common::CTimer m_timer;
+  int m_showCmd;
+  HINSTANCE m_hInstance;
+  HWND m_hwnd;
 };
 }

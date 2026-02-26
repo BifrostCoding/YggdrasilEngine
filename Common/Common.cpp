@@ -7,7 +7,6 @@ namespace common
 //------------------------------------------------------
 // TResult
 //------------------------------------------------------
-
 TResult::TResult()
   : m_isOK(true)
   , m_text("")
@@ -36,48 +35,6 @@ bool TResult::IsError() const
 std::string TResult::GetText() const
 {
   return m_text + "\nFILE: " + m_file + "\nLINE: " + std::to_string(m_line);
-}
-
-//------------------------------------------------------
-// TVector2
-//------------------------------------------------------
-
-TVector2::TVector2()
-  : m_x(0.0f)
-  , m_y(0.0f)
-{
-}
-
-TVector2::TVector2(float x, float y)
-  : m_x(x)
-  , m_y(y)
-{
-}
-
-TVector2 TVector2::operator-(const TVector2& right)
-{
-  m_x -= right.m_x;
-  m_y -= right.m_y;
-
-  return *this;
-}
-
-//------------------------------------------------------
-// TVector3
-//------------------------------------------------------
-
-TVector3::TVector3()
-  : m_x(0.0f)
-  , m_y(0.0f)
-  , m_z(0.0f)
-{
-}
-
-TVector3::TVector3(float x, float y, float z)
-  : m_x(x)
-  , m_y(y)
-  , m_z(z)
-{
 }
 }
 }

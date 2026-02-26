@@ -4,7 +4,13 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 {
   yggdrasil::CEngine engine(hInstance, showCmd);
 
-  yggdrasil::common::TResult result = engine.Initialize(yggdrasil::rhi::EBackend::DX11);
+  yggdrasil::common::TWindowData windowData{};
+
+  windowData.m_width = 800;
+  windowData.m_height = 600;
+  windowData.m_windowed = true;
+
+  yggdrasil::common::TResult result = engine.Initialize(windowData, yggdrasil::rhi::EBackend::DX11);
 
   if (result.IsError())
   {

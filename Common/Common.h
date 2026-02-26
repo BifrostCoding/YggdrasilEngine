@@ -18,20 +18,18 @@ namespace yggdrasil
 {
 namespace common
 {
-constexpr const int  WIDTH = 1000;
-constexpr const int  HEIGHT = 800;
-constexpr const bool WINDOWED = true;
-
 constexpr const float PI = 3.14f;
 constexpr const float RAD = 6.28f;
 constexpr const float FOV = 0.4f;
 constexpr const float NEAR_PLANE = 1.0f;
 constexpr const float FAR_PLANE = 1000.0f;
 
-enum class EMeshType
+struct TWindowData
 {
-  StaticMesh,
-  Terrain
+  HWND m_hwnd;
+  int m_width;
+  int m_height;
+  bool m_windowed;
 };
 
 struct TResult
@@ -50,33 +48,6 @@ private:
   std::string m_text;
   std::string m_file;
   int m_line;
-};
-
-struct TVector2
-{
-  TVector2();
-  TVector2(float x, float y);
-  virtual ~TVector2() = default;
-
-  TVector2 operator-(const TVector2& right);
-
-  float m_x, m_y;
-};
-
-struct TVector3
-{
-  TVector3();
-  TVector3(float x, float y, float z);
-  virtual ~TVector3() = default;
-
-  float m_x, m_y, m_z;
-};
-
-struct TMaterialDesc
-{
-  std::string m_vsFilepath;
-  std::string m_psFilepath;
-  std::string m_textureFilepath;
 };
 }
 }

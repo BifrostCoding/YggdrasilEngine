@@ -137,7 +137,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="DX11Buffer.h" />
     <ClInclude Include="DX11Common.h" />
+    <ClInclude Include="DX11RHI.h" />
     <ClInclude Include="RHI.h" />
     <ClInclude Include="VulkanCommon.h" />
   </ItemGroup>
@@ -147,7 +150,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DX11Buffer.cpp" />
     <ClCompile Include="DX11Common.cpp" />
+    <ClCompile Include="DX11RHI.cpp" />
     <ClCompile Include="RHI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

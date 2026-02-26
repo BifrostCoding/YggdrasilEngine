@@ -9,14 +9,21 @@ CEngine::CEngine(HINSTANCE hInstance, int showCmd)
 {
 }
 
-common::TResult CEngine::Initialize(rhi::EBackend backend)
+common::TResult CEngine::Initialize(common::TWindowData& windowData, rhi::EBackend backend)
 {
-  common::TResult result = InitializeWindow();
+  common::TResult result = InitializeWindow(windowData);
 
   if (result.IsError())
     return result;
 
-  return InitializeRHI(backend);
+  windowData.m_hwnd = m_hwnd;
+
+  m_pRHI = rhi::CreateInstance(backend);
+
+  if (m_pRHI == nullptr)
+    return ERROR_RESULT("Can't create RHI instance");
+
+  return m_pRHI->Initialize(windowData);
 }
 
 //static
@@ -44,7 +51,7 @@ LRESULT CALLBACK CEngine::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
   return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-common::TResult CEngine::InitializeWindow()
+common::TResult CEngine::InitializeWindow(const common::TWindowData& windowData)
 {
   LPCTSTR wndClassName = TEXT("mainwindow");
 
@@ -74,8 +81,8 @@ common::TResult CEngine::InitializeWindow()
     TEXT("Yggdrasil"),
     WS_OVERLAPPEDWINDOW,
     CW_USEDEFAULT, CW_USEDEFAULT,
-    common::WIDTH,
-    common::HEIGHT,
+    windowData.m_width,
+    windowData.m_height,
     NULL,
     NULL,
     m_hInstance,
@@ -90,11 +97,6 @@ common::TResult CEngine::InitializeWindow()
   ShowWindow(m_hwnd, m_showCmd);
   UpdateWindow(m_hwnd);
 
-  return common::TResult();
-}
-
-common::TResult CEngine::InitializeRHI(rhi::EBackend framework)
-{
   return common::TResult();
 }
 
