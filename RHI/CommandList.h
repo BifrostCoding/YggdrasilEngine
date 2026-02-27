@@ -24,8 +24,6 @@ public:
 
   virtual ~ICommandList() = default;
 
-  virtual void Initialize(IRHI* pRHI) = 0;
-
   virtual void SetRenderTarget(IRenderTargetView* pRenderTargetView, IDepthStencilView* pDepthStencilView) = 0;
   virtual void SetViewport(const TViewport& viewport) = 0;
 
@@ -36,7 +34,8 @@ public:
   virtual void BindConstantBufferData(IBuffer* pBuffer, const void* pData) = 0;
 
   virtual void Submit() = 0;
-};
 
+  virtual void Present() = 0;
+};
 }
 }

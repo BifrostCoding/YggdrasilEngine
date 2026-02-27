@@ -29,7 +29,6 @@ private:
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-  std::unique_ptr<rhi::IRHI> m_pRHI;
   common::CTimer m_timer;
   int m_showCmd;
   HINSTANCE m_hInstance;

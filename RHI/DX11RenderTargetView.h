@@ -18,6 +18,8 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI);
 
+  ID3D11RenderTargetView* Get() const;
+
 private:
 
   ID3D11RenderTargetView* m_pRenderTargetView;

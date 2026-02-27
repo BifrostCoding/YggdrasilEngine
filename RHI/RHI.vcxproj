@@ -141,6 +141,7 @@
     <ClInclude Include="CommandList.h" />
     <ClInclude Include="DepthStencilView.h" />
     <ClInclude Include="DX11Buffer.h" />
+    <ClInclude Include="DX11CommandList.h" />
     <ClInclude Include="DX11Common.h" />
     <ClInclude Include="DX11DepthStencilView.h" />
     <ClInclude Include="DX11InputLayout.h" />
@@ -164,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11Buffer.cpp" />
+    <ClCompile Include="DX11CommandList.cpp" />
     <ClCompile Include="DX11Common.cpp" />
     <ClCompile Include="DX11DepthStencilView.cpp" />
     <ClCompile Include="DX11InputLayout.cpp" />

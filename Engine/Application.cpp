@@ -18,25 +18,6 @@ common::TResult CApplication::Initialize(common::TWindowData& windowData, rhi::E
 
   windowData.m_hwnd = m_hwnd;
 
-  m_pRHI = rhi::CreateInstance(backend);
-
-  if (m_pRHI == nullptr)
-    return ERROR_RESULT("Can't create RHI instance");
-
-  result = m_pRHI->Initialize(windowData);
-
-  rhi::TVertexShaderDesc desc;
-  desc.m_filename = "VS_StaticMesh.cso";
-
-  std::unique_ptr<rhi::IVertexShader> vertexShader;
-  result = m_pRHI->CreateVertexShader(desc, vertexShader);
-
-  rhi::TInputLayoutDesc inputDesc{};
-  inputDesc.m_vertexType = rhi::EVertexType::StaticMesh;
-
-  std::unique_ptr<rhi::IInputLayout> inputLayout;
-  result = m_pRHI->CreateInputLayout(inputDesc, vertexShader.get(), inputLayout);
-
   return result;
 }
 
@@ -67,7 +48,7 @@ LRESULT CALLBACK CApplication::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
 common::TResult CApplication::InitializeWindow(const common::TWindowData& windowData)
 {
-  LPCTSTR wndClassName = TEXT("mainwindow");
+  LPCTSTR wndClassName = TEXT("application");
 
   WNDCLASSEX wc{};
 

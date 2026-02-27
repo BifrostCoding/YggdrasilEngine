@@ -1,11 +1,4 @@
 #include "DX11RHI.h"
-#include "DX11Buffer.h"
-#include "DX11InputLayout.h"
-#include "DX11VertexShader.h"
-#include "DX11PixelShader.h"
-#include "DX11Texture.h"
-#include "DX11RenderTargetView.h"
-#include "DX11DepthStencilView.h"
 
 namespace yggdrasil
 {
@@ -131,6 +124,13 @@ common::TResult CDX11RHI::CreateDepthStencilView(const TDepthStencilViewDesc& de
   pDepthStencilView = std::move(pDX11DepthStencilView);
   
   return result;
+}
+
+void CDX11RHI::CreateCommandList(std::unique_ptr<ICommandList>& pCommandList)
+{
+  auto pDX11CommandList = std::make_unique<CDX11CommandList>(this);
+
+  pCommandList = std::move(pDX11CommandList);
 }
 
 IDXGISwapChain* CDX11RHI::GetSwapChain() const

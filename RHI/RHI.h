@@ -8,6 +8,7 @@
 #include "Texture.h"
 #include "RenderTargetView.h"
 #include "DepthStencilView.h"
+#include "CommandList.h"
 
 namespace yggdrasil
 {
@@ -39,6 +40,8 @@ public:
   virtual common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) = 0;
   virtual common::TResult CreateRenderTargetView(std::unique_ptr<IRenderTargetView>& pRenderTargetView) = 0;
   virtual common::TResult CreateDepthStencilView(const TDepthStencilViewDesc& depthStencilViewDesc, std::unique_ptr<IDepthStencilView>& pDepthStencilView) = 0;
+
+  virtual void CreateCommandList(std::unique_ptr<ICommandList>& pCommandList) = 0;
 };
 
 //------------------------------------------------

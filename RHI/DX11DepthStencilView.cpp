@@ -45,5 +45,10 @@ common::TResult CDX11DepthStencilView::Initialize(CDX11RHI* pRHI, const TDepthSt
 
   return common::TResult();
 }
+
+ID3D11DepthStencilView* CDX11DepthStencilView::Get() const
+{
+  return m_pDepthStencilView;
+}
 }
 }

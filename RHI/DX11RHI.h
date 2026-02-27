@@ -2,6 +2,14 @@
 
 #include "RHI.h"
 #include "DX11Common.h"
+#include "DX11Buffer.h"
+#include "DX11InputLayout.h"
+#include "DX11VertexShader.h"
+#include "DX11PixelShader.h"
+#include "DX11Texture.h"
+#include "DX11RenderTargetView.h"
+#include "DX11DepthStencilView.h"
+#include "DX11CommandList.h"
 
 namespace yggdrasil
 {
@@ -22,6 +30,7 @@ public:
   common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) override;
   common::TResult CreateRenderTargetView(std::unique_ptr<IRenderTargetView>& pRenderTargetView) override;
   common::TResult CreateDepthStencilView(const TDepthStencilViewDesc& depthStencilViewDesc, std::unique_ptr<IDepthStencilView>& pDepthStencilView) override;
+  void CreateCommandList(std::unique_ptr<ICommandList>& pCommandList) override;
 
   IDXGISwapChain* GetSwapChain() const;
   ID3D11Device* GetDevice() const;

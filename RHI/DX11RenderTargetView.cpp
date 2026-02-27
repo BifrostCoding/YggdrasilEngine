@@ -35,5 +35,10 @@ common::TResult CDX11RenderTargetView::Initialize(CDX11RHI* pRHI)
 
   return common::TResult();
 }
+
+ID3D11RenderTargetView* CDX11RenderTargetView::Get() const
+{
+  return m_pRenderTargetView;
+}
 }
 }

@@ -18,6 +18,8 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI, const TDepthStencilViewDesc& depthStencilViewDesc);
 
+  ID3D11DepthStencilView* Get() const;
+
 private:
 
   ID3D11Texture2D* m_pDepthStencilBuffer;

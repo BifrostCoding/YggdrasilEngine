@@ -90,6 +90,9 @@
     <ClInclude Include="CommandList.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="DX11CommandList.h">
+      <Filter>Headerdateien\Backends\DX11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RHI.cpp">
@@ -120,6 +123,9 @@
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11RenderTargetView.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11CommandList.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
   </ItemGroup>
