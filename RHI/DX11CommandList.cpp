@@ -12,10 +12,10 @@ CDX11CommandList::CDX11CommandList(IRHI* pRHI)
 
 void CDX11CommandList::Begin()
 {
-
+  //nothing here yet
 }
 
-void CDX11CommandList::SetRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView)
+void CDX11CommandList::BindRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView)
 {
   CDX11RenderTarget* pDX11RenderTargetView = dynamic_cast<CDX11RenderTarget*>(pRenderTargetView);
   CDX11DepthBuffer* pDX11DepthStencilView = dynamic_cast<CDX11DepthBuffer*>(pDepthStencilView);
@@ -28,7 +28,7 @@ void CDX11CommandList::SetRenderTarget(IRenderTarget* pRenderTargetView, IDepthB
   m_pRHI->GetDeviceContext()->OMSetRenderTargets(1, &pD3D11RenderTargetView, pD3D11DepthStencilView);
 }
 
-void CDX11CommandList::SetViewport(const TViewport& viewport)
+void CDX11CommandList::BindViewport(const TViewport& viewport)
 {
   D3D11_VIEWPORT dx11Viewport{};
 

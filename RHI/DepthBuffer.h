@@ -11,8 +11,8 @@ namespace rhi
 //------------------------------------------------
 struct TDepthBufferDesc final
 {
-  int m_width;
-  int m_height;
+  uint32_t m_width;
+  uint32_t m_height;
 };
 
 //------------------------------------------------

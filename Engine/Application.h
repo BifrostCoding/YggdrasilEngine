@@ -20,6 +20,7 @@ public:
 
 private:
 
+  common::TResult Initialize();
   common::TResult InitializeWindow();
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -28,7 +29,7 @@ private:
   void Stop() const;
 
   rendering::CRenderer m_renderer;
-  common::TWindowData m_windowData;
+  common::TWindowData& m_windowData;
   common::CTimer m_timer;
 };
 }

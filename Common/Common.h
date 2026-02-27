@@ -31,8 +31,8 @@ struct TWindowData final
   HWND m_hwnd;
   HINSTANCE m_hinstance;
   bool m_showCmd;
-  int m_width;
-  int m_height;
+  uint32_t m_width;
+  uint32_t m_height;
   bool m_windowed;
 };
 

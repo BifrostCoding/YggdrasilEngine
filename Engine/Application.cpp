@@ -33,6 +33,16 @@ LRESULT CALLBACK CApplication::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
   return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
+common::TResult CApplication::Initialize()
+{
+  common::TResult result = InitializeWindow();
+
+  if (result.IsError())
+    return result;
+
+  return m_renderer.Initialize();
+}
+
 common::TResult CApplication::InitializeWindow()
 {
   LPCTSTR wndClassName = TEXT("application");
@@ -84,7 +94,7 @@ common::TResult CApplication::InitializeWindow()
 
 common::TResult CApplication::Start()
 {
-  common::TResult result = InitializeWindow();
+  common::TResult result = Initialize();
 
   if (result.IsError())
     return result;
@@ -123,5 +133,7 @@ void CApplication::Render()
   m_timer.Update();
 
   float deltaTime = m_timer.GetDeltaTime();
+
+  m_renderer.Submit();
 }
 }

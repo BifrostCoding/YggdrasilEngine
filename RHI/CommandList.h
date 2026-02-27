@@ -25,8 +25,8 @@ public:
   virtual ~ICommandList() = default;
 
   virtual void Begin() = 0;
-  virtual void SetRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView) = 0;
-  virtual void SetViewport(const TViewport& viewport) = 0;
+  virtual void BindRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView) = 0;
+  virtual void BindViewport(const TViewport& viewport) = 0;
   virtual void BindInputLayout(IVertexDescriptor* pVertexDescriptor) = 0;
   virtual void BindVertexBuffer(IBuffer* pBuffer) = 0;
   virtual void BindIndexBuffer(IBuffer* pBuffer) = 0;
