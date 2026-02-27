@@ -1,4 +1,4 @@
-#include "DX11InputLayout.h"
+#include "DX11VertexDescriptor.h"
 #include "DX11RHI.h"
 #include "DX11VertexShader.h"
 
@@ -6,19 +6,19 @@ namespace yggdrasil
 {
 namespace rhi
 {
-CDX11InputLayout::CDX11InputLayout()
-  : m_pInputLayout(nullptr)
+CDX11VertexDescriptor::CDX11VertexDescriptor()
+  : m_pVertexDescriptor(nullptr)
 {
 }
 
-CDX11InputLayout::~CDX11InputLayout()
+CDX11VertexDescriptor::~CDX11VertexDescriptor()
 {
-  RELEASE_PTR(m_pInputLayout);
+  RELEASE_PTR(m_pVertexDescriptor);
 }
 
-common::TResult CDX11InputLayout::Initialize(CDX11RHI* pRHI, const TInputLayoutDesc& inputLayoutDesc, CDX11VertexShader* pVertexShader)
+common::TResult CDX11VertexDescriptor::Initialize(CDX11RHI* pRHI, const TVertexDescriptorDesc& vertexDescriptorDesc, CDX11VertexShader* pVertexShader)
 {
-  std::vector<D3D11_INPUT_ELEMENT_DESC> layoutDesc = GetLayoutDesc(inputLayoutDesc.m_vertexType);
+  std::vector<D3D11_INPUT_ELEMENT_DESC> layoutDesc = GetLayoutDesc(vertexDescriptorDesc.m_vertexType);
 
   if (layoutDesc.empty())
     return ERROR_RESULT("Can't get layoutDesc");
@@ -28,7 +28,7 @@ common::TResult CDX11InputLayout::Initialize(CDX11RHI* pRHI, const TInputLayoutD
     layoutDesc.size(),
     pVertexShader->GetBytecode().data(),
     pVertexShader->GetBytecode().size(),
-    &m_pInputLayout
+    &m_pVertexDescriptor
   );
 
   if (hr != S_OK)
@@ -37,7 +37,7 @@ common::TResult CDX11InputLayout::Initialize(CDX11RHI* pRHI, const TInputLayoutD
   return common::TResult();
 }
 
-const std::vector<D3D11_INPUT_ELEMENT_DESC> CDX11InputLayout::GetLayoutDesc(EVertexType vertexType) const
+const std::vector<D3D11_INPUT_ELEMENT_DESC> CDX11VertexDescriptor::GetLayoutDesc(EVertexType vertexType) const
 {
   switch (vertexType)
   {

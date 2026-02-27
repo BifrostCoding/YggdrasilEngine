@@ -57,10 +57,10 @@
     <ClInclude Include="DX11Texture.h">
       <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="InputLayout.h">
+    <ClInclude Include="VertexDescriptor.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DX11InputLayout.h">
+    <ClInclude Include="DX11VertexDescriptor.h">
       <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
     <ClInclude Include="VertexShader.h">
@@ -75,16 +75,16 @@
     <ClInclude Include="PixelShader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DepthStencilView.h">
+    <ClInclude Include="DepthBuffer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DX11DepthStencilView.h">
+    <ClInclude Include="DX11DepthBuffer.h">
       <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="RenderTargetView.h">
+    <ClInclude Include="RenderTarget.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DX11RenderTargetView.h">
+    <ClInclude Include="DX11RenderTarget.h">
       <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
     <ClInclude Include="CommandList.h">
@@ -110,7 +110,7 @@
     <ClCompile Include="DX11Texture.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="DX11InputLayout.cpp">
+    <ClCompile Include="DX11VertexDescriptor.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11VertexShader.cpp">
@@ -119,10 +119,10 @@
     <ClCompile Include="DX11PixelShader.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="DX11DepthStencilView.cpp">
+    <ClCompile Include="DX11DepthBuffer.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="DX11RenderTargetView.cpp">
+    <ClCompile Include="DX11RenderTarget.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11CommandList.cpp">

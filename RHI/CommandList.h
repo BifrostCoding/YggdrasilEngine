@@ -2,12 +2,12 @@
 
 #include <Common/Common.h>
 #include "Buffer.h"
-#include "InputLayout.h"
+#include "VertexDescriptor.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "Texture.h"
-#include "RenderTargetView.h"
-#include "DepthStencilView.h"
+#include "RenderTarget.h"
+#include "DepthBuffer.h"
 
 namespace yggdrasil
 {
@@ -25,9 +25,9 @@ public:
   virtual ~ICommandList() = default;
 
   virtual void Begin() = 0;
-  virtual void SetRenderTarget(IRenderTargetView* pRenderTargetView, IDepthStencilView* pDepthStencilView) = 0;
+  virtual void SetRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView) = 0;
   virtual void SetViewport(const TViewport& viewport) = 0;
-  virtual void BindInputLayout(IInputLayout* pInputLayout) = 0;
+  virtual void BindInputLayout(IVertexDescriptor* pVertexDescriptor) = 0;
   virtual void BindVertexBuffer(IBuffer* pBuffer) = 0;
   virtual void BindIndexBuffer(IBuffer* pBuffer) = 0;
   virtual void BindConstantBuffer(IBuffer* pBuffer) = 0;

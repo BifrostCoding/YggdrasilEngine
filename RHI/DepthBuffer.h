@@ -7,26 +7,22 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// TViewport
+// TDepthBufferDesc
 //------------------------------------------------
-struct TViewport final
+struct TDepthBufferDesc final
 {
-  float m_x;
-  float m_y;
-  float m_width;
-  float m_height;
-  float m_minDepth;
-  float m_maxDepth;
+  int m_width;
+  int m_height;
 };
 
 //------------------------------------------------
-// IRenderTargetView
+// IDepthBuffer
 //------------------------------------------------
-class IRenderTargetView
+class IDepthBuffer
 {
 public:
 
-  virtual ~IRenderTargetView() = default;
+  virtual ~IDepthBuffer() = default;
 };
 }
 }

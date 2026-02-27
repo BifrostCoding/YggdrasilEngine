@@ -19,9 +19,6 @@
     <Filter Include="Quelldateien\Caching">
       <UniqueIdentifier>{f4e90965-bedb-4222-9c52-f5e4e725c483}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{1d91e552-9d51-4b71-855f-4b13e6df014c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -44,16 +41,5 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="PS_StaticMesh.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="StaticMesh.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="VS_StaticMesh.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

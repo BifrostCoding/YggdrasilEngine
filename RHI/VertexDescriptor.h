@@ -15,21 +15,21 @@ enum class EVertexType
 };
 
 //------------------------------------------------
-// TInputLayoutDesc
+// TVertexDescriptorDesc
 //------------------------------------------------
-struct TInputLayoutDesc final
+struct TVertexDescriptorDesc final
 {
   EVertexType m_vertexType;
 };
 
 //------------------------------------------------
-// IInputLayout
+// IVertexDescriptor
 //------------------------------------------------
-class IInputLayout
+class IVertexDescriptor
 {
 public:
 
-  virtual ~IInputLayout() = default;
+  virtual ~IVertexDescriptor() = default;
 };
 }
 }

@@ -1,21 +1,21 @@
-#include "DX11RenderTargetView.h"
+#include "DX11RenderTarget.h"
 #include "DX11RHI.h"
 
 namespace yggdrasil
 {
 namespace rhi
 {
-CDX11RenderTargetView::CDX11RenderTargetView()
+CDX11RenderTarget::CDX11RenderTarget()
   : m_pRenderTargetView(nullptr)
 {
 }
 
-CDX11RenderTargetView::~CDX11RenderTargetView()
+CDX11RenderTarget::~CDX11RenderTarget()
 {
   RELEASE_PTR(m_pRenderTargetView);
 }
 
-common::TResult CDX11RenderTargetView::Initialize(CDX11RHI* pRHI)
+common::TResult CDX11RenderTarget::Initialize(CDX11RHI* pRHI)
 {
   ID3D11Texture2D* backBuffer = nullptr;
 
@@ -36,7 +36,7 @@ common::TResult CDX11RenderTargetView::Initialize(CDX11RHI* pRHI)
   return common::TResult();
 }
 
-ID3D11RenderTargetView* CDX11RenderTargetView::Get() const
+ID3D11RenderTargetView* CDX11RenderTarget::Get() const
 {
   return m_pRenderTargetView;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DX11Common.h"
-#include "RenderTargetView.h"
+#include "RenderTarget.h"
 
 namespace yggdrasil
 {
@@ -9,12 +9,12 @@ namespace rhi
 {
 class CDX11RHI;
 
-class CDX11RenderTargetView final : public IRenderTargetView
+class CDX11RenderTarget final : public IRenderTarget
 {
 public:
 
-  CDX11RenderTargetView();
-  virtual ~CDX11RenderTargetView();
+  CDX11RenderTarget();
+  virtual ~CDX11RenderTarget();
 
   common::TResult Initialize(CDX11RHI* pRHI);
 

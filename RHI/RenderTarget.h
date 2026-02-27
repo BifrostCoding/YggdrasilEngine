@@ -7,22 +7,26 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// TDepthStencilViewDesc
+// TViewport
 //------------------------------------------------
-struct TDepthStencilViewDesc final
+struct TViewport final
 {
-  int m_width;
-  int m_height;
+  float m_x;
+  float m_y;
+  float m_width;
+  float m_height;
+  float m_minDepth;
+  float m_maxDepth;
 };
 
 //------------------------------------------------
-// IDepthStencilView
+// IRenderTarget
 //------------------------------------------------
-class IDepthStencilView
+class IRenderTarget
 {
 public:
 
-  virtual ~IDepthStencilView() = default;
+  virtual ~IRenderTarget() = default;
 };
 }
 }

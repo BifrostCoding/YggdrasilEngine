@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Common/Common.h>
-#include <RHI/InputLayout.h>
+#include <RHI/VertexDescriptor.h>
 
 namespace yggdrasil
 {
@@ -17,13 +17,13 @@ class CInputLayoutCache final
 //  CInputLayoutCache();
 //  virtual ~CInputLayoutCache();
 //
-//  IInputLayout* GetInputLayout(EVertexType vertexType) const;
+//  IVertexDescriptor* GetInputLayout(EVertexType vertexType) const;
 //
 //private:
 //
-//  void AddInputLayout(EVertexType vertexType, std::unique_ptr<IInputLayout> pInputLayout);
+//  void AddInputLayout(EVertexType vertexType, std::unique_ptr<IVertexDescriptor> pVertexDescriptor);
 //
-//  std::map<EVertexType, std::unique_ptr<IInputLayout>> m_inputLayoutCache;
+//  std::map<EVertexType, std::unique_ptr<IVertexDescriptor>> m_inputLayoutCache;
 };
 }
 }

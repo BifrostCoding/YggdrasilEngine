@@ -1,26 +1,28 @@
-#include "DX11DepthStencilView.h"
+#include "DX11DepthBuffer.h"
 #include "DX11RHI.h"
 
 namespace yggdrasil
 {
 namespace rhi
 {
-CDX11DepthStencilView::CDX11DepthStencilView()
+CDX11DepthBuffer::CDX11DepthBuffer()
   : m_pDepthStencilView(nullptr)
+  , m_pDepthBuffer(nullptr)
 {
 }
 
-CDX11DepthStencilView::~CDX11DepthStencilView()
+CDX11DepthBuffer::~CDX11DepthBuffer()
 {
   RELEASE_PTR(m_pDepthStencilView);
+  RELEASE_PTR(m_pDepthBuffer);
 }
 
-common::TResult CDX11DepthStencilView::Initialize(CDX11RHI* pRHI, const TDepthStencilViewDesc& depthStencilViewDesc)
+common::TResult CDX11DepthBuffer::Initialize(CDX11RHI* pRHI, const TDepthBufferDesc& depthBufferDesc)
 {
   D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 
-  depthStencilDesc.Width              = depthStencilViewDesc.m_width;
-  depthStencilDesc.Height             = depthStencilViewDesc.m_height;
+  depthStencilDesc.Width              = depthBufferDesc.m_width;
+  depthStencilDesc.Height             = depthBufferDesc.m_height;
   depthStencilDesc.MipLevels          = 1;
   depthStencilDesc.ArraySize          = 1;
   depthStencilDesc.Format             = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -31,16 +33,12 @@ common::TResult CDX11DepthStencilView::Initialize(CDX11RHI* pRHI, const TDepthSt
   depthStencilDesc.CPUAccessFlags     = 0;
   depthStencilDesc.MiscFlags          = 0;
 
-  ID3D11Texture2D* pDepthStencilBuffer = nullptr;
-
-  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&depthStencilDesc, nullptr, &pDepthStencilBuffer);
+  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&depthStencilDesc, nullptr, &m_pDepthBuffer);
 
   if (hr != S_OK)
-    return ERROR_RESULT("Failed to Create DepthStencilBuffer");
+    return ERROR_RESULT("Failed to Create DepthBuffer");
 
-  hr = pRHI->GetDevice()->CreateDepthStencilView(pDepthStencilBuffer, nullptr, &m_pDepthStencilView);
-
-  RELEASE_PTR(pDepthStencilBuffer);
+  hr = pRHI->GetDevice()->CreateDepthStencilView(m_pDepthBuffer, nullptr, &m_pDepthStencilView);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to Create DepthStencilView");
@@ -48,7 +46,7 @@ common::TResult CDX11DepthStencilView::Initialize(CDX11RHI* pRHI, const TDepthSt
   return common::TResult();
 }
 
-ID3D11DepthStencilView* CDX11DepthStencilView::Get() const
+ID3D11DepthStencilView* CDX11DepthBuffer::Get() const
 {
   return m_pDepthStencilView;
 }

@@ -60,13 +60,13 @@ common::TResult CDX11RHI::CreateBuffer(const TBufferDesc& bufferDesc, const comm
   return result;
 }
 
-common::TResult CDX11RHI::CreateInputLayout(const TInputLayoutDesc& inputLayoutDesc, IVertexShader* pVertexShader, std::unique_ptr<IInputLayout>& pInputLayout)
+common::TResult CDX11RHI::CreateVertexDescriptor(const TVertexDescriptorDesc& vertexDescriptorDesc, IVertexShader* pVertexShader, std::unique_ptr<IVertexDescriptor>& pVertexDescriptor)
 {
-  auto pDX11InputLayout = std::make_unique<CDX11InputLayout>();
+  auto pDX11VertexDescriptor = std::make_unique<CDX11VertexDescriptor>();
 
-  common::TResult result = pDX11InputLayout->Initialize(this, inputLayoutDesc, dynamic_cast<CDX11VertexShader*>(pVertexShader));
+  common::TResult result = pDX11VertexDescriptor->Initialize(this, vertexDescriptorDesc, dynamic_cast<CDX11VertexShader*>(pVertexShader));
 
-  pInputLayout = std::move(pDX11InputLayout);
+  pVertexDescriptor = std::move(pDX11VertexDescriptor);
 
   return result;
 }
@@ -104,22 +104,22 @@ common::TResult CDX11RHI::CreateTexture(const TTextureDesc& textureDesc, std::un
   return result;
 }
 
-common::TResult CDX11RHI::CreateRenderTargetView(std::unique_ptr<IRenderTargetView>& pRenderTargetView)
+common::TResult CDX11RHI::CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTarget)
 {
-  auto pDX11RenderTargetView = std::make_unique<CDX11RenderTargetView>();
+  auto pDX11RenderTarget= std::make_unique<CDX11RenderTarget>();
 
-  common::TResult result = pDX11RenderTargetView->Initialize(this);
+  common::TResult result = pDX11RenderTarget->Initialize(this);
 
-  pRenderTargetView = std::move(pDX11RenderTargetView);
+  pRenderTarget= std::move(pDX11RenderTarget);
 
   return result;
 }
 
-common::TResult CDX11RHI::CreateDepthStencilView(const TDepthStencilViewDesc& depthStencilViewDesc, std::unique_ptr<IDepthStencilView>& pDepthStencilView)
+common::TResult CDX11RHI::CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthStencilView)
 {
-  auto pDX11DepthStencilView = std::make_unique<CDX11DepthStencilView>();
+  auto pDX11DepthStencilView = std::make_unique<CDX11DepthBuffer>();
 
-  common::TResult result = pDX11DepthStencilView->Initialize(this, depthStencilViewDesc);
+  common::TResult result = pDX11DepthStencilView->Initialize(this, depthBufferDesc);
 
   pDepthStencilView = std::move(pDX11DepthStencilView);
   
