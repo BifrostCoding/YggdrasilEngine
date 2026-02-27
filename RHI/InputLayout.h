@@ -7,41 +7,30 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// EBufferUsage
+// EVertexType
 //------------------------------------------------
-enum class EBufferUsage
+enum class EVertexType
 {
-  Default,
-  Dynamic,
+  StaticMesh,
 };
 
 //------------------------------------------------
-// EBufferType
+// TInputLayoutDesc
 //------------------------------------------------
-enum class EBufferType
+struct TInputLayoutDesc final
 {
-  VertexBuffer,
-  IndexBuffer,
-  ConstantBuffer,
+  EVertexType m_vertexType;
+  std::string m_vsShaderfile;
 };
 
 //------------------------------------------------
-// TBufferDesc
+// IInputLayout
 //------------------------------------------------
-struct TBufferDesc final
-{
-  EBufferUsage m_usage;
-  EBufferType  m_bufferType;
-};
-
-//------------------------------------------------
-// IBuffer
-//------------------------------------------------
-class IBuffer
+class IInputLayout
 {
 public:
 
-  virtual ~IBuffer() = default;
+  virtual ~IInputLayout() = default;
 };
 }
 }

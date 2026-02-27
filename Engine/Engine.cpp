@@ -23,7 +23,15 @@ common::TResult CEngine::Initialize(common::TWindowData& windowData, rhi::EBacke
   if (m_pRHI == nullptr)
     return ERROR_RESULT("Can't create RHI instance");
 
-  return m_pRHI->Initialize(windowData);
+  result = m_pRHI->Initialize(windowData);
+
+  rhi::TPixelShaderDesc desc;
+  desc.m_filename = "PS_StaticMesh.cso";
+
+  std::unique_ptr<rhi::IPixelShader> pixelShader;
+  result = m_pRHI->CreatePixelShader(desc, pixelShader);
+
+  return result;
 }
 
 //static

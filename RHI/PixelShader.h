@@ -7,21 +7,21 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// TTextureDesc
+// TPixelShaderDesc
 //------------------------------------------------
-struct TTextureDesc final
+struct TPixelShaderDesc final
 {
   std::string m_filename;
 };
 
 //------------------------------------------------
-// ITexture
+// IPixelShader
 //------------------------------------------------
-class ITexture
+class IPixelShader
 {
 public:
 
-  virtual ~ITexture() = default;
+  virtual ~IPixelShader() = default;
 };
 }
 }

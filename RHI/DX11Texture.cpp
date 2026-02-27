@@ -1,13 +1,13 @@
 #include "DX11Texture.h"
+#include "DX11RHI.h"
 #include <Common/ImageLoader.h>
 
 namespace yggdrasil
 {
 namespace rhi
 {
-CDX11Texture::CDX11Texture(ID3D11Device* pDevice)
-  : m_pDevice(pDevice)
-  , m_pShaderResourceView(nullptr)
+CDX11Texture::CDX11Texture()
+  : m_pShaderResourceView(nullptr)
   , m_pSamplerState(nullptr)
 {
 }
@@ -18,7 +18,7 @@ CDX11Texture::~CDX11Texture()
   RELEASE_PTR(m_pSamplerState);
 }
 
-common::TResult CDX11Texture::Initialize(const TTextureDesc& textureDesc)
+common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& textureDesc)
 {
   common::CImageLoader imageLoader;
 
@@ -29,7 +29,7 @@ common::TResult CDX11Texture::Initialize(const TTextureDesc& textureDesc)
   if (result.IsError())
     return result;
 
-   D3D11_TEXTURE2D_DESC desc = {};
+  D3D11_TEXTURE2D_DESC desc = {};
   desc.Width            = imageData.m_width;
   desc.Height           = imageData.m_height;
   desc.MipLevels        = 1;
@@ -44,12 +44,12 @@ common::TResult CDX11Texture::Initialize(const TTextureDesc& textureDesc)
   initData.SysMemPitch = imageData.m_width * 4;
 
   ID3D11Texture2D* texture = nullptr;
-  HRESULT hr = m_pDevice->CreateTexture2D(&desc, &initData, &texture);
+  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&desc, &initData, &texture);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to create Texture2D");
 
-  hr = m_pDevice->CreateShaderResourceView(texture, nullptr, &m_pShaderResourceView);
+  hr = pRHI->GetDevice()->CreateShaderResourceView(texture, nullptr, &m_pShaderResourceView);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to create ShaderResouceView");
@@ -66,7 +66,7 @@ common::TResult CDX11Texture::Initialize(const TTextureDesc& textureDesc)
   sampDesc.MinLOD         = 0;
   sampDesc.MaxLOD         = D3D11_FLOAT32_MAX;
 
-  hr = m_pDevice->CreateSamplerState(&sampDesc, &m_pSamplerState);
+  hr = pRHI->GetDevice()->CreateSamplerState(&sampDesc, &m_pSamplerState);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to create SamplerState");

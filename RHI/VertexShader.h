@@ -7,21 +7,21 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// TTextureDesc
+// TVertexShaderDesc
 //------------------------------------------------
-struct TTextureDesc final
+struct TVertexShaderDesc final
 {
   std::string m_filename;
 };
 
 //------------------------------------------------
-// ITexture
+// IVertexShader
 //------------------------------------------------
-class ITexture
+class IVertexShader
 {
 public:
 
-  virtual ~ITexture() = default;
+  virtual ~IVertexShader() = default;
 };
 }
 }

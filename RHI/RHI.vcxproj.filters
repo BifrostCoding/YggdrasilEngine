@@ -57,6 +57,24 @@
     <ClInclude Include="DX11Texture.h">
       <Filter>Headerdateien\Backends\DX11</Filter>
     </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11InputLayout.h">
+      <Filter>Headerdateien\Backends\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11VertexShader.h">
+      <Filter>Headerdateien\Backends\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11PixelShader.h">
+      <Filter>Headerdateien\Backends\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RHI.cpp">
@@ -72,6 +90,15 @@
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11Texture.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11InputLayout.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11VertexShader.cpp">
+      <Filter>Quelldateien\Backends\DX11</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11PixelShader.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
   </ItemGroup>

@@ -23,7 +23,7 @@ struct TImageData final
 //------------------------------------------------
 // CImageLoader
 //------------------------------------------------
-class CImageLoader
+class CImageLoader final
 {
 public:
 

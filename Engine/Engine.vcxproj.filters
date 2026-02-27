@@ -13,15 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\Caching">
+      <UniqueIdentifier>{58c8cb27-7b0a-4230-97ad-c3b3596ed546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Caching">
+      <UniqueIdentifier>{f4e90965-bedb-4222-9c52-f5e4e725c483}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="InputLayoutCache.h">
+      <Filter>Headerdateien\Caching</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayoutCache.cpp">
+      <Filter>Quelldateien\Caching</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

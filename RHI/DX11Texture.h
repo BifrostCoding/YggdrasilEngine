@@ -7,18 +7,19 @@ namespace yggdrasil
 {
 namespace rhi
 {
-class CDX11Texture : public ITexture
+class CDX11RHI;
+
+class CDX11Texture final : public ITexture
 {
 public:
 
-  CDX11Texture(ID3D11Device* pDevice);
+  CDX11Texture();
   virtual ~CDX11Texture();
 
-  virtual common::TResult Initialize(const TTextureDesc& textureDesc);
+  common::TResult Initialize(CDX11RHI* pRHI, const TTextureDesc& textureDesc);
 
 private:
 
-  ID3D11Device* m_pDevice;
   ID3D11ShaderResourceView* m_pShaderResourceView;
   ID3D11SamplerState* m_pSamplerState;
 };

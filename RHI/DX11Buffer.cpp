@@ -1,12 +1,12 @@
 #include "DX11Buffer.h"
+#include "DX11RHI.h"
 
 namespace yggdrasil
 {
 namespace rhi
 {
-CDX11Buffer::CDX11Buffer(ID3D11Device* pDevice)
-  : m_pDevice(pDevice)
-  , m_pBuffer(nullptr)
+CDX11Buffer::CDX11Buffer()
+  : m_pBuffer(nullptr)
 {
 }
 
@@ -15,7 +15,7 @@ CDX11Buffer::~CDX11Buffer()
   RELEASE_PTR(m_pBuffer);
 }
 
-common::TResult CDX11Buffer::Initialize(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle)
+common::TResult CDX11Buffer::Initialize(CDX11RHI* pRHI, const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle)
 {
   D3D11_BUFFER_DESC vertexBufferDesc{};
 
@@ -29,7 +29,7 @@ common::TResult CDX11Buffer::Initialize(const TBufferDesc& bufferDesc, const com
 
   subresourceData.pSysMem = dataHandle.m_pData;
 
-  HRESULT hr = m_pDevice->CreateBuffer(&vertexBufferDesc, &subresourceData, &m_pBuffer);
+  HRESULT hr = pRHI->GetDevice()->CreateBuffer(&vertexBufferDesc, &subresourceData, &m_pBuffer);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to initialize Buffer");
@@ -41,10 +41,8 @@ D3D11_USAGE CDX11Buffer::GetDX11Usage(const EBufferUsage bufferUsage) const
 {
   switch (bufferUsage)
   {
-    case EBufferUsage::Default  : return D3D11_USAGE_DEFAULT;
-    case EBufferUsage::Immutable: return D3D11_USAGE_IMMUTABLE;
-    case EBufferUsage::Dynamic  : return D3D11_USAGE_DYNAMIC;
-    case EBufferUsage::Staging  : return D3D11_USAGE_STAGING;
+    case EBufferUsage::Default: return D3D11_USAGE_DEFAULT;
+    case EBufferUsage::Dynamic: return D3D11_USAGE_DYNAMIC;
   }
 }
 

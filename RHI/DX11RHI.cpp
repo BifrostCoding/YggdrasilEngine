@@ -1,5 +1,7 @@
 #include "DX11RHI.h"
 #include "DX11Buffer.h"
+#include "DX11VertexShader.h"
+#include "DX11PixelShader.h"
 #include "DX11Texture.h"
 
 namespace yggdrasil
@@ -9,14 +11,14 @@ namespace rhi
 CDX11RHI::CDX11RHI()
   : m_pSwapChain(nullptr)
   , m_pDevice(nullptr)
-  , m_pContext(nullptr)
+  , m_pDeviceContext(nullptr)
 {
 }
 
 CDX11RHI::~CDX11RHI()
 {
   RELEASE_PTR(m_pSwapChain);
-  RELEASE_PTR(m_pContext);
+  RELEASE_PTR(m_pDeviceContext);
   RELEASE_PTR(m_pDevice);
 }
 
@@ -43,7 +45,7 @@ common::TResult CDX11RHI::Initialize(const common::TWindowData& windowData)
   swapChainDesc.Windowed           = windowData.m_windowed;
   swapChainDesc.SwapEffect         = DXGI_SWAP_EFFECT_DISCARD;
 
-  HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &swapChainDesc, &m_pSwapChain, &m_pDevice, nullptr, &m_pContext);
+  HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &swapChainDesc, &m_pSwapChain, &m_pDevice, nullptr, &m_pDeviceContext);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to create D3D11 Device and SwapChain");
@@ -53,16 +55,61 @@ common::TResult CDX11RHI::Initialize(const common::TWindowData& windowData)
 
 common::TResult CDX11RHI::CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer)
 {
-  pBuffer = std::make_unique<CDX11Buffer>(m_pDevice);
+  auto pDX11Buffer = std::make_unique<CDX11Buffer>();
 
-  return pBuffer->Initialize(bufferDesc, dataHandle);
+  common::TResult result = pDX11Buffer->Initialize(this, bufferDesc, dataHandle);
+  
+  pBuffer = std::move(pDX11Buffer);
+
+  return result;
+}
+
+common::TResult CDX11RHI::CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader)
+{
+  auto pDX11VertexShader = std::make_unique<CDX11VertexShader>();
+
+  common::TResult result = pDX11VertexShader->Initialize(this, vertexShaderDesc);
+
+  pVertexShader = std::move(pDX11VertexShader);
+
+  return result;
+}
+
+common::TResult CDX11RHI::CreatePixelShader(const TPixelShaderDesc& pixelShaderDesc, std::unique_ptr<IPixelShader>& pPixelShader)
+{
+  auto pDX11PixelShader = std::make_unique<CDX11PixelShader>();
+
+  common::TResult result = pDX11PixelShader->Initialize(this, pixelShaderDesc);
+
+  pPixelShader = std::move(pDX11PixelShader);
+
+  return result;
 }
 
 common::TResult CDX11RHI::CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture)
 {
-  pTexture = std::make_unique<CDX11Texture>(m_pDevice);
+  auto pDX11Texture = std::make_unique<CDX11Texture>();
 
-  return pTexture->Initialize(textureDesc);
+  common::TResult result = pDX11Texture->Initialize(this, textureDesc);
+
+  pTexture = std::move(pDX11Texture);
+
+  return result;
+}
+
+IDXGISwapChain* CDX11RHI::GetSwapchain() const
+{
+  return m_pSwapChain;
+}
+
+ID3D11Device* CDX11RHI::GetDevice() const
+{
+  return m_pDevice;
+}
+
+ID3D11DeviceContext* CDX11RHI::GetDeviceContext() const
+{
+  return m_pDeviceContext;
 }
 }
 }
