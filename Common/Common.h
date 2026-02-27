@@ -10,6 +10,10 @@
 #include <mutex>
 #include <map>
 
+//#include <glm/vec2.hpp>
+//#include <glm/vec3.hpp>
+//#include <glm/mat4x4.hpp>
+
 #define ERROR_RESULT_COMMON(text) TResult(false, text, __FILE__, __LINE__)
 #define ERROR_RESULT(text) yggdrasil::common::ERROR_RESULT_COMMON(text)
 
@@ -19,12 +23,9 @@ namespace yggdrasil
 {
 namespace common
 {
-constexpr const float PI = 3.14f;
-constexpr const float RAD = 6.28f;
-constexpr const float FOV = 0.4f;
-constexpr const float NEAR_PLANE = 1.0f;
-constexpr const float FAR_PLANE = 1000.0f;
-
+//------------------------------------------------
+// TWindowData
+//------------------------------------------------
 struct TWindowData final
 {
   HWND m_hwnd;
@@ -33,6 +34,9 @@ struct TWindowData final
   bool m_windowed;
 };
 
+//------------------------------------------------
+// TResult
+//------------------------------------------------
 struct TResult
 {
   TResult();
@@ -51,6 +55,9 @@ private:
   int m_line;
 };
 
+//------------------------------------------------
+// TDataHandle
+//------------------------------------------------
 struct TDataHandle final
 {
   size_t m_size;

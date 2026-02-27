@@ -20,8 +20,10 @@ public:
   common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) override;
   common::TResult CreatePixelShader(const TPixelShaderDesc& pixelShaderDesc, std::unique_ptr<IPixelShader>& pPixelShader) override;
   common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) override;
+  common::TResult CreateRenderTargetView(std::unique_ptr<IRenderTargetView>& pRenderTargetView) override;
+  common::TResult CreateDepthStencilView(const TDepthStencilViewDesc& depthStencilViewDesc, std::unique_ptr<IDepthStencilView>& pDepthStencilView) override;
 
-  IDXGISwapChain* GetSwapchain() const;
+  IDXGISwapChain* GetSwapChain() const;
   ID3D11Device* GetDevice() const;
   ID3D11DeviceContext* GetDeviceContext() const;
 

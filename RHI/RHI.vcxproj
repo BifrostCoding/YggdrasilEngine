@@ -138,15 +138,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
+    <ClInclude Include="CommandList.h" />
+    <ClInclude Include="DepthStencilView.h" />
     <ClInclude Include="DX11Buffer.h" />
     <ClInclude Include="DX11Common.h" />
+    <ClInclude Include="DX11DepthStencilView.h" />
     <ClInclude Include="DX11InputLayout.h" />
     <ClInclude Include="DX11PixelShader.h" />
+    <ClInclude Include="DX11RenderTargetView.h" />
     <ClInclude Include="DX11RHI.h" />
     <ClInclude Include="DX11Texture.h" />
     <ClInclude Include="DX11VertexShader.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="RenderTargetView.h" />
     <ClInclude Include="RHI.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="VertexShader.h" />
@@ -160,8 +165,10 @@
   <ItemGroup>
     <ClCompile Include="DX11Buffer.cpp" />
     <ClCompile Include="DX11Common.cpp" />
+    <ClCompile Include="DX11DepthStencilView.cpp" />
     <ClCompile Include="DX11InputLayout.cpp" />
     <ClCompile Include="DX11PixelShader.cpp" />
+    <ClCompile Include="DX11RenderTargetView.cpp" />
     <ClCompile Include="DX11RHI.cpp" />
     <ClCompile Include="DX11Texture.cpp" />
     <ClCompile Include="DX11VertexShader.cpp" />

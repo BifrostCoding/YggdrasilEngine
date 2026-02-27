@@ -6,6 +6,8 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "Texture.h"
+#include "RenderTargetView.h"
+#include "DepthStencilView.h"
 
 namespace yggdrasil
 {
@@ -35,21 +37,8 @@ public:
   virtual common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) = 0;
   virtual common::TResult CreatePixelShader(const TPixelShaderDesc& pixelShaderDesc, std::unique_ptr<IPixelShader>& pPixelShader) = 0;
   virtual common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) = 0;
-};
-
-//------------------------------------------------
-// ICommandList
-//------------------------------------------------
-class ICommandList
-{
-public:
-
-  virtual ~ICommandList() = default;
-
-  virtual void BeginFrame() = 0;
-  virtual void BindBuffer(IBuffer* pBuffer) = 0;
-  virtual void EndFrame() = 0;
-  virtual void Submit() = 0;
+  virtual common::TResult CreateRenderTargetView(std::unique_ptr<IRenderTargetView>& pRenderTargetView) = 0;
+  virtual common::TResult CreateDepthStencilView(const TDepthStencilViewDesc& depthStencilViewDesc, std::unique_ptr<IDepthStencilView>& pDepthStencilView) = 0;
 };
 
 //------------------------------------------------

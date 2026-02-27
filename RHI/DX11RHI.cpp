@@ -4,6 +4,8 @@
 #include "DX11VertexShader.h"
 #include "DX11PixelShader.h"
 #include "DX11Texture.h"
+#include "DX11RenderTargetView.h"
+#include "DX11DepthStencilView.h"
 
 namespace yggdrasil
 {
@@ -109,7 +111,29 @@ common::TResult CDX11RHI::CreateTexture(const TTextureDesc& textureDesc, std::un
   return result;
 }
 
-IDXGISwapChain* CDX11RHI::GetSwapchain() const
+common::TResult CDX11RHI::CreateRenderTargetView(std::unique_ptr<IRenderTargetView>& pRenderTargetView)
+{
+  auto pDX11RenderTargetView = std::make_unique<CDX11RenderTargetView>();
+
+  common::TResult result = pDX11RenderTargetView->Initialize(this);
+
+  pRenderTargetView = std::move(pDX11RenderTargetView);
+
+  return result;
+}
+
+common::TResult CDX11RHI::CreateDepthStencilView(const TDepthStencilViewDesc& depthStencilViewDesc, std::unique_ptr<IDepthStencilView>& pDepthStencilView)
+{
+  auto pDX11DepthStencilView = std::make_unique<CDX11DepthStencilView>();
+
+  common::TResult result = pDX11DepthStencilView->Initialize(this, depthStencilViewDesc);
+
+  pDepthStencilView = std::move(pDX11DepthStencilView);
+  
+  return result;
+}
+
+IDXGISwapChain* CDX11RHI::GetSwapChain() const
 {
   return m_pSwapChain;
 }
