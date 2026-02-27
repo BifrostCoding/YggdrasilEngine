@@ -8,6 +8,7 @@ namespace yggdrasil
 namespace rhi
 {
 class CDX11RHI;
+class CDX11VertexShader;
 
 class CDX11InputLayout final : public IInputLayout
 {
@@ -16,7 +17,7 @@ public:
   CDX11InputLayout();
   virtual ~CDX11InputLayout();
 
-  common::TResult Initialize(CDX11RHI* pRHI, const TInputLayoutDesc& inputLayoutDesc);
+  common::TResult Initialize(CDX11RHI* pRHI, const TInputLayoutDesc& inputLayoutDesc, CDX11VertexShader* pVertexShader);
 
 private:
 

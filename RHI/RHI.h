@@ -2,6 +2,7 @@
 
 #include <Common/Common.h>
 #include "Buffer.h"
+#include "InputLayout.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "Texture.h"
@@ -30,6 +31,7 @@ public:
 
   virtual common::TResult Initialize(const common::TWindowData& windowData) = 0;
   virtual common::TResult CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer) = 0;
+  virtual common::TResult CreateInputLayout(const TInputLayoutDesc& inputLayoutDesc, IVertexShader* pVertexShader, std::unique_ptr<IInputLayout>& pInputLayout) = 0;
   virtual common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) = 0;
   virtual common::TResult CreatePixelShader(const TPixelShaderDesc& pixelShaderDesc, std::unique_ptr<IPixelShader>& pPixelShader) = 0;
   virtual common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) = 0;

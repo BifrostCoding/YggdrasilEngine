@@ -1,5 +1,6 @@
 #include "DX11RHI.h"
 #include "DX11Buffer.h"
+#include "DX11InputLayout.h"
 #include "DX11VertexShader.h"
 #include "DX11PixelShader.h"
 #include "DX11Texture.h"
@@ -60,6 +61,17 @@ common::TResult CDX11RHI::CreateBuffer(const TBufferDesc& bufferDesc, const comm
   common::TResult result = pDX11Buffer->Initialize(this, bufferDesc, dataHandle);
   
   pBuffer = std::move(pDX11Buffer);
+
+  return result;
+}
+
+common::TResult CDX11RHI::CreateInputLayout(const TInputLayoutDesc& inputLayoutDesc, IVertexShader* pVertexShader, std::unique_ptr<IInputLayout>& pInputLayout)
+{
+  auto pDX11InputLayout = std::make_unique<CDX11InputLayout>();
+
+  common::TResult result = pDX11InputLayout->Initialize(this, inputLayoutDesc, dynamic_cast<CDX11VertexShader*>(pVertexShader));
+
+  pInputLayout = std::move(pDX11InputLayout);
 
   return result;
 }

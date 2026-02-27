@@ -1,5 +1,6 @@
 #include "DX11InputLayout.h"
 #include "DX11RHI.h"
+#include "DX11VertexShader.h"
 
 namespace yggdrasil
 {
@@ -15,27 +16,23 @@ CDX11InputLayout::~CDX11InputLayout()
   RELEASE_PTR(m_pInputLayout);
 }
 
-common::TResult CDX11InputLayout::Initialize(CDX11RHI* pRHI, const TInputLayoutDesc& inputLayoutDesc)
+common::TResult CDX11InputLayout::Initialize(CDX11RHI* pRHI, const TInputLayoutDesc& inputLayoutDesc, CDX11VertexShader* pVertexShader)
 {
-  //if (m_inputLayoutCache.find(inputLayoutDesc.m_vertexType) != m_inputLayoutCache.end())
-  //  return common::TResult();
-
   std::vector<D3D11_INPUT_ELEMENT_DESC> layoutDesc = GetLayoutDesc(inputLayoutDesc.m_vertexType);
 
   if (layoutDesc.empty())
     return ERROR_RESULT("Can't get layoutDesc");
 
-  //TVertexShaderData* vsData = m_pRenderer->GetShaderCache().GetVertexShaderData(vsShaderfile);
+  HRESULT hr = pRHI->GetDevice()->CreateInputLayout(
+    layoutDesc.data(),
+    layoutDesc.size(),
+    pVertexShader->GetBytecode().data(),
+    pVertexShader->GetBytecode().size(),
+    &m_pInputLayout
+  );
 
-  //if (vsData == nullptr)
-  //  return ERROR_RESULT("Can't get vsData");
-
-  //HRESULT hr = m_pDevice->CreateInputLayout(inputLayoutDesc.data(), inputLayoutDesc.size(), vsData->m_bytecode.data(), vsData->m_bytecode.size(), &m_pInputLayout);
-
-  //if (hr != S_OK)
-  //  return ERROR_RESULT("Can't create InputLayout");
-
-  //m_inputLayoutCache[vertexType] = this;
+  if (hr != S_OK)
+    return ERROR_RESULT("Can't create InputLayout");
 
   return common::TResult();
 }
