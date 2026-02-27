@@ -7,14 +7,12 @@ namespace rhi
 {
 CDX11DepthStencilView::CDX11DepthStencilView()
   : m_pDepthStencilView(nullptr)
-  , m_pDepthStencilBuffer(nullptr)
 {
 }
 
 CDX11DepthStencilView::~CDX11DepthStencilView()
 {
   RELEASE_PTR(m_pDepthStencilView);
-  RELEASE_PTR(m_pDepthStencilBuffer);
 }
 
 common::TResult CDX11DepthStencilView::Initialize(CDX11RHI* pRHI, const TDepthStencilViewDesc& depthStencilViewDesc)
@@ -33,12 +31,16 @@ common::TResult CDX11DepthStencilView::Initialize(CDX11RHI* pRHI, const TDepthSt
   depthStencilDesc.CPUAccessFlags     = 0;
   depthStencilDesc.MiscFlags          = 0;
 
-  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&depthStencilDesc, NULL, &m_pDepthStencilBuffer);
+  ID3D11Texture2D* pDepthStencilBuffer = nullptr;
+
+  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&depthStencilDesc, nullptr, &pDepthStencilBuffer);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to Create DepthStencilBuffer");
 
-  hr = pRHI->GetDevice()->CreateDepthStencilView(m_pDepthStencilBuffer, NULL, &m_pDepthStencilView);
+  hr = pRHI->GetDevice()->CreateDepthStencilView(pDepthStencilBuffer, nullptr, &m_pDepthStencilView);
+
+  RELEASE_PTR(pDepthStencilBuffer);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to Create DepthStencilView");

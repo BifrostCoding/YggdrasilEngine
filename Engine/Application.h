@@ -1,8 +1,9 @@
 #pragma once
 
+#include <Common/Common.h>
 #include <Common/Timer.h>
 #include <RHI/RHI.h>
-#include <RHI/DX11Common.h>
+#include <Renderer/Renderer.h>
 
 namespace yggdrasil
 {
@@ -10,28 +11,24 @@ class CApplication
 {
 public:
 
-  CApplication(HINSTANCE hInstance, int showCmd);
+  CApplication(common::TWindowData& windowData, rhi::EBackend backend);
   virtual ~CApplication() = default;
 
   CApplication(const CApplication&) = delete;
 
-  common::TResult Initialize(common::TWindowData& windowData, rhi::EBackend backend);
-  void Render();
-  int Start();
-  void Stop() const;
-
-  HWND GetHwnd() const;
-  HINSTANCE GetHInstance() const;
+  common::TResult Start();
 
 private:
 
-  common::TResult InitializeWindow(const common::TWindowData& windowData);
+  common::TResult InitializeWindow();
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+  void Render();
+  void Stop() const;
+
+  rendering::CRenderer m_renderer;
+  common::TWindowData m_windowData;
   common::CTimer m_timer;
-  int m_showCmd;
-  HINSTANCE m_hInstance;
-  HWND m_hwnd;
 };
 }

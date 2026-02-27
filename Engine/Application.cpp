@@ -2,23 +2,10 @@
 
 namespace yggdrasil
 {
-CApplication::CApplication(HINSTANCE hInstance, int showCmd)
-  : m_hwnd(nullptr)
-  , m_hInstance(hInstance)
-  , m_showCmd(showCmd)
+CApplication::CApplication(common::TWindowData& windowData, rhi::EBackend backend)
+  : m_windowData(windowData)
+  , m_renderer(windowData, backend)
 {
-}
-
-common::TResult CApplication::Initialize(common::TWindowData& windowData, rhi::EBackend backend)
-{
-  common::TResult result = InitializeWindow(windowData);
-
-  if (result.IsError())
-    return result;
-
-  windowData.m_hwnd = m_hwnd;
-
-  return result;
 }
 
 //static
@@ -46,7 +33,7 @@ LRESULT CALLBACK CApplication::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
   return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-common::TResult CApplication::InitializeWindow(const common::TWindowData& windowData)
+common::TResult CApplication::InitializeWindow()
 {
   LPCTSTR wndClassName = TEXT("application");
 
@@ -57,7 +44,7 @@ common::TResult CApplication::InitializeWindow(const common::TWindowData& window
   wc.lpfnWndProc   = WndProc;
   wc.cbClsExtra    = NULL;
   wc.cbWndExtra    = NULL;
-  wc.hInstance     = m_hInstance;
+  wc.hInstance     = m_windowData.m_hinstance;
   wc.hIcon         = LoadIcon(NULL, IDI_WINLOGO);
   wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -70,32 +57,37 @@ common::TResult CApplication::InitializeWindow(const common::TWindowData& window
     return ERROR_RESULT("Error registering class");
   }
 
-  m_hwnd = CreateWindowEx(
+  m_windowData.m_hwnd = CreateWindowEx(
     NULL,
     wndClassName,
     TEXT("Yggdrasil"),
     WS_OVERLAPPEDWINDOW,
     CW_USEDEFAULT, CW_USEDEFAULT,
-    windowData.m_width,
-    windowData.m_height,
+    m_windowData.m_width,
+    m_windowData.m_height,
     NULL,
     NULL,
-    m_hInstance,
+    m_windowData.m_hinstance,
     NULL
   );
 
-  if (!m_hwnd)
+  if (!m_windowData.m_hwnd)
   {
     return ERROR_RESULT("Error creating window");
   }
 
-  ShowWindow(m_hwnd, m_showCmd);
-  UpdateWindow(m_hwnd);
+  ShowWindow(m_windowData.m_hwnd, m_windowData.m_showCmd);
+  UpdateWindow(m_windowData.m_hwnd);
 
   return common::TResult();
 }
 
-int CApplication::Start() {
+common::TResult CApplication::Start()
+{
+  common::TResult result = InitializeWindow();
+
+  if (result.IsError())
+    return result;
 
   MSG msg;
   ZeroMemory(&msg, sizeof(MSG));
@@ -118,12 +110,12 @@ int CApplication::Start() {
     }
   }
 
-  return (int)msg.wParam;
+  return result;
 }
 
 void CApplication::Stop() const
 {
-  DestroyWindow(m_hwnd);
+  DestroyWindow(m_windowData.m_hwnd);
 }
 
 void CApplication::Render()
@@ -131,15 +123,5 @@ void CApplication::Render()
   m_timer.Update();
 
   float deltaTime = m_timer.GetDeltaTime();
-}
-
-HWND CApplication::GetHwnd() const
-{
-  return m_hwnd;
-}
-
-HINSTANCE CApplication::GetHInstance() const
-{
-  return m_hInstance;
 }
 }

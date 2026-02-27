@@ -10,6 +10,11 @@ CDX11CommandList::CDX11CommandList(IRHI* pRHI)
 {
 }
 
+void CDX11CommandList::Begin()
+{
+
+}
+
 void CDX11CommandList::SetRenderTarget(IRenderTargetView* pRenderTargetView, IDepthStencilView* pDepthStencilView)
 {
   CDX11RenderTargetView* pDX11RenderTargetView = dynamic_cast<CDX11RenderTargetView*>(pRenderTargetView);
@@ -57,8 +62,13 @@ void CDX11CommandList::BindConstantBufferData(IBuffer* pBuffer, const void* pDat
 {
 }
 
+void CDX11CommandList::BindTexture(ITexture* pTexture)
+{
+}
+
 void CDX11CommandList::Submit()
 {
+  m_pRHI->GetDeviceContext()->Flush();
 }
 
 void CDX11CommandList::Present()

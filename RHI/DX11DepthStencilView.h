@@ -22,7 +22,6 @@ public:
 
 private:
 
-  ID3D11Texture2D* m_pDepthStencilBuffer;
   ID3D11DepthStencilView* m_pDepthStencilView;
 };
 }
