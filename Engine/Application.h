@@ -6,14 +6,14 @@
 
 namespace yggdrasil
 {
-class CEngine
+class CApplication
 {
 public:
 
-  CEngine(HINSTANCE hInstance, int showCmd);
-  virtual ~CEngine() = default;
+  CApplication(HINSTANCE hInstance, int showCmd);
+  virtual ~CApplication() = default;
 
-  CEngine(const CEngine&) = delete;
+  CApplication(const CApplication&) = delete;
 
   common::TResult Initialize(common::TWindowData& windowData, rhi::EBackend backend);
   void Render();

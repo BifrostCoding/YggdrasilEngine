@@ -20,7 +20,6 @@ enum class EVertexType
 struct TInputLayoutDesc final
 {
   EVertexType m_vertexType;
-  std::string m_vsShaderfile;
 };
 
 //------------------------------------------------

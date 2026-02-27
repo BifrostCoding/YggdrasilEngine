@@ -24,7 +24,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h">
+    <ClInclude Include="Application.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="InputLayoutCache.h">
@@ -35,7 +35,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp">
+    <ClCompile Include="Application.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="InputLayoutCache.cpp">

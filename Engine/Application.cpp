@@ -1,15 +1,15 @@
-#include "Engine.h"
+#include "Application.h"
 
 namespace yggdrasil
 {
-CEngine::CEngine(HINSTANCE hInstance, int showCmd)
+CApplication::CApplication(HINSTANCE hInstance, int showCmd)
   : m_hwnd(nullptr)
   , m_hInstance(hInstance)
   , m_showCmd(showCmd)
 {
 }
 
-common::TResult CEngine::Initialize(common::TWindowData& windowData, rhi::EBackend backend)
+common::TResult CApplication::Initialize(common::TWindowData& windowData, rhi::EBackend backend)
 {
   common::TResult result = InitializeWindow(windowData);
 
@@ -25,17 +25,23 @@ common::TResult CEngine::Initialize(common::TWindowData& windowData, rhi::EBacke
 
   result = m_pRHI->Initialize(windowData);
 
-  rhi::TPixelShaderDesc desc;
-  desc.m_filename = "PS_StaticMesh.cso";
+  rhi::TVertexShaderDesc desc;
+  desc.m_filename = "VS_StaticMesh.cso";
 
-  std::unique_ptr<rhi::IPixelShader> pixelShader;
-  result = m_pRHI->CreatePixelShader(desc, pixelShader);
+  std::unique_ptr<rhi::IVertexShader> vertexShader;
+  result = m_pRHI->CreateVertexShader(desc, vertexShader);
+
+  rhi::TInputLayoutDesc inputDesc{};
+  inputDesc.m_vertexType = rhi::EVertexType::StaticMesh;
+
+  std::unique_ptr<rhi::IInputLayout> inputLayout;
+  result = m_pRHI->CreateInputLayout(inputDesc, vertexShader.get(), inputLayout);
 
   return result;
 }
 
 //static
-LRESULT CALLBACK CEngine::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK CApplication::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch (msg)
   {
@@ -59,7 +65,7 @@ LRESULT CALLBACK CEngine::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
   return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-common::TResult CEngine::InitializeWindow(const common::TWindowData& windowData)
+common::TResult CApplication::InitializeWindow(const common::TWindowData& windowData)
 {
   LPCTSTR wndClassName = TEXT("mainwindow");
 
@@ -108,7 +114,7 @@ common::TResult CEngine::InitializeWindow(const common::TWindowData& windowData)
   return common::TResult();
 }
 
-int CEngine::Start() {
+int CApplication::Start() {
 
   MSG msg;
   ZeroMemory(&msg, sizeof(MSG));
@@ -134,24 +140,24 @@ int CEngine::Start() {
   return (int)msg.wParam;
 }
 
-void CEngine::Stop() const
+void CApplication::Stop() const
 {
   DestroyWindow(m_hwnd);
 }
 
-void CEngine::Render()
+void CApplication::Render()
 {
   m_timer.Update();
 
   float deltaTime = m_timer.GetDeltaTime();
 }
 
-HWND CEngine::GetHwnd() const
+HWND CApplication::GetHwnd() const
 {
   return m_hwnd;
 }
 
-HINSTANCE CEngine::GetHInstance() const
+HINSTANCE CApplication::GetHInstance() const
 {
   return m_hInstance;
 }
