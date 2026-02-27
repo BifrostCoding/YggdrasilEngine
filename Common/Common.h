@@ -10,7 +10,8 @@
 #include <mutex>
 #include <map>
 
-#define ERROR_RESULT(text) yggdrasil::common::TResult(false, text, __FILE__, __LINE__)
+#define ERROR_RESULT_COMMON(text) TResult(false, text, __FILE__, __LINE__)
+#define ERROR_RESULT(text) yggdrasil::common::ERROR_RESULT_COMMON(text)
 
 #define RELEASE_PTR(ptr) if(ptr != nullptr) ptr->Release();
 
@@ -24,7 +25,7 @@ constexpr const float FOV = 0.4f;
 constexpr const float NEAR_PLANE = 1.0f;
 constexpr const float FAR_PLANE = 1000.0f;
 
-struct TWindowData
+struct TWindowData final
 {
   HWND m_hwnd;
   int m_width;
@@ -48,6 +49,12 @@ private:
   std::string m_text;
   std::string m_file;
   int m_line;
+};
+
+struct TDataHandle final
+{
+  size_t m_size;
+  const void* m_pData;
 };
 }
 }

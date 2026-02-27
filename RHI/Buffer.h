@@ -28,14 +28,12 @@ enum class EBufferType
 };
 
 //------------------------------------------------
-// TBufferData
+// TBufferDesc
 //------------------------------------------------
-struct TBufferData
+struct TBufferDesc final
 {
   EBufferUsage m_usage;
   EBufferType  m_bufferType;
-  size_t       m_dataSize;
-  const void*  m_pData;
 };
 
 //------------------------------------------------
@@ -47,7 +45,7 @@ public:
 
   virtual ~IBuffer() = default;
 
-  virtual common::TResult Initialize(const TBufferData& bufferData) = 0;
+  virtual common::TResult Initialize(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle) = 0;
 };
 }
 }

@@ -7,15 +7,16 @@ namespace yggdrasil
 {
 namespace rhi
 {
-class CDX11RHI : public IRHI
+class CDX11RHI final : public IRHI
 {
 public:
 
   CDX11RHI();
   virtual ~CDX11RHI();
 
-  virtual common::TResult Initialize(const common::TWindowData& windowData) override;
-  virtual common::TResult CreateBuffer(const TBufferData& bufferData, std::unique_ptr<IBuffer>& pBuffer) override;
+  common::TResult Initialize(const common::TWindowData& windowData) override;
+  common::TResult CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer) override;
+  common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) override;
 
 private:
 

@@ -1,5 +1,6 @@
 #include "DX11RHI.h"
 #include "DX11Buffer.h"
+#include "DX11Texture.h"
 
 namespace yggdrasil
 {
@@ -14,6 +15,9 @@ CDX11RHI::CDX11RHI()
 
 CDX11RHI::~CDX11RHI()
 {
+  RELEASE_PTR(m_pSwapChain);
+  RELEASE_PTR(m_pContext);
+  RELEASE_PTR(m_pDevice);
 }
 
 common::TResult CDX11RHI::Initialize(const common::TWindowData& windowData)
@@ -47,11 +51,18 @@ common::TResult CDX11RHI::Initialize(const common::TWindowData& windowData)
   return common::TResult();
 }
 
-common::TResult CDX11RHI::CreateBuffer(const TBufferData& bufferData, std::unique_ptr<IBuffer>& pBuffer)
+common::TResult CDX11RHI::CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer)
 {
   pBuffer = std::make_unique<CDX11Buffer>(m_pDevice);
 
-  return pBuffer->Initialize(bufferData);
+  return pBuffer->Initialize(bufferDesc, dataHandle);
+}
+
+common::TResult CDX11RHI::CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture)
+{
+  pTexture = std::make_unique<CDX11Texture>(m_pDevice);
+
+  return pTexture->Initialize(textureDesc);
 }
 }
 }

@@ -15,19 +15,19 @@ CDX11Buffer::~CDX11Buffer()
   RELEASE_PTR(m_pBuffer);
 }
 
-common::TResult CDX11Buffer::Initialize(const TBufferData& bufferData)
+common::TResult CDX11Buffer::Initialize(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle)
 {
   D3D11_BUFFER_DESC vertexBufferDesc{};
 
-  vertexBufferDesc.Usage          = GetDX11Usage(bufferData.m_usage);
-  vertexBufferDesc.BindFlags      = GetDX11BindFlag(bufferData.m_bufferType);
-  vertexBufferDesc.ByteWidth      = bufferData.m_dataSize;
+  vertexBufferDesc.Usage          = GetDX11Usage(bufferDesc.m_usage);
+  vertexBufferDesc.BindFlags      = GetDX11BindFlag(bufferDesc.m_bufferType);
+  vertexBufferDesc.ByteWidth      = dataHandle.m_size;
   vertexBufferDesc.CPUAccessFlags = 0;
   vertexBufferDesc.MiscFlags      = 0;
 
   D3D11_SUBRESOURCE_DATA subresourceData{};
 
-  subresourceData.pSysMem = bufferData.m_pData;
+  subresourceData.pSysMem = dataHandle.m_pData;
 
   HRESULT hr = m_pDevice->CreateBuffer(&vertexBufferDesc, &subresourceData, &m_pBuffer);
 

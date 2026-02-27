@@ -14,7 +14,7 @@ public:
   CDX11Buffer(ID3D11Device* pDevice);
   virtual ~CDX11Buffer();
 
-  virtual common::TResult Initialize(const TBufferData& bufferData);
+  virtual common::TResult Initialize(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle);
 
 private:
 

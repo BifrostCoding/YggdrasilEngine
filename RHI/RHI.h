@@ -2,6 +2,7 @@
 
 #include <Common/Common.h>
 #include "Buffer.h"
+#include "Texture.h"
 
 namespace yggdrasil
 {
@@ -26,7 +27,8 @@ public:
   virtual ~IRHI() = default;
 
   virtual common::TResult Initialize(const common::TWindowData& windowData) = 0;
-  virtual common::TResult CreateBuffer(const TBufferData& bufferData, std::unique_ptr<IBuffer>& pBuffer) = 0;
+  virtual common::TResult CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer) = 0;
+  virtual common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) = 0;
 };
 
 //------------------------------------------------
