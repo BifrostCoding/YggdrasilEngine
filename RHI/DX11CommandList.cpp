@@ -10,7 +10,7 @@ CDX11CommandList::CDX11CommandList(IRHI* pRHI)
 {
 }
 
-void CDX11CommandList::Begin()
+void CDX11CommandList::BeginFrame()
 {
   //nothing here yet
 }
@@ -71,7 +71,7 @@ void CDX11CommandList::Submit()
   m_pRHI->GetDeviceContext()->Flush();
 }
 
-void CDX11CommandList::Present()
+void CDX11CommandList::EndFrame()
 {
   m_pRHI->GetSwapChain()->Present(0, 0);
 }

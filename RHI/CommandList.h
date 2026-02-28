@@ -24,7 +24,7 @@ public:
 
   virtual ~ICommandList() = default;
 
-  virtual void Begin() = 0;
+  virtual void BeginFrame() = 0;
   virtual void BindRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView) = 0;
   virtual void BindViewport(const TViewport& viewport) = 0;
   virtual void BindInputLayout(IVertexDescriptor* pVertexDescriptor) = 0;
@@ -34,7 +34,7 @@ public:
   virtual void BindConstantBufferData(IBuffer* pBuffer, const void* pData) = 0;
   virtual void BindTexture(ITexture* pTexture) = 0;
   virtual void Submit() = 0;
-  virtual void Present() = 0;
+  virtual void EndFrame() = 0;
 };
 }
 }

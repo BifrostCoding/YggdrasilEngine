@@ -16,7 +16,7 @@ TResult CBinaryFileReader::Read(const std::string& filename, std::vector<char>& 
 
   bytecode.resize(size);
   if (!file.read(bytecode.data(), size))
-    return ERROR_RESULT("Failed to read ´bin-file!");
+    return ERROR_RESULT("Failed to read bin-file!");
 
   return TResult();
 }

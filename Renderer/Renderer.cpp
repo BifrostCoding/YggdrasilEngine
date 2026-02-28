@@ -21,18 +21,23 @@ common::TResult CRenderer::Initialize()
 
   m_pCurrentScene = std::make_shared<CScene>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
 
-  return m_pCurrentScene->Initialize();
+  result = m_pCurrentScene->Initialize();
+
+  if (result.IsError())
+    return result;
+
+  return result;
 }
 
 void CRenderer::Submit()
 {
-  m_pCommandList->Begin();
+  m_pCommandList->BeginFrame();
 
   m_pCommandList->BindRenderTarget(m_pCurrentScene->GetRenderTarget(), m_pCurrentScene->GetDepthBuffer());
   m_pCommandList->BindViewport(m_pCurrentScene->GetViewport());
   m_pCommandList->Submit();
 
-  m_pCommandList->Present();
+  m_pCommandList->EndFrame();
 }
 }
 }

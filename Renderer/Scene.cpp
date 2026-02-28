@@ -19,7 +19,12 @@ common::TResult CScene::Initialize()
   if (result.IsError())
     return result;
 
-  return InitializeConstantBufferPerFrame();
+  result = InitializeConstantBufferPerFrame();
+
+  if (result.IsError())
+    return result;
+
+  return result;
 }
 
 common::TResult CScene::InitializeRenderTarget()

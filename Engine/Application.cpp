@@ -35,15 +35,20 @@ LRESULT CALLBACK CApplication::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARA
 
 common::TResult CApplication::Initialize()
 {
-  common::TResult result = InitializeWindow();
+  common::TResult result = CreateAppWindow();
 
   if (result.IsError())
     return result;
 
-  return m_renderer.Initialize();
+  result = m_renderer.Initialize();
+
+  if (result.IsError())
+    return result;
+
+  return result;
 }
 
-common::TResult CApplication::InitializeWindow()
+common::TResult CApplication::CreateAppWindow()
 {
   LPCTSTR wndClassName = TEXT("application");
 

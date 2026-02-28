@@ -15,7 +15,7 @@ public:
 CDX11CommandList(IRHI* pRHI);
 virtual ~CDX11CommandList() = default;
 
-void Begin() override;
+void BeginFrame() override;
 void BindRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView) override;
 void BindViewport(const TViewport& viewport) override;
 void BindInputLayout(IVertexDescriptor* pVertexDescriptor) override;
@@ -25,7 +25,7 @@ void BindConstantBuffer(IBuffer* pBuffer) override;
 void BindConstantBufferData(IBuffer* pBuffer, const void* pData) override;
 void BindTexture(ITexture* pTexture) override;
 void Submit() override;
-void Present() override;
+void EndFrame() override;
 
 private:
 
