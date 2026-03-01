@@ -143,19 +143,20 @@
     <ProjectReference Include="..\Renderer\Renderer.vcxproj">
       <Project>{b3903d3c-1715-4567-b909-3ce989530dd1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\RHI\RHI.vcxproj">
-      <Project>{76fb131e-b377-41d6-bdfc-2e71daadc805}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="InputLayoutCache.h" />
+    <ClInclude Include="RenderProxy.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="InputLayoutCache.cpp" />
+    <ClCompile Include="RenderProxy.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

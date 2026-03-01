@@ -1,10 +1,10 @@
-#include "Scene.h"
+#include "RenderScene.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-CScene::CScene(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight)
+CRenderScene::CRenderScene(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight)
   : m_pRHI(pRHI)
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
@@ -12,7 +12,7 @@ CScene::CScene(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targe
 {
 }
 
-common::TResult CScene::Initialize()
+common::TResult CRenderScene::Initialize()
 {
   common::TResult result = InitializeRenderTarget();
 
@@ -27,7 +27,7 @@ common::TResult CScene::Initialize()
   return result;
 }
 
-common::TResult CScene::InitializeRenderTarget()
+common::TResult CRenderScene::InitializeRenderTarget()
 {
   common::TResult result = m_pRHI->CreateRenderTarget(m_pRenderTarget);
 
@@ -54,22 +54,22 @@ common::TResult CScene::InitializeRenderTarget()
   return result;
 }
 
-common::TResult CScene::InitializeConstantBufferPerFrame()
+common::TResult CRenderScene::InitializeConstantBufferPerFrame()
 {
   return common::TResult();
 }
 
-rhi::IRenderTarget* CScene::GetRenderTarget() const
+rhi::IRenderTarget* CRenderScene::GetRenderTarget() const
 {
   return m_pRenderTarget.get();
 }
 
-rhi::IDepthBuffer* CScene::GetDepthBuffer() const
+rhi::IDepthBuffer* CRenderScene::GetDepthBuffer() const
 {
   return m_pDepthBuffer.get();
 }
 
-const rhi::TViewport& CScene::GetViewport() const
+const rhi::TViewport& CRenderScene::GetViewport() const
 {
   return m_viewport;
 }

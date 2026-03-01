@@ -2,16 +2,18 @@
 
 #include <Common/Common.h>
 #include <Common/Timer.h>
-#include <RHI/RHI.h>
-#include <Renderer/Renderer.h>
+#include "Window.h"
+#include "RenderProxy.h"
 
 namespace yggdrasil
+{
+namespace app
 {
 class CApplication
 {
 public:
 
-  CApplication(common::TWindowData& windowData, rhi::EBackend backend);
+  CApplication(common::TWindowData& windowData, common::EBackend backend);
   virtual ~CApplication() = default;
 
   CApplication(const CApplication&) = delete;
@@ -21,15 +23,12 @@ public:
 private:
 
   common::TResult Initialize();
-  common::TResult CreateAppWindow();
 
-  static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+  void RenderFrame();
 
-  void Render();
-  void Stop() const;
-
-  rendering::CRenderer m_renderer;
-  common::TWindowData& m_windowData;
+  CWindow m_window;
+  CRenderProxy m_renderProxy;
   common::CTimer m_timer;
 };
+}
 }

@@ -21,7 +21,7 @@
     <ClInclude Include="Renderer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="RenderScene.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="RenderScene.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

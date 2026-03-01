@@ -15,15 +15,6 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// EBackend
-//------------------------------------------------
-enum class EBackend
-{
-  DX11,
-  Vk
-};
-
-//------------------------------------------------
 // IRHI
 //------------------------------------------------
 class IRHI
@@ -47,6 +38,6 @@ public:
 //------------------------------------------------
 // CreateInstance - Function
 //------------------------------------------------
-std::unique_ptr<IRHI> CreateInstance(EBackend backend);
+std::unique_ptr<IRHI> CreateInstance(common::EBackend backend);
 }
 }

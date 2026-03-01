@@ -4,7 +4,7 @@ namespace yggdrasil
 {
 namespace rendering
 {
-CRenderer::CRenderer(const common::TWindowData& windowData, rhi::EBackend backend)
+CRenderer::CRenderer(const common::TWindowData& windowData, common::EBackend backend)
   : m_windowData(windowData)
   , m_pRHI(rhi::CreateInstance(backend))
 {
@@ -19,25 +19,39 @@ common::TResult CRenderer::Initialize()
 
   m_pRHI->CreateCommandList(m_pCommandList);
 
-  m_pCurrentScene = std::make_shared<CScene>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
-
-  result = m_pCurrentScene->Initialize();
-
-  if (result.IsError())
-    return result;
-
   return result;
 }
 
-void CRenderer::Submit()
+void CRenderer::BeginFrame()
 {
   m_pCommandList->BeginFrame();
+}
 
-  m_pCommandList->BindRenderTarget(m_pCurrentScene->GetRenderTarget(), m_pCurrentScene->GetDepthBuffer());
-  m_pCommandList->BindViewport(m_pCurrentScene->GetViewport());
-  m_pCommandList->Submit();
-
+void CRenderer::EndFrame()
+{
   m_pCommandList->EndFrame();
+}
+
+void CRenderer::BeginScene(CRenderScene* pScene)
+{
+  m_pCommandList->BindRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer());
+  m_pCommandList->BindViewport(pScene->GetViewport());
+}
+
+void CRenderer::EndScene()
+{
+  m_pCommandList->Submit();
+}
+
+void CRenderer::RenderEntity()
+{
+}
+
+common::TResult CRenderer::CreateRenderScene(std::unique_ptr<CRenderScene>& pScene) const
+{
+  pScene = std::make_unique<CRenderScene>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
+
+  return pScene->Initialize();
 }
 }
 }
