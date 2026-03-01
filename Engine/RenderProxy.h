@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Renderer/Renderer.h>
+#include "Scene.h"
 
 namespace yggdrasil
 {
@@ -13,7 +14,9 @@ public:
 
   common::TResult Initialize();
 
-  void Submit();
+  void RenderScene(CScene* pScene);
+
+  common::TResult PrepareScene(CScene* pScene);
 
 private:
 

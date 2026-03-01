@@ -1,7 +1,7 @@
 #pragma once
 
 #include <RHI/RHI.h>
-#include "RenderScene.h"
+#include "SceneRenderData.h"
 
 namespace yggdrasil
 {
@@ -19,12 +19,12 @@ public:
   void BeginFrame();
   void EndFrame();
 
-  void BeginScene(CRenderScene* pScene);
+  void BeginScene(CSceneRenderData* pScene);
   void EndScene();
 
   void RenderEntity();
 
-  common::TResult CreateRenderScene(std::unique_ptr<CRenderScene>& pScene) const;
+  common::TResult CreateSceneRenderData(std::unique_ptr<CSceneRenderData>& pSceneRenderData) const;
 
 private:
 

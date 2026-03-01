@@ -6,12 +6,12 @@ namespace yggdrasil
 {
 namespace rendering
 {
-class CRenderScene
+class CSceneRenderData
 {
 public:
 
-  CRenderScene(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight);
-  virtual ~CRenderScene() = default;
+  CSceneRenderData(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight);
+  virtual ~CSceneRenderData() = default;
 
   common::TResult Initialize();
 

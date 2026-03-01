@@ -24,7 +24,7 @@
     <ProjectGuid>{b3903d3c-1715-4567-b909-3ce989530dd1}</ProjectGuid>
     <RootNamespace>Renderer</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Rendering</ProjectName>
+    <ProjectName>Renderer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,11 +141,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RenderScene.h" />
+    <ClInclude Include="SceneRenderData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="RenderScene.cpp" />
+    <ClCompile Include="SceneRenderData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_StaticMesh.hlsl">

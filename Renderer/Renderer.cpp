@@ -32,7 +32,7 @@ void CRenderer::EndFrame()
   m_pCommandList->EndFrame();
 }
 
-void CRenderer::BeginScene(CRenderScene* pScene)
+void CRenderer::BeginScene(CSceneRenderData* pScene)
 {
   m_pCommandList->BindRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer());
   m_pCommandList->BindViewport(pScene->GetViewport());
@@ -47,11 +47,11 @@ void CRenderer::RenderEntity()
 {
 }
 
-common::TResult CRenderer::CreateRenderScene(std::unique_ptr<CRenderScene>& pScene) const
+common::TResult CRenderer::CreateSceneRenderData(std::unique_ptr<CSceneRenderData>& pSceneRenderData) const
 {
-  pScene = std::make_unique<CRenderScene>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
+  pSceneRenderData = std::make_unique<CSceneRenderData>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
 
-  return pScene->Initialize();
+  return pSceneRenderData->Initialize();
 }
 }
 }

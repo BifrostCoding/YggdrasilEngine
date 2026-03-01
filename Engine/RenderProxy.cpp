@@ -12,20 +12,33 @@ common::TResult CRenderProxy::Initialize()
   return m_renderer.Initialize();
 }
 
-void CRenderProxy::Submit()
+void CRenderProxy::RenderScene(CScene* pScene)
 {
-  std::unique_ptr<rendering::CRenderScene> pRenderScene;
-
-  m_renderer.CreateRenderScene(pRenderScene);
-
   m_renderer.BeginFrame();
 
-  m_renderer.BeginScene(pRenderScene.get());
+  m_renderer.BeginScene(pScene->GetSceneRenderData());
 
-  m_renderer.RenderEntity();
+  //for (auto& entity : pScene->GetEntities())
+  //{
+  //  m_renderer.RenderEntity(entity)
+  //}
 
   m_renderer.EndScene();
 
   m_renderer.EndFrame();
+}
+
+common::TResult CRenderProxy::PrepareScene(CScene* pScene)
+{
+  std::unique_ptr<rendering::CSceneRenderData> pSceneRenderData;
+
+  common::TResult result = m_renderer.CreateSceneRenderData(pSceneRenderData);
+
+  if (result.IsError())
+    return result;
+
+  pScene->SetSceneRenderData(std::move(pSceneRenderData));
+
+  return result;
 }
 }

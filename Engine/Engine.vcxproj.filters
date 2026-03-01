@@ -19,11 +19,14 @@
     <Filter Include="Quelldateien\Caching">
       <UniqueIdentifier>{f4e90965-bedb-4222-9c52-f5e4e725c483}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\App">
+      <UniqueIdentifier>{63fc0c4f-22e3-4f60-a1ff-d24e8fbd8438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\App">
+      <UniqueIdentifier>{80b549ee-734c-462d-bbe4-51e6fabd6a62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="InputLayoutCache.h">
       <Filter>Headerdateien\Caching</Filter>
     </ClInclude>
@@ -33,14 +36,17 @@
     <ClInclude Include="RenderProxy.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
+    <ClInclude Include="Application.h">
+      <Filter>Headerdateien\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Headerdateien\App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="InputLayoutCache.cpp">
       <Filter>Quelldateien\Caching</Filter>
     </ClCompile>
@@ -50,8 +56,14 @@
     <ClCompile Include="RenderProxy.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cpp">
+    <ClCompile Include="Scene.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Quelldateien\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Quelldateien\App</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

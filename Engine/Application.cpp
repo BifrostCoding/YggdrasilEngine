@@ -7,6 +7,7 @@ namespace app
 CApplication::CApplication(common::TWindowData& windowData, common::EBackend backend)
   : m_window(windowData, [&]() { RenderFrame(); })
   , m_renderProxy(windowData, backend)
+  , m_pCurrentScene(std::make_shared<CScene>())
 {
 }
 
@@ -34,6 +35,11 @@ common::TResult CApplication::Initialize()
   if (result.IsError())
     return result;
 
+  result = m_renderProxy.PrepareScene(m_pCurrentScene.get());
+
+  if (result.IsError())
+    return result;
+
   return result;
 }
 
@@ -43,7 +49,7 @@ void CApplication::RenderFrame()
 
   float deltaTime = m_timer.GetDeltaTime();
 
-  m_renderProxy.Submit();
+  m_renderProxy.RenderScene(m_pCurrentScene.get());
 }
 }
 }

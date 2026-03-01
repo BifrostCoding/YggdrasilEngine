@@ -27,8 +27,9 @@ private:
   void RenderFrame();
 
   CWindow m_window;
-  CRenderProxy m_renderProxy;
   common::CTimer m_timer;
+  CRenderProxy m_renderProxy;
+  std::shared_ptr<CScene> m_pCurrentScene;
 };
 }
 }
