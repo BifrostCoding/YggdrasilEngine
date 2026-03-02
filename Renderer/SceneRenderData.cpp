@@ -11,10 +11,7 @@ CSceneRenderData::CSceneRenderData(rhi::IRHI* pRHI, const uint32_t targetWidth, 
   , m_viewport()
   , m_pConstantBufferData(std::make_unique<TConstantBufferScene>())
 {
-  //TODO: remove
-  m_pConstantBufferData->m_sun.dir = XMFLOAT3(0.25f, 0.5f, -1.0f);
-  m_pConstantBufferData->m_sun.ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-  m_pConstantBufferData->m_sun.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+  InitializeDirectionalLight();
 }
 
 common::TResult CSceneRenderData::Initialize()
@@ -62,18 +59,27 @@ common::TResult CSceneRenderData::InitializeRenderTarget()
 common::TResult CSceneRenderData::InitializeConstantBuffer()
 {
   rhi::TBufferDesc constantBufferDesc{};
-  constantBufferDesc.m_usage = rhi::EBufferUsage::Default;
-  constantBufferDesc.m_bufferType = rhi::EBufferType::ConstantBuffer;
+  constantBufferDesc.m_usage             = rhi::EBufferUsage::Default;
+  constantBufferDesc.m_bufferType        = rhi::EBufferType::ConstantBuffer;
   constantBufferDesc.m_bufferDestination = rhi::EBufferDestination::PixelShader;
+
   common::TDataHandle constantBufferDataHandle{};
   constantBufferDataHandle.m_pData = nullptr;
-  constantBufferDataHandle.m_size = sizeof(TConstantBufferScene);
+  constantBufferDataHandle.m_size  = sizeof(TConstantBufferScene);
+
   common::TResult result = m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
 
   if (result.IsError())
     return result;
 
   return result;
+}
+
+void CSceneRenderData::InitializeDirectionalLight()
+{
+  m_pConstantBufferData->directionalLight.dir     = XMFLOAT3(0.25f, 0.5f, -1.0f);
+  m_pConstantBufferData->directionalLight.ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+  m_pConstantBufferData->directionalLight.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 rhi::IRenderTarget* CSceneRenderData::GetRenderTarget() const

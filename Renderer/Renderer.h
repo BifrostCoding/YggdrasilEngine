@@ -32,9 +32,6 @@ private:
   const common::TWindowData& m_windowData;
   std::unique_ptr<rhi::IRHI> m_pRHI;
   std::unique_ptr<rhi::ICommandList> m_pCommandList;
-
-  //TeDO::romove it
-  CStaticMeshRenderData m_mesh;
 };
 }
 }

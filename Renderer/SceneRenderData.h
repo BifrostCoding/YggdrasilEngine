@@ -1,26 +1,17 @@
 #pragma once
 
 #include <RHI/RHI.h>
-//TODO: remove
-#include "xnamath.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-struct TDirectionalLight final
-{
-  XMFLOAT3 dir;
-  float pad;
-  XMFLOAT4 ambient;
-  XMFLOAT4 diffuse;
-};
+struct TDirectionalLight;
+struct TConstantBufferScene;
 
-struct TConstantBufferScene final
-{
-  TDirectionalLight m_sun;
-};
-
+//------------------------------------------------
+// CSceneRenderData
+//------------------------------------------------
 class CSceneRenderData
 {
 public:
@@ -40,6 +31,7 @@ private:
 
   common::TResult InitializeRenderTarget();
   common::TResult InitializeConstantBuffer();
+  void InitializeDirectionalLight();
 
   rhi::IRHI* m_pRHI;
 
@@ -52,6 +44,25 @@ private:
   rhi::TViewport m_viewport;
 
   std::unique_ptr<TConstantBufferScene> m_pConstantBufferData;
+};
+
+//------------------------------------------------
+// TDirectionalLight
+//------------------------------------------------
+struct TDirectionalLight final
+{
+  XMFLOAT3 dir;
+  float pad;
+  XMFLOAT4 ambient;
+  XMFLOAT4 diffuse;
+};
+
+//------------------------------------------------
+// TConstantBufferScene
+//------------------------------------------------
+struct TConstantBufferScene final
+{
+  TDirectionalLight directionalLight;
 };
 }
 }

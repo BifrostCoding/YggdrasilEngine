@@ -36,12 +36,6 @@
     <ClInclude Include="RHI.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DX11Common.h">
-      <Filter>Headerdateien\Backends\DX11</Filter>
-    </ClInclude>
-    <ClInclude Include="VulkanCommon.h">
-      <Filter>Headerdateien\Backends\Vk</Filter>
-    </ClInclude>
     <ClInclude Include="Buffer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -97,9 +91,6 @@
   <ItemGroup>
     <ClCompile Include="RHI.cpp">
       <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11Common.cpp">
-      <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11Buffer.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>

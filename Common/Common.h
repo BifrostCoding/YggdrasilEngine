@@ -2,6 +2,9 @@
 
 #undef UNICODE
 
+//------------------------------------------------
+// Common
+//------------------------------------------------
 #include <windows.h>
 #include <memory>
 #include <list>
@@ -10,6 +13,30 @@
 #include <mutex>
 #include <map>
 
+//------------------------------------------------
+// DX11
+//------------------------------------------------
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3dx11.lib")
+#pragma comment(lib, "d3dx10.lib")
+
+#include <d3d11.h>
+#include <d3dx11.h>
+#include <d3dx10.h>
+#include <xnamath.h>
+
+//------------------------------------------------
+// VK
+//------------------------------------------------
+//#pragma comment(lib, "vulkan-1.lib")
+//
+//#define VK_USE_PLATFORM_WIN32_KHR
+//
+//#include <vulkan/vulkan.h>
+
+//------------------------------------------------
+// GLM
+//------------------------------------------------
 //#include <glm/vec2.hpp>
 //#include <glm/vec3.hpp>
 //#include <glm/mat4x4.hpp>

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DX11Common.h"
 #include "VertexDescriptor.h"
 
 namespace yggdrasil

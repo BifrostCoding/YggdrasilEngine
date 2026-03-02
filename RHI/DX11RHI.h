@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RHI.h"
-#include "DX11Common.h"
 #include "DX11Buffer.h"
 #include "DX11VertexDescriptor.h"
 #include "DX11VertexShader.h"

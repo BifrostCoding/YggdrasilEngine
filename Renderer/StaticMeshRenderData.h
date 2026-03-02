@@ -1,14 +1,17 @@
 #pragma once
 
 #include <RHI/RHI.h>
-//TODO: remove again!!!!
-#include "xnamath.h"
-//TODO: remove again!!!!
 
 namespace yggdrasil
 {
 namespace rendering
 {
+struct TConstantBufferObject;
+struct TStaticMeshVertex;
+
+//------------------------------------------------
+// CStaticMeshRenderData
+//------------------------------------------------
 class CStaticMeshRenderData
 {
 public:
@@ -18,29 +21,7 @@ public:
 
   common::TResult Initialize();
 
-  //TODO: remove again!!!!
-//private:
-
-
-  struct TConstantBuffer final
-  {
-    XMMATRIX m_WVP;
-    XMMATRIX m_World;
-  };
-
-  struct TStaticMeshVertex final
-  {
-    TStaticMeshVertex();
-    TStaticMeshVertex(float x, float y, float z, float u, float v, float nx, float ny, float nz);
-
-    XMFLOAT3 m_position;
-    XMFLOAT2 m_uv;
-    XMFLOAT3 m_normal;
-  };
-
-  //TODO: remove again!!!!
-  std::vector<TStaticMeshVertex> vertices;
-  std::vector<DWORD> indices;
+private:
 
   rhi::IRHI* m_pRHI;
 
@@ -52,7 +33,29 @@ public:
   std::unique_ptr<rhi::IPixelShader> m_pPixelShader;
   std::unique_ptr<rhi::ITexture> m_pTexture;
 
-  std::unique_ptr<TConstantBuffer> m_pConstantBufferData;
+  std::unique_ptr<TConstantBufferObject> m_pConstantBufferData;
+};
+
+//------------------------------------------------
+// TConstantBufferObject
+//------------------------------------------------
+struct TConstantBufferObject final
+{
+  XMMATRIX m_WVP;
+  XMMATRIX m_World;
+};
+
+//------------------------------------------------
+// TStaticMeshVertex
+//------------------------------------------------
+struct TStaticMeshVertex final
+{
+  TStaticMeshVertex();
+  TStaticMeshVertex(float x, float y, float z, float u, float v, float nx, float ny, float nz);
+
+  XMFLOAT3 m_position;
+  XMFLOAT2 m_uv;
+  XMFLOAT3 m_normal;
 };
 }
 }
