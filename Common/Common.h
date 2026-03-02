@@ -46,6 +46,18 @@
 
 #define RELEASE_PTR(ptr) if(ptr != nullptr) ptr->Release();
 
+#ifdef _DEBUG
+
+#include <intrin.h>>
+
+#define YGG_ASSERT(condition) if (!(condition)) __debugbreak();
+
+#else
+
+#define YGG_ASSERT(condition, message) ((void)0)
+
+#endif
+
 namespace yggdrasil
 {
 namespace common

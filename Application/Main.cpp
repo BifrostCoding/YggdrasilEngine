@@ -10,7 +10,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
   windowData.m_height    = 600;
   windowData.m_windowed  = true;
 
-  yggdrasil::app::CApplication app(windowData, yggdrasil::common::EBackend::DX11);
+  yggdrasil::app::CApplication app(windowData, yggdrasil::common::EBackend::Vk);
 
   yggdrasil::common::TResult result = app.Start();
 
