@@ -34,5 +34,10 @@ common::TResult CDX11PixelShader::Initialize(CDX11RHI* pRHI, const TPixelShaderD
 
   return result;
 }
+
+ID3D11PixelShader* CDX11PixelShader::Get() const
+{
+  return m_pPixelShader;
+}
 }
 }

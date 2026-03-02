@@ -18,12 +18,16 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI, const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle);
 
+  ID3D11Buffer* Get() const;
+  const TBufferDesc& GetBufferDesc() const;
+
 private:
 
   D3D11_USAGE GetDX11Usage(const EBufferUsage bufferUsage) const;
   D3D11_BIND_FLAG GetDX11BindFlag(const EBufferType bufferType) const;
 
   ID3D11Buffer* m_pBuffer;
+  TBufferDesc m_bufferDesc;
 };
 }
 }

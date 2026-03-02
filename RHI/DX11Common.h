@@ -42,12 +42,6 @@ struct TDirectionalLight final
   XMFLOAT4 diffuse;
 };
 
-struct TConstantBufferPerObjectData final
-{
-  XMMATRIX m_WVP;
-  XMMATRIX m_World;
-};
-
 struct TConstantBufferPerFrameData final
 {
   TDirectionalLight m_sun;

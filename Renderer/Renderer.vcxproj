@@ -142,10 +142,12 @@
   <ItemGroup>
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneRenderData.h" />
+    <ClInclude Include="StaticMeshRenderData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneRenderData.cpp" />
+    <ClCompile Include="StaticMeshRenderData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_StaticMesh.hlsl">

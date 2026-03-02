@@ -24,12 +24,18 @@
     <ClInclude Include="SceneRenderData.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="StaticMeshRenderData.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="SceneRenderData.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshRenderData.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

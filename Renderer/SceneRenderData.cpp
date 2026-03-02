@@ -9,7 +9,12 @@ CSceneRenderData::CSceneRenderData(rhi::IRHI* pRHI, const uint32_t targetWidth, 
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
   , m_viewport()
+  , m_pConstantBufferData(std::make_unique<TConstantBufferScene>())
 {
+  //TODO: remove
+  m_pConstantBufferData->m_sun.dir = XMFLOAT3(0.25f, 0.5f, -1.0f);
+  m_pConstantBufferData->m_sun.ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+  m_pConstantBufferData->m_sun.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 common::TResult CSceneRenderData::Initialize()
@@ -19,7 +24,7 @@ common::TResult CSceneRenderData::Initialize()
   if (result.IsError())
     return result;
 
-  result = InitializeConstantBufferPerFrame();
+  result = InitializeConstantBuffer();
 
   if (result.IsError())
     return result;
@@ -54,9 +59,21 @@ common::TResult CSceneRenderData::InitializeRenderTarget()
   return result;
 }
 
-common::TResult CSceneRenderData::InitializeConstantBufferPerFrame()
+common::TResult CSceneRenderData::InitializeConstantBuffer()
 {
-  return common::TResult();
+  rhi::TBufferDesc constantBufferDesc{};
+  constantBufferDesc.m_usage = rhi::EBufferUsage::Default;
+  constantBufferDesc.m_bufferType = rhi::EBufferType::ConstantBuffer;
+  constantBufferDesc.m_bufferDestination = rhi::EBufferDestination::PixelShader;
+  common::TDataHandle constantBufferDataHandle{};
+  constantBufferDataHandle.m_pData = nullptr;
+  constantBufferDataHandle.m_size = sizeof(TConstantBufferScene);
+  common::TResult result = m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
+
+  if (result.IsError())
+    return result;
+
+  return result;
 }
 
 rhi::IRenderTarget* CSceneRenderData::GetRenderTarget() const
@@ -69,9 +86,19 @@ rhi::IDepthBuffer* CSceneRenderData::GetDepthBuffer() const
   return m_pDepthBuffer.get();
 }
 
+rhi::IBuffer* CSceneRenderData::GetConstantBuffer() const
+{
+  return m_pConstantBuffer.get();
+}
+
 const rhi::TViewport& CSceneRenderData::GetViewport() const
 {
   return m_viewport;
+}
+
+TConstantBufferScene* CSceneRenderData::GetConstantBufferData() const
+{
+  return m_pConstantBufferData.get();
 }
 }
 }

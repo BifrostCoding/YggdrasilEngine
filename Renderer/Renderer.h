@@ -2,6 +2,7 @@
 
 #include <RHI/RHI.h>
 #include "SceneRenderData.h"
+#include "StaticMeshRenderData.h"
 
 namespace yggdrasil
 {
@@ -22,7 +23,7 @@ public:
   void BeginScene(CSceneRenderData* pScene);
   void EndScene();
 
-  void RenderEntity();
+  void RenderMesh();
 
   common::TResult CreateSceneRenderData(std::unique_ptr<CSceneRenderData>& pSceneRenderData) const;
 
@@ -31,6 +32,9 @@ private:
   const common::TWindowData& m_windowData;
   std::unique_ptr<rhi::IRHI> m_pRHI;
   std::unique_ptr<rhi::ICommandList> m_pCommandList;
+
+  //TeDO::romove it
+  CStaticMeshRenderData m_mesh;
 };
 }
 }

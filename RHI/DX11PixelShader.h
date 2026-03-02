@@ -18,6 +18,8 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI, const TPixelShaderDesc& PixelShaderDesc);
 
+  ID3D11PixelShader* Get() const;
+
 private:
 
   ID3D11PixelShader* m_pPixelShader;

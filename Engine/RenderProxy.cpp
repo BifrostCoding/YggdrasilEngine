@@ -18,10 +18,7 @@ void CRenderProxy::RenderScene(CScene* pScene)
 
   m_renderer.BeginScene(pScene->GetSceneRenderData());
 
-  //for (auto& entity : pScene->GetEntities())
-  //{
-  //  m_renderer.RenderEntity(entity)
-  //}
+  m_renderer.RenderMesh();
 
   m_renderer.EndScene();
 

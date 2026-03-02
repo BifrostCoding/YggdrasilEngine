@@ -12,6 +12,8 @@ public:
   CScene() = default;
   virtual ~CScene() = default;
 
+  void Update(float deltaTime);
+
   void SetSceneRenderData(std::unique_ptr<rendering::CSceneRenderData> pSceneRenderData);
 
   rendering::CSceneRenderData* GetSceneRenderData() const;

@@ -73,5 +73,15 @@ common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& tex
 
   return common::TResult();
 }
+
+ID3D11ShaderResourceView* CDX11Texture::GetShaderResourceView() const
+{
+  return m_pShaderResourceView;
+}
+
+ID3D11SamplerState* CDX11Texture::GetSamplerState() const
+{
+  return m_pSamplerState;
+}
 }
 }

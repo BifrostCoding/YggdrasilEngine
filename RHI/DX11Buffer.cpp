@@ -7,6 +7,7 @@ namespace rhi
 {
 CDX11Buffer::CDX11Buffer()
   : m_pBuffer(nullptr)
+  , m_bufferDesc()
 {
 }
 
@@ -17,24 +18,45 @@ CDX11Buffer::~CDX11Buffer()
 
 common::TResult CDX11Buffer::Initialize(CDX11RHI* pRHI, const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle)
 {
-  D3D11_BUFFER_DESC vertexBufferDesc{};
+  m_bufferDesc = bufferDesc;
 
-  vertexBufferDesc.Usage          = GetDX11Usage(bufferDesc.m_usage);
-  vertexBufferDesc.BindFlags      = GetDX11BindFlag(bufferDesc.m_bufferType);
-  vertexBufferDesc.ByteWidth      = dataHandle.m_size;
-  vertexBufferDesc.CPUAccessFlags = 0;
-  vertexBufferDesc.MiscFlags      = 0;
+  D3D11_BUFFER_DESC bufferDescDX11{};
 
-  D3D11_SUBRESOURCE_DATA subresourceData{};
+  bufferDescDX11.Usage          = GetDX11Usage(bufferDesc.m_usage);
+  bufferDescDX11.BindFlags      = GetDX11BindFlag(bufferDesc.m_bufferType);
+  bufferDescDX11.ByteWidth      = dataHandle.m_size;
+  bufferDescDX11.CPUAccessFlags = 0;
+  bufferDescDX11.MiscFlags      = 0;
 
-  subresourceData.pSysMem = dataHandle.m_pData;
+  HRESULT hr = S_OK;
 
-  HRESULT hr = pRHI->GetDevice()->CreateBuffer(&vertexBufferDesc, &subresourceData, &m_pBuffer);
+  if (dataHandle.m_pData == nullptr)
+  {
+    hr = pRHI->GetDevice()->CreateBuffer(&bufferDescDX11, nullptr, &m_pBuffer);
+  }
+  else
+  {
+    D3D11_SUBRESOURCE_DATA subresourceData{};
+
+    subresourceData.pSysMem = dataHandle.m_pData;
+
+    hr = pRHI->GetDevice()->CreateBuffer(&bufferDescDX11, &subresourceData, &m_pBuffer);
+  }
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to initialize Buffer");
 
   return common::TResult();
+}
+
+ID3D11Buffer* CDX11Buffer::Get() const
+{
+  return m_pBuffer;
+}
+
+const TBufferDesc& CDX11Buffer::GetBufferDesc() const
+{
+  return m_bufferDesc;
 }
 
 D3D11_USAGE CDX11Buffer::GetDX11Usage(const EBufferUsage bufferUsage) const

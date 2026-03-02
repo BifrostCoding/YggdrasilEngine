@@ -5,7 +5,7 @@ namespace yggdrasil
 namespace app
 {
 CApplication::CApplication(common::TWindowData& windowData, common::EBackend backend)
-  : m_window(windowData, [&]() { RenderFrame(); })
+  : m_window(windowData, [&]() { Tick(); })
   , m_renderProxy(windowData, backend)
   , m_pCurrentScene(std::make_shared<CScene>())
 {
@@ -43,11 +43,11 @@ common::TResult CApplication::Initialize()
   return result;
 }
 
-void CApplication::RenderFrame()
+void CApplication::Tick()
 {
   m_timer.Update();
 
-  float deltaTime = m_timer.GetDeltaTime();
+  m_pCurrentScene->Update(m_timer.GetDeltaTime());
 
   m_renderProxy.RenderScene(m_pCurrentScene.get());
 }

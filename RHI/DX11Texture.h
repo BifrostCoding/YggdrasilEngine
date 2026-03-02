@@ -18,6 +18,9 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI, const TTextureDesc& textureDesc);
 
+  ID3D11ShaderResourceView* GetShaderResourceView() const;
+  ID3D11SamplerState* GetSamplerState() const;
+
 private:
 
   ID3D11ShaderResourceView* m_pShaderResourceView;

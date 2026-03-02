@@ -33,6 +33,11 @@ common::TResult CDX11VertexShader::Initialize(CDX11RHI* pRHI, const TVertexShade
   return result;
 }
 
+ID3D11VertexShader* CDX11VertexShader::Get() const
+{
+  return m_pVertexShader;
+}
+
 const std::vector<char> CDX11VertexShader::GetBytecode() const
 {
   return m_bytecode;

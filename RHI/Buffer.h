@@ -11,6 +11,7 @@ namespace rhi
 //------------------------------------------------
 enum class EBufferUsage
 {
+  None,
   Default,
   Dynamic,
 };
@@ -20,9 +21,20 @@ enum class EBufferUsage
 //------------------------------------------------
 enum class EBufferType
 {
+  None,
   VertexBuffer,
   IndexBuffer,
   ConstantBuffer,
+};
+
+//------------------------------------------------
+// EBufferDestination
+//------------------------------------------------
+enum class EBufferDestination
+{
+  None,
+  VertexShader,
+  PixelShader
 };
 
 //------------------------------------------------
@@ -32,6 +44,7 @@ struct TBufferDesc final
 {
   EBufferUsage m_usage;
   EBufferType  m_bufferType;
+  EBufferDestination m_bufferDestination;
 };
 
 //------------------------------------------------

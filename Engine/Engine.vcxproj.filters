@@ -25,24 +25,30 @@
     <Filter Include="Headerdateien\App">
       <UniqueIdentifier>{80b549ee-734c-462d-bbe4-51e6fabd6a62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scene">
+      <UniqueIdentifier>{ae9c2612-41fa-42ca-b27a-332a651d3666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Scene">
+      <UniqueIdentifier>{97f02241-f754-4b45-a447-21838b4220b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputLayoutCache.h">
       <Filter>Headerdateien\Caching</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderProxy.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Headerdateien\App</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Window.h">
+      <Filter>Headerdateien\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Headerdateien\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headerdateien\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderProxy.h">
       <Filter>Headerdateien\App</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,19 +56,19 @@
     <ClCompile Include="InputLayoutCache.cpp">
       <Filter>Quelldateien\Caching</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderProxy.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Quelldateien\App</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
+      <Filter>Quelldateien\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderProxy.cpp">
       <Filter>Quelldateien\App</Filter>
     </ClCompile>
   </ItemGroup>

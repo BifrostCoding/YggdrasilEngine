@@ -2,6 +2,11 @@
 
 namespace yggdrasil
 {
+void CScene::Update(float deltaTime)
+{
+
+}
+
 void CScene::SetSceneRenderData(std::unique_ptr<rendering::CSceneRenderData> pSceneRenderData)
 {
   m_pSceneRenderData = std::move(pSceneRenderData);

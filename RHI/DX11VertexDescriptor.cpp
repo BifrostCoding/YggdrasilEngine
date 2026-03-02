@@ -7,13 +7,13 @@ namespace yggdrasil
 namespace rhi
 {
 CDX11VertexDescriptor::CDX11VertexDescriptor()
-  : m_pVertexDescriptor(nullptr)
+  : m_pInputLayout(nullptr)
 {
 }
 
 CDX11VertexDescriptor::~CDX11VertexDescriptor()
 {
-  RELEASE_PTR(m_pVertexDescriptor);
+  RELEASE_PTR(m_pInputLayout);
 }
 
 common::TResult CDX11VertexDescriptor::Initialize(CDX11RHI* pRHI, const TVertexDescriptorDesc& vertexDescriptorDesc, CDX11VertexShader* pVertexShader)
@@ -23,18 +23,19 @@ common::TResult CDX11VertexDescriptor::Initialize(CDX11RHI* pRHI, const TVertexD
   if (layoutDesc.empty())
     return ERROR_RESULT("Can't get layoutDesc");
 
-  HRESULT hr = pRHI->GetDevice()->CreateInputLayout(
-    layoutDesc.data(),
-    layoutDesc.size(),
-    pVertexShader->GetBytecode().data(),
-    pVertexShader->GetBytecode().size(),
-    &m_pVertexDescriptor
-  );
+  const std::vector<char>& vsBytecode = pVertexShader->GetBytecode();
+
+  HRESULT hr = pRHI->GetDevice()->CreateInputLayout(layoutDesc.data(), layoutDesc.size(), vsBytecode.data(), vsBytecode.size(), &m_pInputLayout);
 
   if (hr != S_OK)
     return ERROR_RESULT("Can't create InputLayout");
 
   return common::TResult();
+}
+
+ID3D11InputLayout* CDX11VertexDescriptor::Get() const
+{
+  return m_pInputLayout;
 }
 
 const std::vector<D3D11_INPUT_ELEMENT_DESC> CDX11VertexDescriptor::GetLayoutDesc(EVertexType vertexType) const
@@ -50,14 +51,6 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> CDX11VertexDescriptor::GetLayoutDesc
         { "NORMAL"  , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 20, D3D11_INPUT_PER_VERTEX_DATA, 0 }
       };
     }
-   /* case EMeshType::e2DMeshColored:
-    {
-      return
-      {
-        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT   , 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-        { "COLOR"   , 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-      };
-    }*/
     default:
     {
       return {};

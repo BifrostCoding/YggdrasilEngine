@@ -18,6 +18,8 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI, const TVertexShaderDesc& vertexShaderDesc);
 
+  ID3D11VertexShader* Get() const;
+
   const std::vector<char> GetBytecode() const;
 
 private:

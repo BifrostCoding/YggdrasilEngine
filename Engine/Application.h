@@ -24,7 +24,7 @@ private:
 
   common::TResult Initialize();
 
-  void RenderFrame();
+  void Tick();
 
   CWindow m_window;
   common::CTimer m_timer;

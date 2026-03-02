@@ -19,11 +19,13 @@ public:
 
   common::TResult Initialize(CDX11RHI* pRHI, const TVertexDescriptorDesc& vertexDescriptorDesc, CDX11VertexShader* pVertexShader);
 
+  ID3D11InputLayout* Get() const;
+
 private:
 
   const std::vector<D3D11_INPUT_ELEMENT_DESC> GetLayoutDesc(EVertexType vertexType) const;
 
-  ID3D11InputLayout* m_pVertexDescriptor;
+  ID3D11InputLayout* m_pInputLayout;
 };
 }
 }
