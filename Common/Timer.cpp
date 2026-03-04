@@ -25,5 +25,12 @@ float CTimer::GetDeltaTime() const
 {
   return m_deltaTime;
 }
+
+float CTimer::GetEngineTime() const
+{
+  using namespace std::chrono;
+  static const auto start = steady_clock::now();
+  return duration<float>(steady_clock::now() - start).count();
+}
 }
 }

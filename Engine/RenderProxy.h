@@ -17,6 +17,7 @@ public:
   void RenderScene(CScene* pScene);
 
   common::TResult PrepareScene(CScene* pScene);
+  common::TResult PrepareStaticMesh(CStaticMesh* pStaticMesh);
 
 private:
 

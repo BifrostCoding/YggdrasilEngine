@@ -53,7 +53,7 @@ common::TResult CWindow::Initialize()
     return ERROR_RESULT("Error creating window");
   }
 
-  ShowWindow(m_windowData.m_hwnd, m_windowData.m_showCmd);
+  ShowWindow(m_windowData.m_hwnd, true);
   UpdateWindow(m_windowData.m_hwnd);
 
   return common::TResult();

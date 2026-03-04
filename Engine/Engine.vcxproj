@@ -150,6 +150,7 @@
     <ClInclude Include="InputLayoutCache.h" />
     <ClInclude Include="RenderProxy.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="StaticMesh.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClCompile Include="InputLayoutCache.cpp" />
     <ClCompile Include="RenderProxy.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

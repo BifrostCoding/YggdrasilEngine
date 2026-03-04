@@ -51,6 +51,9 @@
     <ClInclude Include="RenderProxy.h">
       <Filter>Headerdateien\App</Filter>
     </ClInclude>
+    <ClInclude Include="StaticMesh.h">
+      <Filter>Headerdateien\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputLayoutCache.cpp">
@@ -70,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="RenderProxy.cpp">
       <Filter>Quelldateien\App</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMesh.cpp">
+      <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

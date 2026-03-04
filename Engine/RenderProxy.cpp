@@ -18,7 +18,7 @@ void CRenderProxy::RenderScene(CScene* pScene)
 
   m_renderer.BeginScene(pScene->GetSceneRenderData());
 
-  m_renderer.RenderMesh();
+  //m_renderer.RenderMesh();
 
   m_renderer.EndScene();
 
@@ -34,7 +34,21 @@ common::TResult CRenderProxy::PrepareScene(CScene* pScene)
   if (result.IsError())
     return result;
 
-  pScene->SetSceneRenderData(std::move(pSceneRenderData));
+  pScene->SetRenderData(std::move(pSceneRenderData));
+
+  return result;
+}
+
+common::TResult CRenderProxy::PrepareStaticMesh(CStaticMesh* pStaticMesh)
+{
+  std::unique_ptr<rendering::CStaticMeshRenderData> pStaticMeshRenderData;
+
+  common::TResult result = m_renderer.CreateStaticMeshRenderData(pStaticMeshRenderData);
+
+  if (result.IsError())
+    return result;
+
+  pStaticMesh->SetRenderData(std::move(pStaticMeshRenderData));
 
   return result;
 }

@@ -46,11 +46,24 @@
 
 #define RELEASE_PTR(ptr) if(ptr != nullptr) ptr->Release();
 
+//------------------------------------------------
+// YGG_ASSERT
+//------------------------------------------------
 #ifdef _DEBUG
 
-#include <intrin.h>>
+#include <intrin.h>
+#include <iostream>
 
-#define YGG_ASSERT(condition) if (!(condition)) __debugbreak();
+#define YGG_ASSERT(condition, message) \
+if (!(condition)) \
+{ \
+  std::cerr << "file: " << __FILE__     << std::endl; \
+  std::cerr << "line: " << __LINE__     << std::endl; \
+  std::cerr << "func: " << __FUNCTION__ << std::endl; \
+  std::cerr << "------------------------------" << std::endl; \
+  std::cerr << message << std::endl; \
+  __debugbreak(); \
+}
 
 #else
 
@@ -78,7 +91,6 @@ struct TWindowData final
 {
   HWND m_hwnd;
   HINSTANCE m_hinstance;
-  bool m_showCmd;
   uint32_t m_width;
   uint32_t m_height;
   bool m_windowed;

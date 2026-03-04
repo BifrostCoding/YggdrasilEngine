@@ -2,18 +2,18 @@
 
 namespace yggdrasil
 {
-void CScene::Update(float deltaTime)
+void CScene::Update(long engineTime, float deltaTime)
 {
 
 }
 
-void CScene::SetSceneRenderData(std::unique_ptr<rendering::CSceneRenderData> pSceneRenderData)
+void CScene::SetRenderData(std::unique_ptr<rendering::CSceneRenderData> pRenderData)
 {
-  m_pSceneRenderData = std::move(pSceneRenderData);
+  m_pRenderData = std::move(pRenderData);
 }
 
 rendering::CSceneRenderData* CScene::GetSceneRenderData() const
 {
-  return m_pSceneRenderData.get();
+  return m_pRenderData.get();
 }
 }

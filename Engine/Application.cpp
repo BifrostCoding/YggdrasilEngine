@@ -47,7 +47,7 @@ void CApplication::Tick()
 {
   m_timer.Update();
 
-  m_pCurrentScene->Update(m_timer.GetDeltaTime());
+  m_pCurrentScene->Update(m_timer.GetEngineTime(), m_timer.GetDeltaTime());
 
   m_renderProxy.RenderScene(m_pCurrentScene.get());
 }

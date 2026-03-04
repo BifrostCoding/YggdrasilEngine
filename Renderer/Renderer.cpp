@@ -47,7 +47,7 @@ void CRenderer::EndScene()
   m_pCommandList->Submit();
 }
 
-void CRenderer::RenderMesh()
+void CRenderer::RenderMesh(CSceneRenderData* pStaticMeshRenderData)
 {
   /*
   m_pCommandList->BindVertexDescriptor(m_mesh.m_pVertexDescriptor.get());
@@ -67,6 +67,13 @@ common::TResult CRenderer::CreateSceneRenderData(std::unique_ptr<CSceneRenderDat
   pSceneRenderData = std::make_unique<CSceneRenderData>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
 
   return pSceneRenderData->Initialize();
+}
+
+common::TResult CRenderer::CreateStaticMeshRenderData(std::unique_ptr<CStaticMeshRenderData>& pStaticMeshRenderData) const
+{
+  pStaticMeshRenderData = std::make_unique<CStaticMeshRenderData>(m_pRHI.get());
+
+  return pStaticMeshRenderData->Initialize();
 }
 }
 }

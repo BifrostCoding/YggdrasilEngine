@@ -9,10 +9,21 @@ std::unique_ptr<IRHI> CreateInstance(common::EBackend backend)
 {
   switch (backend)
   {
-    case common::EBackend::DX11: return std::make_unique<CDX11RHI>();
-    case common::EBackend::Vk: YGG_ASSERT(false, "vulkan's not implemented yet!"); return nullptr;
+    case common::EBackend::DX11:
+    {
+      return std::make_unique<CDX11RHI>();
+    }
+    case common::EBackend::Vk:
+    {
+      YGG_ASSERT(false, "vulkan is not implemented yet!");
+      break;
+    }
+    default:
+    {
+      YGG_ASSERT(false, "invalid 'common::EBackend' type!");
+      break;
+    }
   }
-  YGG_ASSERT(false, "invalid backend!");
   return nullptr;
 }
 }

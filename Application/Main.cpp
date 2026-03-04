@@ -1,16 +1,15 @@
 #include <Engine/Application.h>
 
-int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR cmdLine, _In_ int showCmd)
+int main(int argv, char* argc[])
 {
   yggdrasil::common::TWindowData windowData{};
 
-  windowData.m_hinstance = hInstance;
-  windowData.m_showCmd   = showCmd;
+  windowData.m_hinstance = GetModuleHandle(nullptr);
   windowData.m_width     = 800;
   windowData.m_height    = 600;
   windowData.m_windowed  = true;
 
-  yggdrasil::app::CApplication app(windowData, yggdrasil::common::EBackend::Vk);
+  yggdrasil::app::CApplication app(windowData, yggdrasil::common::EBackend::DX11);
 
   yggdrasil::common::TResult result = app.Start();
 

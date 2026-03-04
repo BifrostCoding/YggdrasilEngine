@@ -23,9 +23,10 @@ public:
   void BeginScene(CSceneRenderData* pScene);
   void EndScene();
 
-  void RenderMesh();
+  void RenderMesh(CSceneRenderData* pStaticMeshRenderData);
 
   common::TResult CreateSceneRenderData(std::unique_ptr<CSceneRenderData>& pSceneRenderData) const;
+  common::TResult CreateStaticMeshRenderData(std::unique_ptr<CStaticMeshRenderData>& pStaticMeshRenderData) const;
 
 private:
 

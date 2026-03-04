@@ -15,6 +15,7 @@ public:
 
   void Update();
   float GetDeltaTime() const;
+  float GetEngineTime() const;
 
 private:
 
