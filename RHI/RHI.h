@@ -23,7 +23,7 @@ public:
 
   virtual ~IRHI() = default;
 
-  virtual common::TResult Initialize(const common::TWindowData& windowData) = 0;
+  virtual common::TResult Initialize(const common::TApplicationData& applicationData) = 0;
   virtual common::TResult CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer) = 0;
   virtual common::TResult CreateVertexDescriptor(const TVertexDescriptorDesc& vertexDescriptorDesc, IVertexShader* pVertexShader, std::unique_ptr<IVertexDescriptor>& pVertexDescriptor) = 0;
   virtual common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) = 0;

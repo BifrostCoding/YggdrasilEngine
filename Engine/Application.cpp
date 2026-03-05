@@ -4,10 +4,10 @@ namespace yggdrasil
 {
 namespace app
 {
-CApplication::CApplication(common::TWindowData& windowData, common::EBackend backend)
-  : m_window(windowData, [&]() { Tick(); })
-  , m_renderProxy(windowData, backend)
-  , m_pCurrentScene(std::make_shared<CScene>())
+CApplication::CApplication(common::TApplicationData& applicationData, common::EBackend backend)
+  : m_window(applicationData, [&]() { Tick(); })
+  , m_renderProxy(applicationData, backend)
+  , m_pCurrentScene(std::make_shared<CScene>(&m_renderProxy))
 {
 }
 
@@ -35,7 +35,10 @@ common::TResult CApplication::Initialize()
   if (result.IsError())
     return result;
 
-  result = m_renderProxy.PrepareScene(m_pCurrentScene.get());
+  //TODO: replace with --> m_componentFactory.CreateScene(m_pCurrentScene);
+  //LATER-->dont do it here, let it do user
+  result = m_renderProxy.Load(m_pCurrentScene.get());
+  m_pCurrentScene->AddMesh(std::make_unique<CStaticMesh>());
 
   if (result.IsError())
     return result;

@@ -140,14 +140,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MeshData.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="SceneRenderData.h" />
-    <ClInclude Include="StaticMeshRenderData.h" />
+    <ClInclude Include="SceneGPUResources.h" />
+    <ClInclude Include="StaticMeshGPUResources.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MeshData.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="SceneRenderData.cpp" />
-    <ClCompile Include="StaticMeshRenderData.cpp" />
+    <ClCompile Include="SceneGPUResources.cpp" />
+    <ClCompile Include="StaticMeshGPUResources.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_StaticMesh.hlsl">

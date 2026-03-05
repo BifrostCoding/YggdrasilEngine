@@ -18,12 +18,12 @@ CDX11RHI::~CDX11RHI()
   RELEASE_PTR(m_pDevice);
 }
 
-common::TResult CDX11RHI::Initialize(const common::TWindowData& windowData)
+common::TResult CDX11RHI::Initialize(const common::TApplicationData& applicationData)
 {
   DXGI_MODE_DESC bufferDesc{};
 
-  bufferDesc.Width                   = windowData.m_width;
-  bufferDesc.Height                  = windowData.m_height;
+  bufferDesc.Width                   = applicationData.m_width;
+  bufferDesc.Height                  = applicationData.m_height;
   bufferDesc.RefreshRate.Denominator = 1;
   bufferDesc.RefreshRate.Numerator   = 60;
   bufferDesc.Format                  = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -37,8 +37,8 @@ common::TResult CDX11RHI::Initialize(const common::TWindowData& windowData)
   swapChainDesc.SampleDesc.Quality = 0;
   swapChainDesc.BufferUsage        = DXGI_USAGE_RENDER_TARGET_OUTPUT;
   swapChainDesc.BufferCount        = 1;
-  swapChainDesc.OutputWindow       = windowData.m_hwnd;
-  swapChainDesc.Windowed           = windowData.m_windowed;
+  swapChainDesc.OutputWindow       = applicationData.m_hwnd;
+  swapChainDesc.Windowed           = applicationData.m_windowed;
   swapChainDesc.SwapEffect         = DXGI_SWAP_EFFECT_DISCARD;
 
   HRESULT hr = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0, D3D11_SDK_VERSION, &swapChainDesc, &m_pSwapChain, &m_pDevice, nullptr, &m_pDeviceContext);

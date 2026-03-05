@@ -11,7 +11,7 @@ class CWindow
 {
 public:
 
-  CWindow(common::TWindowData& windowData, std::function<void()> renderCallback);
+  CWindow(common::TApplicationData& applicationData, std::function<void()> renderCallback);
   virtual ~CWindow() = default;
 
   common::TResult Initialize();
@@ -24,7 +24,7 @@ private:
 
   static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-  common::TWindowData& m_windowData;
+  common::TApplicationData& m_applicationData;
   std::function<void()> m_renderCallback;
 };
 }

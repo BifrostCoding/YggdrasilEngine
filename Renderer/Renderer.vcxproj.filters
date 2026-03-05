@@ -21,10 +21,16 @@
     <ClInclude Include="Renderer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="SceneRenderData.h">
+    <ClInclude Include="SceneGPUResources.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="StaticMeshRenderData.h">
+    <ClInclude Include="StaticMeshGPUResources.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshData.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,10 +38,13 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="SceneRenderData.cpp">
+    <ClCompile Include="SceneGPUResources.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="StaticMeshRenderData.cpp">
+    <ClCompile Include="StaticMeshGPUResources.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshData.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

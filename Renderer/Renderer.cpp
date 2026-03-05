@@ -1,19 +1,18 @@
 #include "Renderer.h"
-#include "StaticMeshRenderData.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-CRenderer::CRenderer(const common::TWindowData& windowData, common::EBackend backend)
-  : m_windowData(windowData)
+CRenderer::CRenderer(const common::TApplicationData& applicationData, common::EBackend backend)
+  : m_applicationData(applicationData)
   , m_pRHI(rhi::CreateInstance(backend))
 {
 }
 
 common::TResult CRenderer::Initialize()
 {
-  common::TResult result = m_pRHI->Initialize(m_windowData);
+  common::TResult result = m_pRHI->Initialize(m_applicationData);
 
   if (result.IsError())
     return result;
@@ -33,7 +32,7 @@ void CRenderer::EndFrame()
   m_pCommandList->EndFrame();
 }
 
-void CRenderer::BeginScene(CSceneRenderData* pScene)
+void CRenderer::BeginScene(CSceneGPUResources* pScene)
 {
   m_pCommandList->BindRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer());
   m_pCommandList->BindViewport(pScene->GetViewport());
@@ -47,33 +46,31 @@ void CRenderer::EndScene()
   m_pCommandList->Submit();
 }
 
-void CRenderer::RenderMesh(CSceneRenderData* pStaticMeshRenderData)
+void CRenderer::RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData)
 {
-  /*
-  m_pCommandList->BindVertexDescriptor(m_mesh.m_pVertexDescriptor.get());
-  m_pCommandList->BindVertexBuffer(m_mesh.m_pVertexBuffer.get(), 32U);
-  m_pCommandList->BindIndexBuffer(m_mesh.m_pIndexBuffer.get());
-  m_pCommandList->BindVertexShader(m_mesh.m_pVertexShader.get());
-  m_pCommandList->BindPixelShader(m_mesh.m_pPixelShader.get());
-  m_pCommandList->BindTexture(m_mesh.m_pTexture.get());
-  m_pCommandList->BindConstantBuffer(m_mesh.m_pConstantBuffer.get());
-  m_pCommandList->BindBufferData(m_mesh.m_pConstantBuffer.get(), m_mesh.m_pConstantBufferData.get());
-  m_pCommandList->DrawIndexed(36U);
-  */
+  m_pCommandList->BindVertexDescriptor(pStaticMeshRenderData->GetVertexDescriptor());
+  m_pCommandList->BindVertexBuffer(pStaticMeshRenderData->GetVertexBuffer(), pStaticMeshRenderData->GetStride());
+  m_pCommandList->BindIndexBuffer(pStaticMeshRenderData->GetIndexBuffer());
+  m_pCommandList->BindVertexShader(pStaticMeshRenderData->GetVertexShader());
+  m_pCommandList->BindPixelShader(pStaticMeshRenderData->GetPixelShader());
+  m_pCommandList->BindTexture(pStaticMeshRenderData->GetTexture());
+  m_pCommandList->BindConstantBuffer(pStaticMeshRenderData->GetConstantBuffer());
+  m_pCommandList->BindBufferData(pStaticMeshRenderData->GetConstantBuffer(), pStaticMeshRenderData->GetConstantBufferData());
+  m_pCommandList->DrawIndexed(pStaticMeshRenderData->GetIndexCount());
 }
 
-common::TResult CRenderer::CreateSceneRenderData(std::unique_ptr<CSceneRenderData>& pSceneRenderData) const
+common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pSceneRenderData) const
 {
-  pSceneRenderData = std::make_unique<CSceneRenderData>(m_pRHI.get(), m_windowData.m_width, m_windowData.m_height);
+  pSceneRenderData = std::make_unique<CSceneGPUResources>(m_pRHI.get(), m_applicationData.m_width, m_applicationData.m_height);
 
   return pSceneRenderData->Initialize();
 }
 
-common::TResult CRenderer::CreateStaticMeshRenderData(std::unique_ptr<CStaticMeshRenderData>& pStaticMeshRenderData) const
+common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data) const
 {
-  pStaticMeshRenderData = std::make_unique<CStaticMeshRenderData>(m_pRHI.get());
+  pStaticMeshRenderData = std::make_unique<CStaticMeshGPUResources>(m_pRHI.get());
 
-  return pStaticMeshRenderData->Initialize();
+  return pStaticMeshRenderData->Initialize(data);
 }
 }
 }

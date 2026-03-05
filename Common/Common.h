@@ -47,12 +47,14 @@
 #define RELEASE_PTR(ptr) if(ptr != nullptr) ptr->Release();
 
 //------------------------------------------------
-// YGG_ASSERT
+// DEBUG_WRITE, YGG_ASSERT
 //------------------------------------------------
 #ifdef _DEBUG
 
 #include <intrin.h>
 #include <iostream>
+
+#define DEBUG_WRITE(message) std::cout << message << std::endl;
 
 #define YGG_ASSERT(condition, message) \
 if (!(condition)) \
@@ -67,7 +69,8 @@ if (!(condition)) \
 
 #else
 
-#define YGG_ASSERT(condition, message) ((void)0)
+#define YGG_ASSERT(condition, message)
+#define DEBUG_WRITE(message)
 
 #endif
 
@@ -85,9 +88,9 @@ enum class EBackend
 };
 
 //------------------------------------------------
-// TWindowData
+// TApplicationData
 //------------------------------------------------
-struct TWindowData final
+struct TApplicationData final
 {
   HWND m_hwnd;
   HINSTANCE m_hinstance;

@@ -4,6 +4,7 @@
 #include <Common/Timer.h>
 #include "Window.h"
 #include "RenderProxy.h"
+#include "Scene.h"
 
 namespace yggdrasil
 {
@@ -13,7 +14,7 @@ class CApplication
 {
 public:
 
-  CApplication(common::TWindowData& windowData, common::EBackend backend);
+  CApplication(common::TApplicationData& applicationData, common::EBackend backend);
   virtual ~CApplication() = default;
 
   CApplication(const CApplication&) = delete;

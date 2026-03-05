@@ -1,9 +1,11 @@
 #include "RenderProxy.h"
+#include "Scene.h"
 
 namespace yggdrasil
 {
-CRenderProxy::CRenderProxy(const common::TWindowData& windowData, common::EBackend backend)
-  : m_renderer(windowData, backend)
+CRenderProxy::CRenderProxy(const common::TApplicationData& applicationData, common::EBackend backend)
+  : m_applicationData(applicationData)
+  , m_renderer(applicationData, backend)
 {
 }
 
@@ -16,40 +18,52 @@ void CRenderProxy::RenderScene(CScene* pScene)
 {
   m_renderer.BeginFrame();
 
-  m_renderer.BeginScene(pScene->GetSceneRenderData());
+  m_renderer.BeginScene(pScene->GetGPUResources());
 
-  //m_renderer.RenderMesh();
+  for (auto& pMesh : pScene->GetMeshes())
+  {
+    m_renderer.RenderMesh(pMesh->GetGPUResources());
+  }
 
   m_renderer.EndScene();
 
   m_renderer.EndFrame();
 }
 
-common::TResult CRenderProxy::PrepareScene(CScene* pScene)
+common::TResult CRenderProxy::Load(CScene* pScene)
 {
-  std::unique_ptr<rendering::CSceneRenderData> pSceneRenderData;
+  std::unique_ptr<rendering::CSceneGPUResources> pSceneGPUResources;
 
-  common::TResult result = m_renderer.CreateSceneRenderData(pSceneRenderData);
+  common::TResult result = m_renderer.CreateSceneGPUResources(pSceneGPUResources);
 
   if (result.IsError())
     return result;
 
-  pScene->SetRenderData(std::move(pSceneRenderData));
+  pScene->SetGPUResources(std::move(pSceneGPUResources));
 
   return result;
 }
 
-common::TResult CRenderProxy::PrepareStaticMesh(CStaticMesh* pStaticMesh)
+common::TResult CRenderProxy::Load(CStaticMesh* pStaticMesh, const rendering::CStaticMeshRenderData& data)
 {
-  std::unique_ptr<rendering::CStaticMeshRenderData> pStaticMeshRenderData;
+  std::unique_ptr<rendering::CStaticMeshGPUResources> pStaticMeshGPUResources;
 
-  common::TResult result = m_renderer.CreateStaticMeshRenderData(pStaticMeshRenderData);
+  common::TResult result = m_renderer.CreateStaticMeshGPUResources(pStaticMeshGPUResources, data);
 
   if (result.IsError())
     return result;
 
-  pStaticMesh->SetRenderData(std::move(pStaticMeshRenderData));
+  pStaticMesh->SetGPUResources(std::move(pStaticMeshGPUResources));
 
   return result;
+}
+
+float CRenderProxy::GetViewportWidth() const
+{
+  return m_applicationData.m_width;
+}
+float CRenderProxy::GetViewportHeight() const
+{
+  return m_applicationData.m_height;
 }
 }

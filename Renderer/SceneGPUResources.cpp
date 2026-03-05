@@ -1,10 +1,10 @@
-#include "SceneRenderData.h"
+#include "SceneGPUResources.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-CSceneRenderData::CSceneRenderData(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight)
+CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight)
   : m_pRHI(pRHI)
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
@@ -14,7 +14,7 @@ CSceneRenderData::CSceneRenderData(rhi::IRHI* pRHI, const uint32_t targetWidth, 
   InitializeDirectionalLight();
 }
 
-common::TResult CSceneRenderData::Initialize()
+common::TResult CSceneGPUResources::Initialize()
 {
   common::TResult result = InitializeRenderTarget();
 
@@ -29,7 +29,7 @@ common::TResult CSceneRenderData::Initialize()
   return result;
 }
 
-common::TResult CSceneRenderData::InitializeRenderTarget()
+common::TResult CSceneGPUResources::InitializeRenderTarget()
 {
   common::TResult result = m_pRHI->CreateRenderTarget(m_pRenderTarget);
 
@@ -56,7 +56,7 @@ common::TResult CSceneRenderData::InitializeRenderTarget()
   return result;
 }
 
-common::TResult CSceneRenderData::InitializeConstantBuffer()
+common::TResult CSceneGPUResources::InitializeConstantBuffer()
 {
   rhi::TBufferDesc constantBufferDesc{};
   constantBufferDesc.m_usage             = rhi::EBufferUsage::Default;
@@ -75,34 +75,34 @@ common::TResult CSceneRenderData::InitializeConstantBuffer()
   return result;
 }
 
-void CSceneRenderData::InitializeDirectionalLight()
+void CSceneGPUResources::InitializeDirectionalLight()
 {
   m_pConstantBufferData->directionalLight.dir     = XMFLOAT3(0.25f, 0.5f, -1.0f);
   m_pConstantBufferData->directionalLight.ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
   m_pConstantBufferData->directionalLight.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
-rhi::IRenderTarget* CSceneRenderData::GetRenderTarget() const
+rhi::IRenderTarget* CSceneGPUResources::GetRenderTarget() const
 {
   return m_pRenderTarget.get();
 }
 
-rhi::IDepthBuffer* CSceneRenderData::GetDepthBuffer() const
+rhi::IDepthBuffer* CSceneGPUResources::GetDepthBuffer() const
 {
   return m_pDepthBuffer.get();
 }
 
-rhi::IBuffer* CSceneRenderData::GetConstantBuffer() const
+rhi::IBuffer* CSceneGPUResources::GetConstantBuffer() const
 {
   return m_pConstantBuffer.get();
 }
 
-const rhi::TViewport& CSceneRenderData::GetViewport() const
+const rhi::TViewport& CSceneGPUResources::GetViewport() const
 {
   return m_viewport;
 }
 
-TConstantBufferScene* CSceneRenderData::GetConstantBufferData() const
+TConstantBufferScene* CSceneGPUResources::GetConstantBufferData() const
 {
   return m_pConstantBufferData.get();
 }

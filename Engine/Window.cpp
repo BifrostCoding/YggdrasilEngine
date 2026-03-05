@@ -4,8 +4,8 @@ namespace yggdrasil
 {
 namespace app
 {
-CWindow::CWindow(common::TWindowData& windowData, std::function<void()> renderCallback)
-  : m_windowData(windowData)
+CWindow::CWindow(common::TApplicationData& applicationData, std::function<void()> renderCallback)
+  : m_applicationData(applicationData)
   , m_renderCallback(renderCallback)
 {
 }
@@ -21,7 +21,7 @@ common::TResult CWindow::Initialize()
   wc.lpfnWndProc   = WndProc;
   wc.cbClsExtra    = NULL;
   wc.cbWndExtra    = NULL;
-  wc.hInstance     = m_windowData.m_hinstance;
+  wc.hInstance     = m_applicationData.m_hinstance;
   wc.hIcon         = LoadIcon(NULL, IDI_WINLOGO);
   wc.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -34,27 +34,27 @@ common::TResult CWindow::Initialize()
     return ERROR_RESULT("Error registering class");
   }
 
-  m_windowData.m_hwnd = CreateWindowEx(
+  m_applicationData.m_hwnd = CreateWindowEx(
     NULL,
     wndClassName,
     TEXT("Yggdrasil"),
     WS_OVERLAPPEDWINDOW,
     CW_USEDEFAULT, CW_USEDEFAULT,
-    m_windowData.m_width,
-    m_windowData.m_height,
+    m_applicationData.m_width,
+    m_applicationData.m_height,
     NULL,
     NULL,
-    m_windowData.m_hinstance,
+    m_applicationData.m_hinstance,
     NULL
   );
 
-  if (!m_windowData.m_hwnd)
+  if (!m_applicationData.m_hwnd)
   {
     return ERROR_RESULT("Error creating window");
   }
 
-  ShowWindow(m_windowData.m_hwnd, true);
-  UpdateWindow(m_windowData.m_hwnd);
+  ShowWindow(m_applicationData.m_hwnd, true);
+  UpdateWindow(m_applicationData.m_hwnd);
 
   return common::TResult();
 }
@@ -85,7 +85,7 @@ void CWindow::DoWindowMessageLoop()
 
 void CWindow::Destroy() const
 {
-  DestroyWindow(m_windowData.m_hwnd);
+  DestroyWindow(m_applicationData.m_hwnd);
 }
 
 //static

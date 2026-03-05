@@ -1,8 +1,8 @@
 #pragma once
 
 #include <RHI/RHI.h>
-#include "SceneRenderData.h"
-#include "StaticMeshRenderData.h"
+#include "SceneGPUResources.h"
+#include "StaticMeshGPUResources.h"
 
 namespace yggdrasil
 {
@@ -12,7 +12,7 @@ class CRenderer final
 {
 public:
 
-  CRenderer(const common::TWindowData& windowData, common::EBackend backend);
+  CRenderer(const common::TApplicationData& applicationData, common::EBackend backend);
   virtual ~CRenderer() = default;
 
   common::TResult Initialize();
@@ -20,17 +20,17 @@ public:
   void BeginFrame();
   void EndFrame();
 
-  void BeginScene(CSceneRenderData* pScene);
+  void BeginScene(CSceneGPUResources* pScene);
   void EndScene();
 
-  void RenderMesh(CSceneRenderData* pStaticMeshRenderData);
+  void RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData);
 
-  common::TResult CreateSceneRenderData(std::unique_ptr<CSceneRenderData>& pSceneRenderData) const;
-  common::TResult CreateStaticMeshRenderData(std::unique_ptr<CStaticMeshRenderData>& pStaticMeshRenderData) const;
+  common::TResult CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pSceneRenderData) const;
+  common::TResult CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data) const;
 
 private:
 
-  const common::TWindowData& m_windowData;
+  const common::TApplicationData& m_applicationData;
   std::unique_ptr<rhi::IRHI> m_pRHI;
   std::unique_ptr<rhi::ICommandList> m_pCommandList;
 };

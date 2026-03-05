@@ -21,7 +21,7 @@ public:
   CDX11RHI();
   virtual ~CDX11RHI();
 
-  common::TResult Initialize(const common::TWindowData& windowData) override;
+  common::TResult Initialize(const common::TApplicationData& applicationData) override;
   common::TResult CreateBuffer(const TBufferDesc& bufferDesc, const common::TDataHandle& dataHandle, std::unique_ptr<IBuffer>& pBuffer) override;
   common::TResult CreateVertexDescriptor(const TVertexDescriptorDesc& vertexDescriptorDesc, IVertexShader* pVertexShader, std::unique_ptr<IVertexDescriptor>& pVertexDescriptor) override;
   common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) override;

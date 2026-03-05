@@ -48,11 +48,11 @@
     <ClInclude Include="Camera.h">
       <Filter>Headerdateien\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="RenderProxy.h">
-      <Filter>Headerdateien\App</Filter>
-    </ClInclude>
     <ClInclude Include="StaticMesh.h">
       <Filter>Headerdateien\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderProxy.h">
+      <Filter>Headerdateien\App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -71,11 +71,11 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="RenderProxy.cpp">
-      <Filter>Quelldateien\App</Filter>
-    </ClCompile>
     <ClCompile Include="StaticMesh.cpp">
       <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderProxy.cpp">
+      <Filter>Quelldateien\App</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

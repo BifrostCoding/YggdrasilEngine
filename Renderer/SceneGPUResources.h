@@ -10,14 +10,14 @@ struct TDirectionalLight;
 struct TConstantBufferScene;
 
 //------------------------------------------------
-// CSceneRenderData
+// CSceneGPUResources
 //------------------------------------------------
-class CSceneRenderData
+class CSceneGPUResources
 {
 public:
 
-  CSceneRenderData(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight);
-  virtual ~CSceneRenderData() = default;
+  CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight);
+  virtual ~CSceneGPUResources() = default;
 
   common::TResult Initialize();
 
