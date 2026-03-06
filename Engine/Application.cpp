@@ -38,7 +38,9 @@ common::TResult CApplication::Initialize()
   //TODO: replace with --> m_componentFactory.CreateScene(m_pCurrentScene);
   //LATER-->dont do it here, let it do user
   result = m_renderProxy.Load(m_pCurrentScene.get());
-  m_pCurrentScene->AddMesh(std::make_unique<CStaticMesh>());
+  auto pMesh = std::make_unique<CStaticMesh>();
+  pMesh->SetPosition(glm::vec3(0.0f, 0.0f, 5.0f));
+  m_pCurrentScene->AddMesh(std::move(pMesh));
 
   if (result.IsError())
     return result;

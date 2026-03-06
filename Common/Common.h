@@ -23,7 +23,6 @@
 #include <d3d11.h>
 #include <d3dx11.h>
 #include <d3dx10.h>
-#include <xnamath.h>
 
 //------------------------------------------------
 // VK
@@ -37,9 +36,11 @@
 //------------------------------------------------
 // GLM
 //------------------------------------------------
-//#include <glm/vec2.hpp>
-//#include <glm/vec3.hpp>
-//#include <glm/mat4x4.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 #define ERROR_RESULT_COMMON(text) TResult(false, text, __FILE__, __LINE__)
 #define ERROR_RESULT(text) yggdrasil::common::ERROR_RESULT_COMMON(text)

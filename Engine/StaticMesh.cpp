@@ -7,15 +7,20 @@ void CStaticMesh::Update(CCamera& camera)
 {
   rendering::TConstantBufferObject* constantBufferData = m_pGPUResources->GetConstantBufferData();
 
-  XMMATRIX worldMatrix       = XMMatrixIdentity();
-  XMMATRIX rotationMatrix    = XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f);
-  XMMATRIX translationMatrix = XMMatrixTranslation(0.0f, 0.0f, 5.0f);
-  XMMATRIX scaleMatrix       = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+  glm::mat4 worldMatrix       = glm::identity<glm::mat4>();
+  glm::mat4 rotationMatrix    = glm::mat4_cast(m_transform.GetRotation());
+  glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), m_transform.GetPosition());
+  glm::mat4 scaleMatrix       = glm::scale(glm::mat4(1.0f), m_transform.GetScale());
 
-  worldMatrix = rotationMatrix * translationMatrix * scaleMatrix;
+  worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 
-  constantBufferData->m_WVP   = XMMatrixTranspose(worldMatrix * camera.GetViewMatrix() * camera.GetProjectionMatrix());
-  constantBufferData->m_World = XMMatrixTranspose(worldMatrix);
+  constantBufferData->m_WVP   = glm::transpose(camera.GetProjectionMatrix() * camera.GetViewMatrix() * worldMatrix);
+  constantBufferData->m_World = glm::transpose(worldMatrix);
+}
+
+void CStaticMesh::SetPosition(const glm::vec3& position)
+{
+  m_transform.SetPosition(position);
 }
 
 void CStaticMesh::SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pRenderData)

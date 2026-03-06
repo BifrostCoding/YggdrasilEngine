@@ -10,6 +10,7 @@ CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWid
   , m_targetHeight(targetHeight)
   , m_viewport()
   , m_pConstantBufferData(std::make_unique<TConstantBufferScene>())
+  , m_clearColor(0.2f, 0.5f, 0.8f)
 {
   InitializeDirectionalLight();
 }
@@ -77,9 +78,9 @@ common::TResult CSceneGPUResources::InitializeConstantBuffer()
 
 void CSceneGPUResources::InitializeDirectionalLight()
 {
-  m_pConstantBufferData->directionalLight.dir     = XMFLOAT3(0.25f, 0.5f, -1.0f);
-  m_pConstantBufferData->directionalLight.ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-  m_pConstantBufferData->directionalLight.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+  m_pConstantBufferData->m_directionalLight.m_direction = glm::vec4(0.25f, 0.5f, -1.0f, 0.0f);
+  m_pConstantBufferData->m_directionalLight.m_ambient   = glm::vec4(0.2f , 0.2f, 0.2f , 1.0f);
+  m_pConstantBufferData->m_directionalLight.m_diffuse   = glm::vec4(1.0f , 1.0f, 1.0f , 1.0f);
 }
 
 rhi::IRenderTarget* CSceneGPUResources::GetRenderTarget() const
@@ -105,6 +106,11 @@ const rhi::TViewport& CSceneGPUResources::GetViewport() const
 TConstantBufferScene* CSceneGPUResources::GetConstantBufferData() const
 {
   return m_pConstantBufferData.get();
+}
+
+glm::vec3 CSceneGPUResources::GetClearColor() const
+{
+  return m_clearColor;
 }
 }
 }

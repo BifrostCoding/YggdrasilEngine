@@ -7,6 +7,8 @@ namespace rendering
 CStaticMeshGPUResources::CStaticMeshGPUResources(rhi::IRHI* pRHI)
   : m_pRHI(pRHI)
   , m_pConstantBufferData(std::make_unique<TConstantBufferObject>())
+  , m_indexCount(0U)
+  , m_stride(0U)
 {
 }
 
@@ -39,6 +41,10 @@ common::TResult CStaticMeshGPUResources::Initialize(const CStaticMeshRenderData&
     return result;
 
   result = CreateTexture();
+  if (result.IsError())
+    return result;
+
+  result = CreateRasterizerState();
   if (result.IsError())
     return result;
 
@@ -133,6 +139,17 @@ common::TResult CStaticMeshGPUResources::CreateTexture()
   return m_pRHI->CreateTexture(textureDesc, m_pTexture);
 }
 
+common::TResult CStaticMeshGPUResources::CreateRasterizerState()
+{
+  rhi::TRasterizerDesc rasterizerDesc{};
+
+  rasterizerDesc.m_cullMode  = rhi::ECullMode::Back;
+  rasterizerDesc.m_fillMode  = rhi::EFillMode::Solid;
+  rasterizerDesc.m_frontFace = rhi::EFrontFace::CounterClockwise;
+  
+  return m_pRHI->CreateRasterizerState(rasterizerDesc, m_pRasterizerState);
+}
+
 rhi::IVertexDescriptor* CStaticMeshGPUResources::GetVertexDescriptor() const
 {
   return m_pVertexDescriptor.get();
@@ -166,6 +183,11 @@ rhi::IPixelShader* CStaticMeshGPUResources::GetPixelShader() const
 rhi::ITexture* CStaticMeshGPUResources::GetTexture() const
 {
   return m_pTexture.get();
+}
+
+rhi::IRasterizerState* CStaticMeshGPUResources::GetRasterizerState() const
+{
+  return m_pRasterizerState.get();
 }
 
 TConstantBufferObject* CStaticMeshGPUResources::GetConstantBufferData() const

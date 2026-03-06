@@ -126,6 +126,17 @@ common::TResult CDX11RHI::CreateDepthBuffer(const TDepthBufferDesc& depthBufferD
   return result;
 }
 
+common::TResult CDX11RHI::CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState)
+{
+  auto pDX11RasterizerState = std::make_unique<CDX11RasterizerState>();
+
+  common::TResult result = pDX11RasterizerState->Initialize(this, rasterizerDesc);
+
+  pRasterizerState = std::move(pDX11RasterizerState);
+
+  return result;
+}
+
 void CDX11RHI::CreateCommandList(std::unique_ptr<ICommandList>& pCommandList)
 {
   auto pDX11CommandList = std::make_unique<CDX11CommandList>(this);

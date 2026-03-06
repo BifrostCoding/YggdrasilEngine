@@ -1,7 +1,5 @@
 #include "Camera.h"
 
-constexpr const float PI = 3.14f;
-constexpr const float RAD = 6.28f;
 constexpr const float FOV = 0.4f;
 constexpr const float NEAR_PLANE = 1.0f;
 constexpr const float FAR_PLANE = 1000.0f;
@@ -11,29 +9,32 @@ namespace yggdrasil
 CCamera::CCamera(float width, float height)
   : m_width(width)
   , m_height(height)
+  , m_viewMatrix()
+  , m_projectionMatrix()
 {
 }
 
 void CCamera::Update()
 {
-  m_projectionMatrix = XMMatrixPerspectiveFovLH(FOV * PI, (float)m_width / m_height, NEAR_PLANE, FAR_PLANE);
+  m_projectionMatrix = glm::perspectiveRH_ZO(FOV * glm::pi<float>(), static_cast<float>(m_width) / static_cast<float>(m_height), NEAR_PLANE, FAR_PLANE);
 
-  XMMATRIX rotation = XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f);
-  XMVECTOR position = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-  XMVECTOR forward  = XMVector3TransformNormal(XMVectorSet(0, 0, 1, 0), rotation);
-  XMVECTOR right    = XMVector3TransformNormal(XMVectorSet(1, 0, 0, 0), rotation);
-  XMVECTOR up       = XMVector3Cross(forward, right);
-  XMVECTOR target   = XMVectorAdd(position, forward);
+  glm::mat4 rotationMatrix = glm::mat4_cast(m_transform.GetRotation());
 
-  m_viewMatrix = XMMatrixLookAtLH(position, target, up);
+  glm::vec3 position = m_transform.GetPosition();
+  glm::vec3 forward  = glm::vec3(rotationMatrix * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f));
+  glm::vec3 right    = glm::vec3(rotationMatrix * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f));
+  glm::vec3 up       = glm::cross(forward, right);
+  glm::vec3 target   = position + forward;
+
+  m_viewMatrix = glm::lookAtRH(position, target, up);
 }
 
-const XMMATRIX CCamera::GetViewMatrix() const
+const glm::mat4 CCamera::GetViewMatrix() const
 {
   return m_viewMatrix;
 }
 
-const XMMATRIX CCamera::GetProjectionMatrix() const
+const glm::mat4 CCamera::GetProjectionMatrix() const
 {
   return m_projectionMatrix;
 }

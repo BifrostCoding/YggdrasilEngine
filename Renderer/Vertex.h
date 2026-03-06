@@ -11,9 +11,9 @@ namespace rendering
 //------------------------------------------------
 struct TStaticMeshVertex final
 {
-  XMFLOAT3 m_position;
-  XMFLOAT2 m_uv;
-  XMFLOAT3 m_normal;
+  glm::vec3 m_position;
+  glm::vec2 m_uv;
+  glm::vec3 m_normal;
 };
 }
 }

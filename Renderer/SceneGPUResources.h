@@ -26,6 +26,7 @@ public:
   rhi::IBuffer* GetConstantBuffer() const;
   const rhi::TViewport& GetViewport() const;
   TConstantBufferScene* GetConstantBufferData() const;
+  glm::vec3 GetClearColor() const;
 
 private:
 
@@ -44,6 +45,8 @@ private:
   rhi::TViewport m_viewport;
 
   std::unique_ptr<TConstantBufferScene> m_pConstantBufferData;
+
+  glm::vec3 m_clearColor;
 };
 
 //------------------------------------------------
@@ -51,10 +54,9 @@ private:
 //------------------------------------------------
 struct TDirectionalLight final
 {
-  XMFLOAT3 dir;
-  float pad;
-  XMFLOAT4 ambient;
-  XMFLOAT4 diffuse;
+  glm::vec4 m_direction;
+  glm::vec4 m_ambient;
+  glm::vec4 m_diffuse;
 };
 
 //------------------------------------------------
@@ -62,7 +64,7 @@ struct TDirectionalLight final
 //------------------------------------------------
 struct TConstantBufferScene final
 {
-  TDirectionalLight directionalLight;
+  TDirectionalLight m_directionalLight;
 };
 }
 }

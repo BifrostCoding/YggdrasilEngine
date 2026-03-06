@@ -8,6 +8,7 @@
 #include "DX11Texture.h"
 #include "DX11RenderTarget.h"
 #include "DX11DepthBuffer.h"
+#include "DX11RasterizerState.h"
 #include "DX11CommandList.h"
 
 namespace yggdrasil
@@ -29,6 +30,8 @@ public:
   common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) override;
   common::TResult CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTargetView) override;
   common::TResult CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthStencilView) override;
+  common::TResult CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState) override;
+
   void CreateCommandList(std::unique_ptr<ICommandList>& pCommandList) override;
 
   IDXGISwapChain* GetSwapChain() const;

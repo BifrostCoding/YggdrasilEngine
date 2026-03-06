@@ -34,11 +34,9 @@ void CRenderer::EndFrame()
 
 void CRenderer::BeginScene(CSceneGPUResources* pScene)
 {
-  m_pCommandList->BindRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer());
+  m_pCommandList->ClearRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer(), pScene->GetClearColor());
   m_pCommandList->BindViewport(pScene->GetViewport());
-
-  m_pCommandList->BindConstantBuffer(pScene->GetConstantBuffer());
-  m_pCommandList->BindBufferData(pScene->GetConstantBuffer(), pScene->GetConstantBufferData());
+  m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetConstantBufferData());
 }
 
 void CRenderer::EndScene()
@@ -54,8 +52,8 @@ void CRenderer::RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData)
   m_pCommandList->BindVertexShader(pStaticMeshRenderData->GetVertexShader());
   m_pCommandList->BindPixelShader(pStaticMeshRenderData->GetPixelShader());
   m_pCommandList->BindTexture(pStaticMeshRenderData->GetTexture());
-  m_pCommandList->BindConstantBuffer(pStaticMeshRenderData->GetConstantBuffer());
-  m_pCommandList->BindBufferData(pStaticMeshRenderData->GetConstantBuffer(), pStaticMeshRenderData->GetConstantBufferData());
+  m_pCommandList->BindRasterizerState(pStaticMeshRenderData->GetRasterizerState());
+  m_pCommandList->BindShaderData(pStaticMeshRenderData->GetConstantBuffer(), pStaticMeshRenderData->GetConstantBufferData());
   m_pCommandList->DrawIndexed(pStaticMeshRenderData->GetIndexCount());
 }
 

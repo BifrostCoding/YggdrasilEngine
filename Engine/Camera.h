@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Common/Common.h>
-#include <xnamath.h>
+#include <Common/Transform.h>
 
 namespace yggdrasil
 {
@@ -14,25 +14,17 @@ public:
 
   void Update();
 
-  const XMMATRIX GetViewMatrix() const;
-  const XMMATRIX GetProjectionMatrix() const;
-
-  //virtual void SetPosition(const XMFLOAT3& position) override;
-  //virtual void SetRotation(const TVector3& rotation) override;
-  //virtual void SetScale(const TVector3& scale) override;
-
-  //virtual TVector3 GetPosition() const override;
-  //virtual TVector3 GetRotation() const override;
-  //virtual TVector3 GetScale() const override;
+  const glm::mat4 GetViewMatrix() const;
+  const glm::mat4 GetProjectionMatrix() const;
 
 private:
 
   float m_width;
   float m_height;
 
-  XMMATRIX m_viewMatrix;
-  XMMATRIX m_projectionMatrix;
+  glm::mat4 m_viewMatrix;
+  glm::mat4 m_projectionMatrix;
 
-  //CTransform m_transform;
+  common::CTransform m_transform;
 };
 }

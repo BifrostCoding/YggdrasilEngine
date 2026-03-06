@@ -7,51 +7,51 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
-// EBufferUsage
+// EFillMode
 //------------------------------------------------
-enum class EBufferUsage
+enum class EFillMode
 {
-  Default,
-  Dynamic,
+  Solid,
+  Wireframe,
 };
 
 //------------------------------------------------
-// EBufferType
+// ECullMode
 //------------------------------------------------
-enum class EBufferType
+enum class ECullMode
 {
-  VertexBuffer,
-  IndexBuffer,
-  ConstantBuffer,
+  None,
+  Back,
+  Front,
 };
 
 //------------------------------------------------
-// EBufferDestination
+// EFrontFace
 //------------------------------------------------
-enum class EBufferDestination
+enum class EFrontFace
 {
-  VertexShader,
-  PixelShader
+  Clockwise,
+  CounterClockwise
 };
 
 //------------------------------------------------
-// TBufferDesc
+// TRasterizerDesc
 //------------------------------------------------
-struct TBufferDesc final
+struct TRasterizerDesc final
 {
-  EBufferUsage m_usage;
-  EBufferType  m_bufferType;
-  EBufferDestination m_bufferDestination;
+  EFillMode m_fillMode;
+  ECullMode m_cullMode;
+  EFrontFace m_frontFace;
 };
 
 //------------------------------------------------
-// IBuffer
+// IRasterizerState
 //------------------------------------------------
-class IBuffer
+class IRasterizerState
 {
 public:
 
-  virtual ~IBuffer() = default;
+  virtual ~IRasterizerState() = default;
 };
 }
 }

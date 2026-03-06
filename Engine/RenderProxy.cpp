@@ -62,6 +62,7 @@ float CRenderProxy::GetViewportWidth() const
 {
   return m_applicationData.m_width;
 }
+
 float CRenderProxy::GetViewportHeight() const
 {
   return m_applicationData.m_height;

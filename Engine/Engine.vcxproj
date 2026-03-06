@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -147,7 +147,6 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="InputLayoutCache.h" />
     <ClInclude Include="RenderProxy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="StaticMesh.h" />
@@ -156,7 +155,6 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="InputLayoutCache.cpp" />
     <ClCompile Include="RenderProxy.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="StaticMesh.cpp" />

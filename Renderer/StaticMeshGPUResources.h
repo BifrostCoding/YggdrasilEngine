@@ -19,8 +19,8 @@ struct CStaticMeshRenderData final
 //------------------------------------------------
 struct TConstantBufferObject final
 {
-  XMMATRIX m_WVP;
-  XMMATRIX m_World;
+  glm::mat4 m_WVP;
+  glm::mat4 m_World;
 };
 
 //------------------------------------------------
@@ -42,6 +42,7 @@ public:
   common::TResult CreateIndexBuffer(const CMeshData& meshData);
   common::TResult CreateConstantBuffer();
   common::TResult CreateTexture();
+  common::TResult CreateRasterizerState();
 
   rhi::IVertexDescriptor* GetVertexDescriptor() const;
   rhi::IBuffer* GetVertexBuffer() const;
@@ -50,6 +51,7 @@ public:
   rhi::IVertexShader* GetVertexShader() const;
   rhi::IPixelShader* GetPixelShader() const;
   rhi::ITexture* GetTexture() const;
+  rhi::IRasterizerState* GetRasterizerState() const;
   TConstantBufferObject* GetConstantBufferData() const;
   const size_t GetStride() const;
   const size_t GetIndexCount() const;
@@ -65,6 +67,7 @@ private:
   std::unique_ptr<rhi::IVertexShader> m_pVertexShader;
   std::unique_ptr<rhi::IPixelShader> m_pPixelShader;
   std::unique_ptr<rhi::ITexture> m_pTexture;
+  std::unique_ptr<rhi::IRasterizerState> m_pRasterizerState;
 
   std::unique_ptr<TConstantBufferObject> m_pConstantBufferData;
 

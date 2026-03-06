@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\VulkanSDK\1.4.341.1\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\VulkanSDK\1.4.341.1\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\VulkanSDK\1.4.341.1\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\VulkanSDK\1.4.341.1\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\VulkanSDK\1.4.341.1\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\VulkanSDK\1.4.341.1\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,12 +143,14 @@
     <ClInclude Include="DX11Buffer.h" />
     <ClInclude Include="DX11CommandList.h" />
     <ClInclude Include="DX11DepthBuffer.h" />
+    <ClInclude Include="DX11RasterizerState.h" />
     <ClInclude Include="DX11VertexDescriptor.h" />
     <ClInclude Include="DX11PixelShader.h" />
     <ClInclude Include="DX11RenderTarget.h" />
     <ClInclude Include="DX11RHI.h" />
     <ClInclude Include="DX11Texture.h" />
     <ClInclude Include="DX11VertexShader.h" />
+    <ClInclude Include="RasterizerState.h" />
     <ClInclude Include="VertexDescriptor.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="RenderTarget.h" />
@@ -165,6 +167,7 @@
     <ClCompile Include="DX11Buffer.cpp" />
     <ClCompile Include="DX11CommandList.cpp" />
     <ClCompile Include="DX11DepthBuffer.cpp" />
+    <ClCompile Include="DX11RasterizerState.cpp" />
     <ClCompile Include="DX11VertexDescriptor.cpp" />
     <ClCompile Include="DX11PixelShader.cpp" />
     <ClCompile Include="DX11RenderTarget.cpp" />

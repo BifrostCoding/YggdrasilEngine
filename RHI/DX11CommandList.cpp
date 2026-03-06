@@ -15,7 +15,7 @@ void CDX11CommandList::BeginFrame()
   m_pRHI->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void CDX11CommandList::BindRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView)
+void CDX11CommandList::ClearRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView, const glm::vec3& color)
 {
   CDX11RenderTarget* pDX11RenderTargetView = dynamic_cast<CDX11RenderTarget*>(pRenderTargetView);
   CDX11DepthBuffer* pDX11DepthStencilView = dynamic_cast<CDX11DepthBuffer*>(pDepthStencilView);
@@ -23,7 +23,7 @@ void CDX11CommandList::BindRenderTarget(IRenderTarget* pRenderTargetView, IDepth
   ID3D11RenderTargetView* pD3D11RenderTargetView = pDX11RenderTargetView->Get();
   ID3D11DepthStencilView* pD3D11DepthStencilView = pDX11DepthStencilView->Get();
 
-  m_pRHI->GetDeviceContext()->ClearRenderTargetView(pD3D11RenderTargetView, D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f));
+  m_pRHI->GetDeviceContext()->ClearRenderTargetView(pD3D11RenderTargetView, D3DXCOLOR(color.r, color.g, color.b, 1.0f));
   m_pRHI->GetDeviceContext()->ClearDepthStencilView(pD3D11DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
   m_pRHI->GetDeviceContext()->OMSetRenderTargets(1, &pD3D11RenderTargetView, pD3D11DepthStencilView);
 }
@@ -67,7 +67,7 @@ void CDX11CommandList::BindIndexBuffer(IBuffer* pBuffer)
   m_pRHI->GetDeviceContext()->IASetIndexBuffer(pDX11Buffer->Get(), DXGI_FORMAT_R32_UINT, 0);
 }
 
-void CDX11CommandList::BindConstantBuffer(IBuffer* pBuffer)
+void CDX11CommandList::BindShaderData(IBuffer* pBuffer, const void* pData)
 {
   CDX11Buffer* pDX11Buffer = dynamic_cast<CDX11Buffer*>(pBuffer);
 
@@ -88,11 +88,6 @@ void CDX11CommandList::BindConstantBuffer(IBuffer* pBuffer)
       break;
     }
   }
-}
-
-void CDX11CommandList::BindBufferData(IBuffer* pBuffer, const void* pData)
-{
-  CDX11Buffer* pDX11Buffer = dynamic_cast<CDX11Buffer*>(pBuffer);
 
   m_pRHI->GetDeviceContext()->UpdateSubresource(pDX11Buffer->Get(), 0, nullptr, pData, 0, 0);
 }
@@ -120,6 +115,13 @@ void CDX11CommandList::BindTexture(ITexture* pTexture)
 
   m_pRHI->GetDeviceContext()->PSSetShaderResources(0, 1, &pShaderResourceView);
   m_pRHI->GetDeviceContext()->PSSetSamplers(0, 1, &pSamplerState);
+}
+
+void CDX11CommandList::BindRasterizerState(IRasterizerState* pRasterizerState)
+{
+  CDX11RasterizerState* pDX11RasterizerState = dynamic_cast<CDX11RasterizerState*>(pRasterizerState);
+
+  m_pRHI->GetDeviceContext()->RSSetState(pDX11RasterizerState->Get());
 }
 
 void CDX11CommandList::DrawIndexed(uint32_t indexCount)
