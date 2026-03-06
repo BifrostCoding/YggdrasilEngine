@@ -16,14 +16,15 @@ public:
 
   CApplication(common::TApplicationData& applicationData, common::EBackend backend);
   virtual ~CApplication() = default;
-
   CApplication(const CApplication&) = delete;
 
-  common::TResult Start();
+  common::TResult Initialize();
+
+  void Start();
+
+  CScene* GetCurrentScene() const;
 
 private:
-
-  common::TResult Initialize();
 
   void Tick();
 

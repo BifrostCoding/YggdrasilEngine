@@ -20,9 +20,12 @@ void CRenderProxy::RenderScene(CScene* pScene)
 
   m_renderer.BeginScene(pScene->GetGPUResources());
 
-  for (auto& pMesh : pScene->GetMeshes())
+  for (auto& pEntity : pScene->GetEntities())
   {
-    m_renderer.RenderMesh(pMesh->GetGPUResources());
+    for (auto& pStaticMesh : pEntity->GetStaticMeshes())
+    {
+      m_renderer.RenderMesh(pStaticMesh->GetGPUResources());
+    }
   }
 
   m_renderer.EndScene();

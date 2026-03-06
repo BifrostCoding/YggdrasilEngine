@@ -22,10 +22,10 @@ common::TResult CDX11RasterizerState::Initialize(CDX11RHI* pRHI, const TRasteriz
   rasterDesc.FillMode              = GetDX11FillMode(rasterizerDesc.m_fillMode);
   rasterDesc.CullMode              = GetDX11CullMode(rasterizerDesc.m_cullMode);
   rasterDesc.FrontCounterClockwise = GetFrontCounterClockWise(rasterizerDesc.m_frontFace);
-  rasterDesc.DepthClipEnable       = TRUE;
-  rasterDesc.ScissorEnable         = FALSE;
-  rasterDesc.MultisampleEnable     = TRUE;
-  rasterDesc.AntialiasedLineEnable = FALSE;
+  rasterDesc.DepthClipEnable       = true;
+  rasterDesc.ScissorEnable         = false;
+  rasterDesc.MultisampleEnable     = true;
+  rasterDesc.AntialiasedLineEnable = true;
 
   HRESULT hr = pRHI->GetDevice()->CreateRasterizerState(&rasterDesc, &m_pRasterizerState);
 

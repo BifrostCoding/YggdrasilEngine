@@ -11,18 +11,6 @@ CApplication::CApplication(common::TApplicationData& applicationData, common::EB
 {
 }
 
-common::TResult CApplication::Start()
-{
-  common::TResult result = Initialize();
-
-  if (result.IsError())
-    return result;
-
-  m_window.DoWindowMessageLoop();
-
-  return result;
-}
-
 common::TResult CApplication::Initialize()
 {
   common::TResult result = m_window.Initialize();
@@ -35,17 +23,22 @@ common::TResult CApplication::Initialize()
   if (result.IsError())
     return result;
 
-  //TODO: replace with --> m_componentFactory.CreateScene(m_pCurrentScene);
-  //LATER-->dont do it here, let it do user
   result = m_renderProxy.Load(m_pCurrentScene.get());
-  auto pMesh = std::make_unique<CStaticMesh>();
-  pMesh->SetPosition(glm::vec3(0.0f, 0.0f, 5.0f));
-  m_pCurrentScene->AddMesh(std::move(pMesh));
 
   if (result.IsError())
     return result;
 
   return result;
+}
+
+void CApplication::Start()
+{
+  m_window.DoWindowMessageLoop();
+}
+
+CScene* CApplication::GetCurrentScene() const
+{
+  return m_pCurrentScene.get();
 }
 
 void CApplication::Tick()

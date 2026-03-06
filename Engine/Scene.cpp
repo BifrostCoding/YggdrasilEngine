@@ -13,27 +13,32 @@ void CScene::Update(long engineTime, float deltaTime)
 {
   m_camera.Update();
 
-  for (auto& pMesh : m_meshes)
+  for (auto& pEntity : m_entities)
   {
-    pMesh->Update(m_camera);
+    pEntity->Update(deltaTime, m_camera);
   }
 }
 
-void CScene::AddMesh(std::unique_ptr<CStaticMesh> pMesh)
+void CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
 {
-  rendering::CStaticMeshRenderData renderData
+  pEntity->OnInitialize();
+
+  for (auto& pStaticMesh : pEntity->GetStaticMeshes())
   {
-    rendering::CBoxMesh()
-  };
+    rendering::CStaticMeshRenderData renderData
+    {
+      rendering::CBoxMesh()
+    };
 
-  m_pRenderProxy->Load(pMesh.get(), renderData);
+    m_pRenderProxy->Load(pStaticMesh.get(), renderData);
+  }
 
-  m_meshes.push_back(std::move(pMesh));
+  m_entities.push_back(std::move(pEntity));
 }
 
-std::list<std::unique_ptr<CStaticMesh>>& CScene::GetMeshes()
+std::list<std::unique_ptr<AEntity>>& CScene::GetEntities()
 {
-  return m_meshes;
+  return m_entities;
 }
 
 void CScene::SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pRenderData)

@@ -45,6 +45,9 @@
     <ClInclude Include="RenderProxy.h">
       <Filter>Headerdateien\App</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Headerdateien\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="RenderProxy.cpp">
       <Filter>Quelldateien\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

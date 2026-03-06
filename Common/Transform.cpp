@@ -11,24 +11,19 @@ CTransform::CTransform()
 {
 }
 
-glm::vec3 CTransform::GetPosition() const
+glm::vec3& CTransform::GetPosition()
 {
   return m_position;
 }
 
-glm::quat CTransform::GetRotation() const
+glm::quat& CTransform::GetRotation()
 {
   return m_rotation;
 }
 
-glm::vec3 CTransform::GetScale() const
+glm::vec3& CTransform::GetScale()
 {
   return m_scale;
-}
-
-void CTransform::SetPosition(const glm::vec3& position)
-{
-  m_position = position;
 }
 }
 }

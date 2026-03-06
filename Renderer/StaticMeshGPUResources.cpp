@@ -134,7 +134,7 @@ common::TResult CStaticMeshGPUResources::CreateTexture()
 {
   rhi::TTextureDesc textureDesc{};
 
-  textureDesc.m_filename = "./gras.jpg";
+  textureDesc.m_filename = "./box.jpg";
 
   return m_pRHI->CreateTexture(textureDesc, m_pTexture);
 }

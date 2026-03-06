@@ -13,12 +13,9 @@ public:
   CTransform();
   virtual ~CTransform() = default;
 
-  glm::vec3 GetPosition() const;
-  glm::quat GetRotation() const;
-  glm::vec3 GetScale() const;
-
-  //TODO: rethink this
-  void SetPosition(const glm::vec3& position);
+  glm::vec3& GetPosition();
+  glm::quat& GetRotation();
+  glm::vec3& GetScale();
 
 private:
 

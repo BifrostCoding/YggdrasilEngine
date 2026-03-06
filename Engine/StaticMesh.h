@@ -18,10 +18,7 @@ public:
   CStaticMesh() = default;
   virtual ~CStaticMesh() = default;
 
-  void Update(CCamera& camera);
-
-  //TODO: rethink this
-  void SetPosition(const glm::vec3& position);
+  void Update(CCamera& camera, common::CTransform& transform);
 
 private:
 
@@ -29,7 +26,5 @@ private:
   rendering::CStaticMeshGPUResources* GetGPUResources() const;
 
   std::unique_ptr<rendering::CStaticMeshGPUResources> m_pGPUResources;
-
-  common::CTransform m_transform;
 };
 }
