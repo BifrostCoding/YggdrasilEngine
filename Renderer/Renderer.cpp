@@ -7,13 +7,17 @@ namespace rendering
 CRenderer::CRenderer(const common::TApplicationData& applicationData, common::EBackend backend)
   : m_applicationData(applicationData)
   , m_pRHI(rhi::CreateInstance(backend))
+  , m_constantBufferService(m_pRHI.get())
 {
 }
 
 common::TResult CRenderer::Initialize()
 {
   common::TResult result = m_pRHI->Initialize(m_applicationData);
+  if (result.IsError())
+    return result;
 
+  result = m_constantBufferService.Initialize();
   if (result.IsError())
     return result;
 
@@ -53,7 +57,7 @@ void CRenderer::RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData)
   m_pCommandList->BindPixelShader(pStaticMeshRenderData->GetPixelShader());
   m_pCommandList->BindTexture(pStaticMeshRenderData->GetTexture());
   m_pCommandList->BindRasterizerState(pStaticMeshRenderData->GetRasterizerState());
-  m_pCommandList->BindShaderData(pStaticMeshRenderData->GetConstantBuffer(), pStaticMeshRenderData->GetVSConstantBufferData());
+  m_pCommandList->BindShaderData(pStaticMeshRenderData->GetVSConstantBuffer(), pStaticMeshRenderData->GetVSConstantBufferData());
   m_pCommandList->DrawIndexed(pStaticMeshRenderData->GetIndexCount());
 }
 

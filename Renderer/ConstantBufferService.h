@@ -22,14 +22,23 @@ class CConstantBufferService
 {
 public:
 
-  CConstantBufferService();
+  CConstantBufferService(rhi::IRHI* pRHI);
   virtual ~CConstantBufferService() = default;
 
-  std::shared_ptr<TVSConstantBuffer_StaticMesh> GetVSConstantBufferStaticMesh();
+  common::TResult Initialize();
+
+  common::TResult CreateVSConstantBuffer_StaticMesh();
+
+  std::shared_ptr<rhi::IBuffer> GetVSConstantBufferStaticMesh();
+  std::shared_ptr<TVSConstantBuffer_StaticMesh> GetVSConstantBufferDataStaticMesh();
 
 private:
 
-  std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBuffer_StaticMesh;
+  rhi::IRHI* m_pRHI;
+
+  //StaticMesh
+  std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer_StaticMesh;
+  std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData_StaticMesh;
 };
 }
 }

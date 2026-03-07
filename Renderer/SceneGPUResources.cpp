@@ -18,12 +18,10 @@ CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWid
 common::TResult CSceneGPUResources::Initialize()
 {
   common::TResult result = InitializeRenderTarget();
-
   if (result.IsError())
     return result;
 
   result = InitializePSConstantBuffer();
-
   if (result.IsError())
     return result;
 

@@ -6,7 +6,8 @@ namespace rendering
 {
 CStaticMeshGPUResources::CStaticMeshGPUResources(rhi::IRHI* pRHI, CConstantBufferService& constantBufferService)
   : m_pRHI(pRHI)
-  , m_pVSConstantBufferData(constantBufferService.GetVSConstantBufferStaticMesh())
+  , m_pVSConstantBufferData(constantBufferService.GetVSConstantBufferDataStaticMesh())
+  , m_pVSConstantBuffer(constantBufferService.GetVSConstantBufferStaticMesh())
   , m_indexCount(0U)
   , m_stride(0U)
 {
@@ -33,10 +34,6 @@ common::TResult CStaticMeshGPUResources::Initialize(const CStaticMeshRenderData&
     return result;
 
   result = CreateIndexBuffer(desc.m_meshData);
-  if (result.IsError())
-    return result;
-
-  result = CreateConstantBuffer();
   if (result.IsError())
     return result;
 
@@ -114,22 +111,6 @@ common::TResult CStaticMeshGPUResources::CreateIndexBuffer(const CMeshData& mesh
   return m_pRHI->CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
 }
 
-common::TResult CStaticMeshGPUResources::CreateConstantBuffer()
-{
-  rhi::TBufferDesc constantBufferDesc{};
-
-  constantBufferDesc.m_usage             = rhi::EBufferUsage::Default;
-  constantBufferDesc.m_bufferType        = rhi::EBufferType::ConstantBuffer;
-  constantBufferDesc.m_bufferDestination = rhi::EBufferDestination::VertexShader;
-
-  common::TDataHandle constantBufferDataHandle{};
-
-  constantBufferDataHandle.m_pData = nullptr;
-  constantBufferDataHandle.m_size  = sizeof(TVSConstantBuffer_StaticMesh);
-
-  return m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
-}
-
 common::TResult CStaticMeshGPUResources::CreateTexture()
 {
   rhi::TTextureDesc textureDesc{};
@@ -165,9 +146,9 @@ rhi::IBuffer* CStaticMeshGPUResources::GetIndexBuffer() const
   return m_pIndexBuffer.get();
 }
 
-rhi::IBuffer* CStaticMeshGPUResources::GetConstantBuffer() const
+rhi::IBuffer* CStaticMeshGPUResources::GetVSConstantBuffer() const
 {
-  return m_pConstantBuffer.get();
+  return m_pVSConstantBuffer.get();
 }
 
 rhi::IVertexShader* CStaticMeshGPUResources::GetVertexShader() const
