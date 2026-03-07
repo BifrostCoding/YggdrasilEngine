@@ -9,7 +9,7 @@ CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWid
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
   , m_viewport()
-  , m_pConstantBufferData(std::make_unique<TConstantBufferScene>())
+  , m_pPSConstantBufferData(std::make_unique<TPSConstantBuffer_Scene>())
   , m_clearColor(0.2f, 0.5f, 0.8f)
 {
   InitializeDirectionalLight();
@@ -22,7 +22,7 @@ common::TResult CSceneGPUResources::Initialize()
   if (result.IsError())
     return result;
 
-  result = InitializeConstantBuffer();
+  result = InitializePSConstantBuffer();
 
   if (result.IsError())
     return result;
@@ -57,30 +57,27 @@ common::TResult CSceneGPUResources::InitializeRenderTarget()
   return result;
 }
 
-common::TResult CSceneGPUResources::InitializeConstantBuffer()
+common::TResult CSceneGPUResources::InitializePSConstantBuffer()
 {
   rhi::TBufferDesc constantBufferDesc{};
+
   constantBufferDesc.m_usage             = rhi::EBufferUsage::Default;
   constantBufferDesc.m_bufferType        = rhi::EBufferType::ConstantBuffer;
   constantBufferDesc.m_bufferDestination = rhi::EBufferDestination::PixelShader;
 
   common::TDataHandle constantBufferDataHandle{};
+
   constantBufferDataHandle.m_pData = nullptr;
-  constantBufferDataHandle.m_size  = sizeof(TConstantBufferScene);
+  constantBufferDataHandle.m_size  = sizeof(TPSConstantBuffer_Scene);
 
-  common::TResult result = m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
-
-  if (result.IsError())
-    return result;
-
-  return result;
+  return m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
 }
 
 void CSceneGPUResources::InitializeDirectionalLight()
 {
-  m_pConstantBufferData->m_directionalLight.m_direction = glm::vec4(0.25f, 0.5f, -1.0f, 0.0f);
-  m_pConstantBufferData->m_directionalLight.m_ambient   = glm::vec4(0.2f , 0.2f, 0.2f , 1.0f);
-  m_pConstantBufferData->m_directionalLight.m_diffuse   = glm::vec4(1.0f , 1.0f, 1.0f , 1.0f);
+  m_pPSConstantBufferData->m_directionalLight.m_direction = glm::vec4(0.25f, 0.5f, -1.0f, 0.0f);
+  m_pPSConstantBufferData->m_directionalLight.m_ambient   = glm::vec4(0.2f , 0.2f, 0.2f , 1.0f);
+  m_pPSConstantBufferData->m_directionalLight.m_diffuse   = glm::vec4(1.0f , 1.0f, 1.0f , 1.0f);
 }
 
 rhi::IRenderTarget* CSceneGPUResources::GetRenderTarget() const
@@ -103,9 +100,9 @@ const rhi::TViewport& CSceneGPUResources::GetViewport() const
   return m_viewport;
 }
 
-TConstantBufferScene* CSceneGPUResources::GetConstantBufferData() const
+TPSConstantBuffer_Scene* CSceneGPUResources::GetPSConstantBufferData() const
 {
-  return m_pConstantBufferData.get();
+  return m_pPSConstantBufferData.get();
 }
 
 glm::vec3 CSceneGPUResources::GetClearColor() const

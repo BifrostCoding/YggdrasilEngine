@@ -7,7 +7,7 @@ namespace yggdrasil
 namespace rendering
 {
 struct TDirectionalLight;
-struct TConstantBufferScene;
+struct TPSConstantBuffer_Scene;
 
 //------------------------------------------------
 // CSceneGPUResources
@@ -25,13 +25,13 @@ public:
   rhi::IDepthBuffer* GetDepthBuffer() const;
   rhi::IBuffer* GetConstantBuffer() const;
   const rhi::TViewport& GetViewport() const;
-  TConstantBufferScene* GetConstantBufferData() const;
+  TPSConstantBuffer_Scene* GetPSConstantBufferData() const;
   glm::vec3 GetClearColor() const;
 
 private:
 
   common::TResult InitializeRenderTarget();
-  common::TResult InitializeConstantBuffer();
+  common::TResult InitializePSConstantBuffer();
   void InitializeDirectionalLight();
 
   rhi::IRHI* m_pRHI;
@@ -44,7 +44,7 @@ private:
   std::unique_ptr<rhi::IBuffer> m_pConstantBuffer;
   rhi::TViewport m_viewport;
 
-  std::unique_ptr<TConstantBufferScene> m_pConstantBufferData;
+  std::unique_ptr<TPSConstantBuffer_Scene> m_pPSConstantBufferData;
 
   glm::vec3 m_clearColor;
 };
@@ -60,9 +60,9 @@ struct TDirectionalLight final
 };
 
 //------------------------------------------------
-// TConstantBufferScene
+// TPSConstantBuffer_Scene
 //------------------------------------------------
-struct TConstantBufferScene final
+struct TPSConstantBuffer_Scene final
 {
   TDirectionalLight m_directionalLight;
 };

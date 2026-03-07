@@ -144,6 +144,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConstantBufferService.h" />
     <ClInclude Include="MeshData.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneGPUResources.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConstantBufferService.cpp" />
     <ClCompile Include="MeshData.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneGPUResources.cpp" />

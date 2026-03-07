@@ -26,13 +26,14 @@ public:
   void RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData);
 
   common::TResult CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pSceneRenderData) const;
-  common::TResult CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data) const;
+  common::TResult CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data);
 
 private:
 
   const common::TApplicationData& m_applicationData;
   std::unique_ptr<rhi::IRHI> m_pRHI;
   std::unique_ptr<rhi::ICommandList> m_pCommandList;
+  CConstantBufferService m_constantBufferService;
 };
 }
 }

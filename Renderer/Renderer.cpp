@@ -36,7 +36,7 @@ void CRenderer::BeginScene(CSceneGPUResources* pScene)
 {
   m_pCommandList->ClearRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer(), pScene->GetClearColor());
   m_pCommandList->BindViewport(pScene->GetViewport());
-  m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetConstantBufferData());
+  m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetPSConstantBufferData());
 }
 
 void CRenderer::EndScene()
@@ -53,7 +53,7 @@ void CRenderer::RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData)
   m_pCommandList->BindPixelShader(pStaticMeshRenderData->GetPixelShader());
   m_pCommandList->BindTexture(pStaticMeshRenderData->GetTexture());
   m_pCommandList->BindRasterizerState(pStaticMeshRenderData->GetRasterizerState());
-  m_pCommandList->BindShaderData(pStaticMeshRenderData->GetConstantBuffer(), pStaticMeshRenderData->GetConstantBufferData());
+  m_pCommandList->BindShaderData(pStaticMeshRenderData->GetConstantBuffer(), pStaticMeshRenderData->GetVSConstantBufferData());
   m_pCommandList->DrawIndexed(pStaticMeshRenderData->GetIndexCount());
 }
 
@@ -64,9 +64,9 @@ common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUReso
   return pSceneRenderData->Initialize();
 }
 
-common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data) const
+common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data)
 {
-  pStaticMeshRenderData = std::make_unique<CStaticMeshGPUResources>(m_pRHI.get());
+  pStaticMeshRenderData = std::make_unique<CStaticMeshGPUResources>(m_pRHI.get(), m_constantBufferService);
 
   return pStaticMeshRenderData->Initialize(data);
 }

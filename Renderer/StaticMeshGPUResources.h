@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MeshData.h"
+#include "ConstantBufferService.h"
 
 namespace yggdrasil
 {
@@ -15,22 +16,13 @@ struct CStaticMeshRenderData final
 };
 
 //------------------------------------------------
-// TConstantBufferObject
-//------------------------------------------------
-struct TConstantBufferObject final
-{
-  glm::mat4 m_WVP;
-  glm::mat4 m_World;
-};
-
-//------------------------------------------------
 // CStaticMeshGPUResources
 //------------------------------------------------
 class CStaticMeshGPUResources
 {
 public:
 
-  CStaticMeshGPUResources(rhi::IRHI* pRHI);
+  CStaticMeshGPUResources(rhi::IRHI* pRHI, CConstantBufferService& constantBufferService);
   virtual ~CStaticMeshGPUResources() = default;
 
   common::TResult Initialize(const CStaticMeshRenderData& desc);
@@ -52,7 +44,7 @@ public:
   rhi::IPixelShader* GetPixelShader() const;
   rhi::ITexture* GetTexture() const;
   rhi::IRasterizerState* GetRasterizerState() const;
-  TConstantBufferObject* GetConstantBufferData() const;
+  TVSConstantBuffer_StaticMesh* GetVSConstantBufferData() const;
   const size_t GetStride() const;
   const size_t GetIndexCount() const;
 
@@ -69,7 +61,7 @@ private:
   std::unique_ptr<rhi::ITexture> m_pTexture;
   std::unique_ptr<rhi::IRasterizerState> m_pRasterizerState;
 
-  std::unique_ptr<TConstantBufferObject> m_pConstantBufferData;
+  std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData;
 
   size_t m_indexCount;
   size_t m_stride;

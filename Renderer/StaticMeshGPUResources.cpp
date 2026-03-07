@@ -4,9 +4,9 @@ namespace yggdrasil
 {
 namespace rendering
 {
-CStaticMeshGPUResources::CStaticMeshGPUResources(rhi::IRHI* pRHI)
+CStaticMeshGPUResources::CStaticMeshGPUResources(rhi::IRHI* pRHI, CConstantBufferService& constantBufferService)
   : m_pRHI(pRHI)
-  , m_pConstantBufferData(std::make_unique<TConstantBufferObject>())
+  , m_pVSConstantBufferData(constantBufferService.GetVSConstantBufferStaticMesh())
   , m_indexCount(0U)
   , m_stride(0U)
 {
@@ -125,7 +125,7 @@ common::TResult CStaticMeshGPUResources::CreateConstantBuffer()
   common::TDataHandle constantBufferDataHandle{};
 
   constantBufferDataHandle.m_pData = nullptr;
-  constantBufferDataHandle.m_size  = sizeof(TConstantBufferObject);
+  constantBufferDataHandle.m_size  = sizeof(TVSConstantBuffer_StaticMesh);
 
   return m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
 }
@@ -190,9 +190,9 @@ rhi::IRasterizerState* CStaticMeshGPUResources::GetRasterizerState() const
   return m_pRasterizerState.get();
 }
 
-TConstantBufferObject* CStaticMeshGPUResources::GetConstantBufferData() const
+TVSConstantBuffer_StaticMesh* CStaticMeshGPUResources::GetVSConstantBufferData() const
 {
-  return m_pConstantBufferData.get();
+  return m_pVSConstantBufferData.get();
 }
 
 const size_t CStaticMeshGPUResources::GetStride() const

@@ -5,7 +5,7 @@ namespace yggdrasil
 {
 void CStaticMesh::Update(CCamera& camera, common::CTransform& transform)
 {
-  rendering::TConstantBufferObject* constantBufferData = m_pGPUResources->GetConstantBufferData();
+  rendering::TVSConstantBuffer_StaticMesh* constantBufferData = m_pGPUResources->GetVSConstantBufferData();
 
   glm::mat4 worldMatrix       = glm::identity<glm::mat4>();
   glm::mat4 rotationMatrix    = glm::mat4_cast(transform.GetRotation());
