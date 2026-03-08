@@ -23,7 +23,9 @@ void CRenderProxy::RenderScene(CScene& scene)
 
     for (auto& pEntity : scene.GetEntities())
     {
-      for (auto& pStaticMesh : pEntity->GetStaticMeshes())
+      CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
+
+      if (pStaticMesh != nullptr)
       {
         m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetGPUResources());
         m_renderer.RenderStaticMesh(pStaticMesh->GetGPUResources());
@@ -49,7 +51,7 @@ common::TResult CRenderProxy::Load(CScene& scene)
   return result;
 }
 
-common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, rendering::TStaticMeshDesc& data)
+common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data)
 {
   std::unique_ptr<rendering::CMaterialGPUResources> pMaterialGPUResources;
 

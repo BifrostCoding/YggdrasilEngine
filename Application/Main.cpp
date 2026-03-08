@@ -1,6 +1,9 @@
 #include <Engine/Application.h>
 #include <Common/Keyboard.h>
 
+//------------------------------------------------
+// custom - Entity
+//------------------------------------------------
 class CBox : public yggdrasil::AEntity
 {
 public:
@@ -8,11 +11,30 @@ public:
   CBox() = default;
   virtual ~CBox() = default;
 
-  void OnInitialize() override
+  yggdrasil::common::TResult OnInitialize(yggdrasil::CScene& scene) override
   {
-    AddStaticMesh(std::make_unique<yggdrasil::CStaticMesh>());
+    yggdrasil::rendering::TMaterialDesc materialDesc{};
+
+    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
+    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
+    materialDesc.m_textureFilename      = "./box.jpg";
+
+    yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
+    {
+      yggdrasil::rendering::CBoxMesh(),
+      materialDesc
+    };
+
+    auto staticMeshResult = scene.CreateStaticMesh(staticMeshDesc);
+
+    if (!staticMeshResult.has_value())
+      return staticMeshResult.error();
+
+    SetStaticMesh(std::move(staticMeshResult.value()));
 
     GetTransform().GetPosition() = glm::vec3(0.0f, 0.0f, 5.0f);
+
+    return yggdrasil::common::TResult();
   }
 
   void OnUpdate(float deltaTime) override
@@ -44,10 +66,59 @@ public:
       position += movement;
     }
 
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation);
+    glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation);
   }
 };
 
+//------------------------------------------------
+// custom - Entity
+//------------------------------------------------
+class CBlock : public yggdrasil::AEntity
+{
+public:
+
+  CBlock() = default;
+  virtual ~CBlock() = default;
+  
+  yggdrasil::common::TResult OnInitialize(yggdrasil::CScene& scene) override
+  {
+    yggdrasil::rendering::TMaterialDesc materialDesc{};
+
+    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
+    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
+    materialDesc.m_textureFilename      = "./mario_block.jpg";
+
+    yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
+    {
+      yggdrasil::rendering::CBoxMesh(),
+      materialDesc
+    };
+
+    auto staticMeshResult = scene.CreateStaticMesh(staticMeshDesc);
+
+    if (!staticMeshResult.has_value())
+      return staticMeshResult.error();
+
+    SetStaticMesh(std::move(staticMeshResult.value()));
+
+    GetTransform().GetPosition() = glm::vec3(0.0f, 5.0f, 10.0f);
+
+    return yggdrasil::common::TResult();
+  }
+
+  void OnUpdate(float deltaTime) override
+  {
+    glm::quat& rotation = GetTransform().GetRotation();
+    constexpr float ROT_SPEED = glm::radians(90.0f);
+    float angle = ROT_SPEED * deltaTime;
+    glm::quat qYaw = glm::angleAxis(angle, glm::vec3(0, 1, 0));
+    rotation = glm::normalize(qYaw * rotation);
+  }
+};
+
+//------------------------------------------------
+// Main - Function
+//------------------------------------------------
 int main(int argv, char* argc[])
 {
   yggdrasil::common::TApplicationData applicationData{};
@@ -67,9 +138,16 @@ int main(int argv, char* argc[])
     return -1;
   }
 
-  yggdrasil::CScene* pCurrentScene = app.GetCurrentScene();
+  auto sceneResult = app.CreateScene();
 
-  pCurrentScene->AddEntity(std::make_unique<CBox>());
+  if (!sceneResult.has_value())
+  {
+    MessageBox(applicationData.m_hwnd, sceneResult.error().GetText().c_str(), "Error!", MB_OK | MB_ICONERROR);
+    return -1;
+  }
+
+  sceneResult.value()->AddEntity(std::make_unique<CBox>());
+  sceneResult.value()->AddEntity(std::make_unique<CBlock>());
 
   app.Start();
 

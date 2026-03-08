@@ -19,7 +19,7 @@ public:
   void RenderScene(CScene& scene);
 
   common::TResult Load(CScene& scene);
-  common::TResult Load(CStaticMesh& staticMesh, rendering::TStaticMeshDesc& data);
+  common::TResult Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data);
 
   float GetViewportWidth() const;
   float GetViewportHeight() const;

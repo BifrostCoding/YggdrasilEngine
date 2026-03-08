@@ -1,31 +1,38 @@
 #pragma once
 
+#include <expected>
 #include <Renderer/SceneGPUResources.h>
 #include "Camera.h"
 #include "Entity.h"
 
 namespace yggdrasil
 {
+namespace app { class CApplication; }
+
 class CScene
 {
+friend class app::CApplication;
 friend class CRenderProxy;
 
 public:
 
-  CScene(CRenderProxy* pRenderProxy);
+  CScene(CRenderProxy& renderProxy);
   virtual ~CScene() = default;
 
-  void Update(long engineTime, float deltaTime);
+  auto CreateStaticMesh(const rendering::TStaticMeshDesc& desc) const
+  -> std::expected<std::unique_ptr<CStaticMesh>, common::TResult>;
 
-  void AddEntity(std::unique_ptr<AEntity> pEntity);
+  common::TResult AddEntity(std::unique_ptr<AEntity> pEntity);
   std::list<std::unique_ptr<AEntity>>& GetEntities();
 
 private:
 
+  void Update(long engineTime, float deltaTime);
+
   void SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pGPUResources);
   rendering::CSceneGPUResources* GetGPUResources() const;
 
-  CRenderProxy* m_pRenderProxy;
+  CRenderProxy& m_renderProxy;
   CCamera m_camera;
   std::list<std::unique_ptr<AEntity>> m_entities;
   std::unique_ptr<rendering::CSceneGPUResources> m_pGPUResources;

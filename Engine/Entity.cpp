@@ -5,9 +5,9 @@ namespace yggdrasil
 {
 void AEntity::Update(float deltaTime, CCamera& camera)
 {
-  for (auto& pStaticMesh : m_staticMeshes)
+  if (m_pStaticMesh != nullptr)
   {
-    pStaticMesh->Update(camera, m_transform);
+    m_pStaticMesh->Update(camera, m_transform);
   }
 
   OnUpdate(deltaTime);
@@ -18,13 +18,13 @@ common::CTransform& AEntity::GetTransform()
   return m_transform;
 }
 
-void AEntity::AddStaticMesh(std::unique_ptr<CStaticMesh> pMesh)
+void AEntity::SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh)
 {
-  m_staticMeshes.push_back(std::move(pMesh));
+  m_pStaticMesh = std::move(pStaticMesh);
 }
 
-std::list<std::unique_ptr<CStaticMesh>>& AEntity::GetStaticMeshes()
+CStaticMesh* AEntity::GetStaticMesh()
 {
-  return m_staticMeshes;
+  return m_pStaticMesh.get();
 }
 }

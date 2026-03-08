@@ -30,15 +30,12 @@ public:
   //StaticMesh
   common::TResult CreateVSConstantBuffer_StaticMesh();
   std::shared_ptr<rhi::IBuffer> GetVSConstantBufferStaticMesh();
-  std::shared_ptr<TVSConstantBuffer_StaticMesh> GetVSConstantBufferDataStaticMesh();
 
 private:
 
   rhi::IRHI& m_RHI;
 
-  //StaticMesh
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer_StaticMesh;
-  std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData_StaticMesh;
 };
 }
 }

@@ -16,9 +16,6 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{6c632a50-7872-4c43-860e-10844fef1541}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Services">
-      <UniqueIdentifier>{c002045d-14ea-421f-aef3-b55f39304d86}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Services">
       <UniqueIdentifier>{1428cc51-de10-42cc-8b31-e93c8c8fa1cd}</UniqueIdentifier>
     </Filter>

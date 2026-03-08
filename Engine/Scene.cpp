@@ -3,9 +3,9 @@
 
 namespace yggdrasil
 {
-CScene::CScene(CRenderProxy* pRenderProxy)
-  : m_pRenderProxy(pRenderProxy)
-  , m_camera(pRenderProxy->GetViewportWidth(), pRenderProxy->GetViewportHeight())
+CScene::CScene(CRenderProxy& renderProxy)
+  : m_renderProxy(renderProxy)
+  , m_camera(renderProxy.GetViewportWidth(), renderProxy.GetViewportHeight())
 {
 }
 
@@ -19,26 +19,23 @@ void CScene::Update(long engineTime, float deltaTime)
   }
 }
 
-void CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
+auto CScene::CreateStaticMesh(const rendering::TStaticMeshDesc& desc) const
+-> std::expected<std::unique_ptr<CStaticMesh>, common::TResult>
 {
-  pEntity->OnInitialize();
+  std::unique_ptr<CStaticMesh> pStaticMesh = std::make_unique<CStaticMesh>();
 
-  for (auto& pStaticMesh : pEntity->GetStaticMeshes())
-  {
-    rendering::TMaterialDesc materialDesc{};
-    
-    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
-    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "./box.jpg";
+  common::TResult result = m_renderProxy.Load(*pStaticMesh.get(), desc);
+  if (result.IsError())
+    return std::unexpected(result);
 
-    rendering::TStaticMeshDesc renderData
-    {
-      rendering::CBoxMesh(),
-      materialDesc
-    };
+  return pStaticMesh;
+}
 
-    m_pRenderProxy->Load(*pStaticMesh.get(), renderData);
-  }
+common::TResult CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
+{
+  common::TResult result = pEntity->OnInitialize(*this);
+  if (result.IsError())
+    return result;
 
   m_entities.push_back(std::move(pEntity));
 }

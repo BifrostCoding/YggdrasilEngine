@@ -13,11 +13,11 @@ public:
   AEntity() = default;
   virtual ~AEntity() = default;
 
-  virtual void OnInitialize() = 0;
+  virtual common::TResult OnInitialize(CScene& scene) = 0;
   virtual void OnUpdate(float deltaTime) = 0;
 
-  void AddStaticMesh(std::unique_ptr<CStaticMesh> pMesh);
-  std::list<std::unique_ptr<CStaticMesh>>& GetStaticMeshes();
+  void SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh);
+  CStaticMesh* GetStaticMesh();
 
   common::CTransform& GetTransform();
 
@@ -25,7 +25,7 @@ public:
 
 private:
 
-  std::list<std::unique_ptr<CStaticMesh>> m_staticMeshes;
+  std::unique_ptr<CStaticMesh> m_pStaticMesh;
   common::CTransform m_transform;
 };
 }

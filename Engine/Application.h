@@ -22,6 +22,7 @@ public:
 
   void Start();
 
+  std::expected<CScene*, common::TResult> CreateScene();
   CScene* GetCurrentScene() const;
 
 private:
@@ -31,7 +32,8 @@ private:
   CWindow m_window;
   common::CTimer m_timer;
   CRenderProxy m_renderProxy;
-  std::shared_ptr<CScene> m_pCurrentScene;
+  std::list<std::unique_ptr<CScene>> m_scenes;
+  CScene* m_pCurrentScene;
 };
 }
 }

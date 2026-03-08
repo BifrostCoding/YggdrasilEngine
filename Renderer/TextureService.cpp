@@ -17,6 +17,10 @@ common::TResult CTextureService::Initialize()
   if (result.IsError())
     return result;
 
+  result = CreateTexture("./mario_block.jpg");
+  if (result.IsError())
+    return result;
+
   return result;
 }
 
