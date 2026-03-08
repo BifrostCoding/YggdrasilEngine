@@ -23,7 +23,7 @@ common::TResult CApplication::Initialize()
   if (result.IsError())
     return result;
 
-  result = m_renderProxy.Load(m_pCurrentScene.get());
+  result = m_renderProxy.Load(*m_pCurrentScene.get());
 
   if (result.IsError())
     return result;
@@ -47,7 +47,7 @@ void CApplication::Tick()
 
   m_pCurrentScene->Update(m_timer.GetEngineTime(), m_timer.GetDeltaTime());
 
-  m_renderProxy.RenderScene(m_pCurrentScene.get());
+  m_renderProxy.RenderScene(*m_pCurrentScene.get());
 }
 }
 }

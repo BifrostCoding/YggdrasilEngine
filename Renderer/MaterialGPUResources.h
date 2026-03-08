@@ -38,7 +38,7 @@ public:
 
 private:
 
-  rhi::IRHI* m_pRHI;
+  rhi::IRHI& m_RHI;
 
   std::unique_ptr<rhi::IVertexShader> m_pVertexShader;
   std::unique_ptr<rhi::IPixelShader> m_pPixelShader;

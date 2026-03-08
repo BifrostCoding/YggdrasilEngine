@@ -16,10 +16,10 @@ public:
 
   common::TResult Initialize();
 
-  void RenderScene(CScene* pScene);
+  void RenderScene(CScene& scene);
 
-  common::TResult Load(CScene* pScene);
-  common::TResult Load(CStaticMesh* pStaticMesh, rendering::CStaticMeshRenderData& data);
+  common::TResult Load(CScene& scene);
+  common::TResult Load(CStaticMesh& staticMesh, rendering::CStaticMeshRenderData& data);
 
   float GetViewportWidth() const;
   float GetViewportHeight() const;

@@ -45,7 +45,7 @@ public:
 
 private:
 
-  rhi::IRHI* m_pRHI;
+  rhi::IRHI& m_RHI;
 
   std::unique_ptr<rhi::IVertexDescriptor> m_pVertexDescriptor;
   std::unique_ptr<rhi::IBuffer> m_pVertexBuffer;

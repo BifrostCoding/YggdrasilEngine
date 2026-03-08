@@ -30,7 +30,7 @@ void CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
       rendering::CBoxMesh()
     };
 
-    m_pRenderProxy->Load(pStaticMesh.get(), renderData);
+    m_pRenderProxy->Load(*pStaticMesh.get(), renderData);
   }
 
   m_entities.push_back(std::move(pEntity));

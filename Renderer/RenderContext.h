@@ -10,18 +10,18 @@ class CRenderContext
 {
 public:
 
-  CRenderContext(rhi::IRHI* pRHI);
+  CRenderContext(rhi::IRHI& RHI);
   virtual ~CRenderContext() = default;
 
   common::TResult Initialize();
 
-  rhi::IRHI* GetRHI();
+  rhi::IRHI& GetRHI();
 
   CConstantBufferService& GetConstantBufferService();
 
 private:
 
-  rhi::IRHI* m_pRHI;
+  rhi::IRHI& m_RHI;
   CConstantBufferService m_constantBufferService;
 };
 }

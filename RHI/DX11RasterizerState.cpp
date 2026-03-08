@@ -61,7 +61,8 @@ D3D11_CULL_MODE CDX11RasterizerState::GetDX11CullMode(const ECullMode cullMode) 
 
 bool CDX11RasterizerState::GetFrontCounterClockWise(const EFrontFace frontFace) const
 {
-  return frontFace == EFrontFace::CounterClockwise;
+  //needs to be inverted because rendering is RightHanded!
+  return frontFace != EFrontFace::CounterClockwise;
 }
 }
 }

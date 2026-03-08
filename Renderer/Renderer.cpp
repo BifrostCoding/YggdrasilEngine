@@ -7,7 +7,7 @@ namespace rendering
 CRenderer::CRenderer(const common::TApplicationData& applicationData, common::EBackend backend)
   : m_applicationData(applicationData)
   , m_pRHI(rhi::CreateInstance(backend))
-  , m_pRenderContext(std::make_unique<CRenderContext>(m_pRHI.get()))
+  , m_pRenderContext(std::make_unique<CRenderContext>(*m_pRHI.get()))
   , m_renderData()
 {
 }

@@ -5,7 +5,7 @@ namespace yggdrasil
 namespace rendering
 {
 CMaterialGPUResources::CMaterialGPUResources(CRenderContext& renderContext)
-  : m_pRHI(renderContext.GetRHI())
+  : m_RHI(renderContext.GetRHI())
 {
 }
 
@@ -38,7 +38,7 @@ common::TResult CMaterialGPUResources::CreateVertexShader()
 
   vertexShaderDesc.m_filename = "./VS_StaticMesh.cso";
 
-  return m_pRHI->CreateVertexShader(vertexShaderDesc, m_pVertexShader);
+  return m_RHI.CreateVertexShader(vertexShaderDesc, m_pVertexShader);
 }
 
 common::TResult CMaterialGPUResources::CreatePixelShader()
@@ -47,7 +47,7 @@ common::TResult CMaterialGPUResources::CreatePixelShader()
 
   pixelShaderDesc.m_filename = "./PS_StaticMesh.cso";
 
-  return m_pRHI->CreatePixelShader(pixelShaderDesc, m_pPixelShader);
+  return m_RHI.CreatePixelShader(pixelShaderDesc, m_pPixelShader);
 }
 
 common::TResult CMaterialGPUResources::CreateTexture()
@@ -56,18 +56,18 @@ common::TResult CMaterialGPUResources::CreateTexture()
 
   textureDesc.m_filename = "./box.jpg";
 
-  return m_pRHI->CreateTexture(textureDesc, m_pTexture);
+  return m_RHI.CreateTexture(textureDesc, m_pTexture);
 }
 
 common::TResult CMaterialGPUResources::CreateRasterizerState()
 {
   rhi::TRasterizerDesc rasterizerDesc{};
 
-  rasterizerDesc.m_cullMode = rhi::ECullMode::Back;
-  rasterizerDesc.m_fillMode = rhi::EFillMode::Solid;
-  rasterizerDesc.m_frontFace = rhi::EFrontFace::CounterClockwise;
+  rasterizerDesc.m_cullMode  = rhi::ECullMode::Back;
+  rasterizerDesc.m_fillMode  = rhi::EFillMode::Solid;
+  rasterizerDesc.m_frontFace = rhi::EFrontFace::Clockwise;
 
-  return m_pRHI->CreateRasterizerState(rasterizerDesc, m_pRasterizerState);
+  return m_RHI.CreateRasterizerState(rasterizerDesc, m_pRasterizerState);
 }
 
 rhi::IVertexShader* CMaterialGPUResources::GetVertexShader() const

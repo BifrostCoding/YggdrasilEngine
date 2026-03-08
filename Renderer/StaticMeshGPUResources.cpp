@@ -5,7 +5,7 @@ namespace yggdrasil
 namespace rendering
 {
 CStaticMeshGPUResources::CStaticMeshGPUResources(CRenderContext& renderContext)
-  : m_pRHI(renderContext.GetRHI())
+  : m_RHI(renderContext.GetRHI())
   , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
   , m_indexCount(0U)
@@ -38,7 +38,7 @@ common::TResult CStaticMeshGPUResources::CreateVertexDescriptor(rhi::IVertexShad
 
   vertexDescriptorDesc.m_vertexType = rhi::EVertexType::StaticMesh;
 
-  return m_pRHI->CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader, m_pVertexDescriptor);
+  return m_RHI.CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader, m_pVertexDescriptor);
 }
 
 common::TResult CStaticMeshGPUResources::CreateVertexBuffer(const CMeshData& meshData)
@@ -55,7 +55,7 @@ common::TResult CStaticMeshGPUResources::CreateVertexBuffer(const CMeshData& mes
   vertexBufferDataHandle.m_pData = meshData.GetVerticesData();
   vertexBufferDataHandle.m_size  = meshData.GetVertexDataSize();
 
-  return m_pRHI->CreateBuffer(vertexBufferDesc, vertexBufferDataHandle, m_pVertexBuffer);
+  return m_RHI.CreateBuffer(vertexBufferDesc, vertexBufferDataHandle, m_pVertexBuffer);
 }
 
 common::TResult CStaticMeshGPUResources::CreateIndexBuffer(const CMeshData& meshData)
@@ -74,7 +74,7 @@ common::TResult CStaticMeshGPUResources::CreateIndexBuffer(const CMeshData& mesh
   indexBufferDataHandle.m_pData = indices.data();
   indexBufferDataHandle.m_size  = sizeof(uint32_t) * indices.size();
 
-  return m_pRHI->CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
+  return m_RHI.CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
 }
 
 rhi::IVertexDescriptor* CStaticMeshGPUResources::GetVertexDescriptor() const

@@ -14,13 +14,13 @@ common::TResult CRenderProxy::Initialize()
   return m_renderer.Initialize();
 }
 
-void CRenderProxy::RenderScene(CScene* pScene)
+void CRenderProxy::RenderScene(CScene& scene)
 {
   m_renderer.BeginFrame();
 
-  m_renderer.BeginScene(pScene->GetGPUResources());
+  m_renderer.BeginScene(scene.GetGPUResources());
 
-  for (auto& pEntity : pScene->GetEntities())
+  for (auto& pEntity : scene.GetEntities())
   {
     for (auto& pStaticMesh : pEntity->GetStaticMeshes())
     {
@@ -34,7 +34,7 @@ void CRenderProxy::RenderScene(CScene* pScene)
   m_renderer.EndFrame();
 }
 
-common::TResult CRenderProxy::Load(CScene* pScene)
+common::TResult CRenderProxy::Load(CScene& scene)
 {
   std::unique_ptr<rendering::CSceneGPUResources> pSceneGPUResources;
 
@@ -42,12 +42,12 @@ common::TResult CRenderProxy::Load(CScene* pScene)
   if (result.IsError())
     return result;
 
-  pScene->SetGPUResources(std::move(pSceneGPUResources));
+  scene.SetGPUResources(std::move(pSceneGPUResources));
 
   return result;
 }
 
-common::TResult CRenderProxy::Load(CStaticMesh* pStaticMesh, rendering::CStaticMeshRenderData& data)
+common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, rendering::CStaticMeshRenderData& data)
 {
   std::unique_ptr<rendering::CMaterialGPUResources> pMaterialGPUResources;
 
@@ -63,8 +63,8 @@ common::TResult CRenderProxy::Load(CStaticMesh* pStaticMesh, rendering::CStaticM
   if (result.IsError())
     return result;
 
-  pStaticMesh->SetGPUResources(std::move(pStaticMeshGPUResources));
-  pStaticMesh->GetMaterial().SetGPUResources(std::move(pMaterialGPUResources));
+  staticMesh.SetGPUResources(std::move(pStaticMeshGPUResources));
+  staticMesh.GetMaterial().SetGPUResources(std::move(pMaterialGPUResources));
 
   return result;
 }

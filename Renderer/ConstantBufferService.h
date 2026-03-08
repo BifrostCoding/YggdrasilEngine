@@ -22,7 +22,7 @@ class CConstantBufferService
 {
 public:
 
-  CConstantBufferService(rhi::IRHI* pRHI);
+  CConstantBufferService(rhi::IRHI& RHI);
   virtual ~CConstantBufferService() = default;
 
   common::TResult Initialize();
@@ -34,7 +34,7 @@ public:
 
 private:
 
-  rhi::IRHI* m_pRHI;
+  rhi::IRHI& m_RHI;
 
   //StaticMesh
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer_StaticMesh;

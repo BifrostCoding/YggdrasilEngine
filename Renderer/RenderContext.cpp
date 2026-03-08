@@ -4,15 +4,15 @@ namespace yggdrasil
 {
 namespace rendering
 {
-CRenderContext::CRenderContext(rhi::IRHI* pRHI)
-  : m_pRHI(pRHI)
-  , m_constantBufferService(pRHI)
+CRenderContext::CRenderContext(rhi::IRHI& RHI)
+  : m_RHI(RHI)
+  , m_constantBufferService(RHI)
 {
 }
 
-rhi::IRHI* CRenderContext::GetRHI()
+rhi::IRHI& CRenderContext::GetRHI()
 {
-  return m_pRHI;
+  return m_RHI;
 }
 
 common::TResult CRenderContext::Initialize()

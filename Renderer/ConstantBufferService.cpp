@@ -4,8 +4,8 @@ namespace yggdrasil
 {
 namespace rendering
 {
-CConstantBufferService::CConstantBufferService(rhi::IRHI* pRHI)
-  : m_pRHI(pRHI)
+CConstantBufferService::CConstantBufferService(rhi::IRHI& RHI)
+  : m_RHI(RHI)
   , m_pVSConstantBufferData_StaticMesh(std::make_shared<TVSConstantBuffer_StaticMesh>())
 {
 }
@@ -30,7 +30,7 @@ common::TResult CConstantBufferService::CreateVSConstantBuffer_StaticMesh()
 
   std::unique_ptr<rhi::IBuffer> constantBuffer;
 
-  common::TResult result = m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, constantBuffer);
+  common::TResult result = m_RHI.CreateBuffer(constantBufferDesc, constantBufferDataHandle, constantBuffer);
 
   if (result.IsError())
     return result;
