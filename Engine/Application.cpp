@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <Common/Keyboard.h>
 
 namespace yggdrasil
 {
@@ -48,6 +49,8 @@ void CApplication::Tick()
   m_pCurrentScene->Update(m_timer.GetEngineTime(), m_timer.GetDeltaTime());
 
   m_renderProxy.RenderScene(*m_pCurrentScene.get());
+
+  input::CKeyboard::EndFrame();
 }
 }
 }

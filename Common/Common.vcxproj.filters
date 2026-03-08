@@ -19,6 +19,12 @@
     <Filter Include="Headerdateien\FileSystem">
       <UniqueIdentifier>{04348137-1cc1-4ec8-9eb5-7147a03066ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Input">
+      <UniqueIdentifier>{7d1c5c6d-e4c0-4924-b533-3f255c2e2471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Input">
+      <UniqueIdentifier>{c89d38f7-6d6b-4c51-8f72-21c15fef681b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -36,6 +42,12 @@
     <ClInclude Include="Transform.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Headerdateien\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Headerdateien\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Common.cpp">
@@ -52,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Quelldateien\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Quelldateien\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
