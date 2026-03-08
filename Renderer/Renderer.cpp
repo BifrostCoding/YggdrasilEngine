@@ -7,9 +7,10 @@ namespace rendering
 CRenderer::CRenderer(const common::TApplicationData& applicationData, common::EBackend backend)
   : m_applicationData(applicationData)
   , m_pRHI(rhi::CreateInstance(backend))
-  , m_constantBufferService(m_pRHI.get())
+  , m_pRenderContext(std::make_unique<CRenderContext>(m_pRHI.get()))
 {
 }
+
 
 common::TResult CRenderer::Initialize()
 {
@@ -17,7 +18,7 @@ common::TResult CRenderer::Initialize()
   if (result.IsError())
     return result;
 
-  result = m_constantBufferService.Initialize();
+  result = m_pRenderContext->Initialize();
   if (result.IsError())
     return result;
 
@@ -70,7 +71,7 @@ common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUReso
 
 common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data)
 {
-  pStaticMeshRenderData = std::make_unique<CStaticMeshGPUResources>(m_pRHI.get(), m_constantBufferService);
+  pStaticMeshRenderData = std::make_unique<CStaticMeshGPUResources>(*m_pRenderContext.get());
 
   return pStaticMeshRenderData->Initialize(data);
 }

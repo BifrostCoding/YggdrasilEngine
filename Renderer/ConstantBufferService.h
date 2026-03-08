@@ -27,8 +27,8 @@ public:
 
   common::TResult Initialize();
 
+  //StaticMesh
   common::TResult CreateVSConstantBuffer_StaticMesh();
-
   std::shared_ptr<rhi::IBuffer> GetVSConstantBufferStaticMesh();
   std::shared_ptr<TVSConstantBuffer_StaticMesh> GetVSConstantBufferDataStaticMesh();
 

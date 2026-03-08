@@ -4,10 +4,10 @@ namespace yggdrasil
 {
 namespace rendering
 {
-CStaticMeshGPUResources::CStaticMeshGPUResources(rhi::IRHI* pRHI, CConstantBufferService& constantBufferService)
-  : m_pRHI(pRHI)
-  , m_pVSConstantBufferData(constantBufferService.GetVSConstantBufferDataStaticMesh())
-  , m_pVSConstantBuffer(constantBufferService.GetVSConstantBufferStaticMesh())
+CStaticMeshGPUResources::CStaticMeshGPUResources(CRenderContext& renderContext)
+  : m_pRHI(renderContext.GetRHI())
+  , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
+  , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
   , m_indexCount(0U)
   , m_stride(0U)
 {

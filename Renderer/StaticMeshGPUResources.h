@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MeshData.h"
-#include "ConstantBufferService.h"
+#include "RenderContext.h"
 
 namespace yggdrasil
 {
@@ -22,7 +22,7 @@ class CStaticMeshGPUResources
 {
 public:
 
-  CStaticMeshGPUResources(rhi::IRHI* pRHI, CConstantBufferService& constantBufferService);
+  CStaticMeshGPUResources(CRenderContext& renderContext);
   virtual ~CStaticMeshGPUResources() = default;
 
   common::TResult Initialize(const CStaticMeshRenderData& desc);

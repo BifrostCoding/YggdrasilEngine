@@ -33,7 +33,7 @@ private:
   const common::TApplicationData& m_applicationData;
   std::unique_ptr<rhi::IRHI> m_pRHI;
   std::unique_ptr<rhi::ICommandList> m_pCommandList;
-  CConstantBufferService m_constantBufferService;
+  std::unique_ptr<CRenderContext> m_pRenderContext;
 };
 }
 }
