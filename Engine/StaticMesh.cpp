@@ -18,13 +18,18 @@ void CStaticMesh::Update(CCamera& camera, common::CTransform& transform)
   constantBufferData->m_World = glm::transpose(worldMatrix);
 }
 
-void CStaticMesh::SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pRenderData)
+void CStaticMesh::SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pGPUResources)
 {
-  m_pGPUResources = std::move(pRenderData);
+  m_pGPUResources = std::move(pGPUResources);
 }
 
 rendering::CStaticMeshGPUResources* CStaticMesh::GetGPUResources() const
 {
   return m_pGPUResources.get();
+}
+
+CMaterial& CStaticMesh::GetMaterial()
+{
+  return m_material;
 }
 }

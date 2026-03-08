@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Common/Common.h>
 #include <Renderer/StaticMeshGPUResources.h>
 #include <Common/Transform.h>
+#include "Material.h"
 
 namespace yggdrasil
 {
@@ -22,9 +22,12 @@ public:
 
 private:
 
-  void SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pRenderData);
+  void SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pGPUResources);
   rendering::CStaticMeshGPUResources* GetGPUResources() const;
 
+  CMaterial& GetMaterial();
+
   std::unique_ptr<rendering::CStaticMeshGPUResources> m_pGPUResources;
+  CMaterial m_material;
 };
 }

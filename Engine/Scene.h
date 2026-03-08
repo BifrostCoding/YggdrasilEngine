@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Common/Common.h>
 #include <Renderer/SceneGPUResources.h>
 #include "Camera.h"
 #include "Entity.h"
@@ -23,7 +22,7 @@ public:
 
 private:
 
-  void SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pRenderData);
+  void SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pGPUResources);
   rendering::CSceneGPUResources* GetGPUResources() const;
 
   CRenderProxy* m_pRenderProxy;

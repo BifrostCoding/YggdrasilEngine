@@ -8,9 +8,9 @@ CRenderer::CRenderer(const common::TApplicationData& applicationData, common::EB
   : m_applicationData(applicationData)
   , m_pRHI(rhi::CreateInstance(backend))
   , m_pRenderContext(std::make_unique<CRenderContext>(m_pRHI.get()))
+  , m_renderData()
 {
 }
-
 
 common::TResult CRenderer::Initialize()
 {
@@ -49,31 +49,47 @@ void CRenderer::EndScene()
   m_pCommandList->Submit();
 }
 
-void CRenderer::RenderMesh(CStaticMeshGPUResources* pStaticMeshRenderData)
+void CRenderer::RenderStaticMesh(CStaticMeshGPUResources* pStaticMesh)
 {
-  m_pCommandList->BindVertexDescriptor(pStaticMeshRenderData->GetVertexDescriptor());
-  m_pCommandList->BindVertexBuffer(pStaticMeshRenderData->GetVertexBuffer(), pStaticMeshRenderData->GetStride());
-  m_pCommandList->BindIndexBuffer(pStaticMeshRenderData->GetIndexBuffer());
-  m_pCommandList->BindVertexShader(pStaticMeshRenderData->GetVertexShader());
-  m_pCommandList->BindPixelShader(pStaticMeshRenderData->GetPixelShader());
-  m_pCommandList->BindTexture(pStaticMeshRenderData->GetTexture());
-  m_pCommandList->BindRasterizerState(pStaticMeshRenderData->GetRasterizerState());
-  m_pCommandList->BindShaderData(pStaticMeshRenderData->GetVSConstantBuffer(), pStaticMeshRenderData->GetVSConstantBufferData());
-  m_pCommandList->DrawIndexed(pStaticMeshRenderData->GetIndexCount());
+  if(m_renderData.m_pCurrentMaterial != nullptr)
+  {
+    m_pCommandList->BindVertexShader(m_renderData.m_pCurrentMaterial->GetVertexShader());
+    m_pCommandList->BindPixelShader(m_renderData.m_pCurrentMaterial->GetPixelShader());
+    m_pCommandList->BindTexture(m_renderData.m_pCurrentMaterial->GetTexture());
+    m_pCommandList->BindRasterizerState(m_renderData.m_pCurrentMaterial->GetRasterizerState());
+  }
+
+  m_pCommandList->BindVertexDescriptor(pStaticMesh->GetVertexDescriptor());
+  m_pCommandList->BindVertexBuffer(pStaticMesh->GetVertexBuffer(), pStaticMesh->GetStride());
+  m_pCommandList->BindIndexBuffer(pStaticMesh->GetIndexBuffer());
+  m_pCommandList->BindShaderData(pStaticMesh->GetVSConstantBuffer(), pStaticMesh->GetVSConstantBufferData());
+  m_pCommandList->DrawIndexed(pStaticMesh->GetIndexCount());
 }
 
-common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pSceneRenderData) const
+void CRenderer::BindMaterial(CMaterialGPUResources* pMaterial)
 {
-  pSceneRenderData = std::make_unique<CSceneGPUResources>(m_pRHI.get(), m_applicationData.m_width, m_applicationData.m_height);
-
-  return pSceneRenderData->Initialize();
+  m_renderData.m_pCurrentMaterial = pMaterial;
 }
 
-common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pStaticMeshRenderData, const CStaticMeshRenderData& data)
+common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pGPUResources) const
 {
-  pStaticMeshRenderData = std::make_unique<CStaticMeshGPUResources>(*m_pRenderContext.get());
+  pGPUResources = std::make_unique<CSceneGPUResources>(m_pRHI.get(), m_applicationData.m_width, m_applicationData.m_height);
 
-  return pStaticMeshRenderData->Initialize(data);
+  return pGPUResources->Initialize();
+}
+
+common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const CStaticMeshRenderData& data)
+{
+  pGPUResources = std::make_unique<CStaticMeshGPUResources>(*m_pRenderContext.get());
+
+  return pGPUResources->Initialize(data);
+}
+
+common::TResult CRenderer::CreateMaterialGPUResources(std::unique_ptr<CMaterialGPUResources>& pGPUResources, const TMaterialDesc& desc)
+{
+  pGPUResources = std::make_unique<CMaterialGPUResources>(*m_pRenderContext.get());
+
+  return pGPUResources->Initialize(desc);
 }
 }
 }

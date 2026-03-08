@@ -41,9 +41,9 @@ std::list<std::unique_ptr<AEntity>>& CScene::GetEntities()
   return m_entities;
 }
 
-void CScene::SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pRenderData)
+void CScene::SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pGPUResources)
 {
-  m_pGPUResources = std::move(pRenderData);
+  m_pGPUResources = std::move(pGPUResources);
 }
 
 rendering::CSceneGPUResources* CScene::GetGPUResources() const

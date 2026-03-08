@@ -17,15 +17,7 @@ common::TResult CStaticMeshGPUResources::Initialize(const CStaticMeshRenderData&
 {
   common::TResult result;
 
-  result = CreateVertexShader();
-  if (result.IsError())
-    return result;
-
-  result = CreatePixelShader();
-  if (result.IsError())
-    return result;
-
-  result = CreateVertexDescriptor();
+  result = CreateVertexDescriptor(desc.m_pVertexShader);
   if (result.IsError())
     return result;
 
@@ -37,42 +29,16 @@ common::TResult CStaticMeshGPUResources::Initialize(const CStaticMeshRenderData&
   if (result.IsError())
     return result;
 
-  result = CreateTexture();
-  if (result.IsError())
-    return result;
-
-  result = CreateRasterizerState();
-  if (result.IsError())
-    return result;
-
   return result;
 }
 
-common::TResult CStaticMeshGPUResources::CreateVertexShader()
-{
-  rhi::TVertexShaderDesc vertexShaderDesc{};
-
-  vertexShaderDesc.m_filename = "./VS_StaticMesh.cso";
-
-  return m_pRHI->CreateVertexShader(vertexShaderDesc, m_pVertexShader);
-}
-
-common::TResult CStaticMeshGPUResources::CreatePixelShader()
-{
-  rhi::TPixelShaderDesc pixelShaderDesc{};
-
-  pixelShaderDesc.m_filename = "./PS_StaticMesh.cso";
-
-  return m_pRHI->CreatePixelShader(pixelShaderDesc, m_pPixelShader);
-}
-
-common::TResult CStaticMeshGPUResources::CreateVertexDescriptor()
+common::TResult CStaticMeshGPUResources::CreateVertexDescriptor(rhi::IVertexShader* m_pVertexShader)
 {
   rhi::TVertexDescriptorDesc vertexDescriptorDesc{};
 
   vertexDescriptorDesc.m_vertexType = rhi::EVertexType::StaticMesh;
 
-  return m_pRHI->CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader.get(), m_pVertexDescriptor);
+  return m_pRHI->CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader, m_pVertexDescriptor);
 }
 
 common::TResult CStaticMeshGPUResources::CreateVertexBuffer(const CMeshData& meshData)
@@ -111,26 +77,6 @@ common::TResult CStaticMeshGPUResources::CreateIndexBuffer(const CMeshData& mesh
   return m_pRHI->CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
 }
 
-common::TResult CStaticMeshGPUResources::CreateTexture()
-{
-  rhi::TTextureDesc textureDesc{};
-
-  textureDesc.m_filename = "./box.jpg";
-
-  return m_pRHI->CreateTexture(textureDesc, m_pTexture);
-}
-
-common::TResult CStaticMeshGPUResources::CreateRasterizerState()
-{
-  rhi::TRasterizerDesc rasterizerDesc{};
-
-  rasterizerDesc.m_cullMode  = rhi::ECullMode::Back;
-  rasterizerDesc.m_fillMode  = rhi::EFillMode::Solid;
-  rasterizerDesc.m_frontFace = rhi::EFrontFace::CounterClockwise;
-  
-  return m_pRHI->CreateRasterizerState(rasterizerDesc, m_pRasterizerState);
-}
-
 rhi::IVertexDescriptor* CStaticMeshGPUResources::GetVertexDescriptor() const
 {
   return m_pVertexDescriptor.get();
@@ -149,26 +95,6 @@ rhi::IBuffer* CStaticMeshGPUResources::GetIndexBuffer() const
 rhi::IBuffer* CStaticMeshGPUResources::GetVSConstantBuffer() const
 {
   return m_pVSConstantBuffer.get();
-}
-
-rhi::IVertexShader* CStaticMeshGPUResources::GetVertexShader() const
-{
-  return m_pVertexShader.get();
-}
-
-rhi::IPixelShader* CStaticMeshGPUResources::GetPixelShader() const
-{
-  return m_pPixelShader.get();
-}
-
-rhi::ITexture* CStaticMeshGPUResources::GetTexture() const
-{
-  return m_pTexture.get();
-}
-
-rhi::IRasterizerState* CStaticMeshGPUResources::GetRasterizerState() const
-{
-  return m_pRasterizerState.get();
 }
 
 TVSConstantBuffer_StaticMesh* CStaticMeshGPUResources::GetVSConstantBufferData() const

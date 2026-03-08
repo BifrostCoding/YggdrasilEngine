@@ -16,15 +16,24 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{6c632a50-7872-4c43-860e-10844fef1541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Services">
+      <UniqueIdentifier>{c002045d-14ea-421f-aef3-b55f39304d86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Services">
+      <UniqueIdentifier>{1428cc51-de10-42cc-8b31-e93c8c8fa1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Services">
+      <UniqueIdentifier>{bfaa625e-4cf9-458c-b807-5423a4015f3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\GPUResources">
+      <UniqueIdentifier>{46be13ca-1277-4a95-8ae5-8f9c04255c1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\GPUResources">
+      <UniqueIdentifier>{7c3c44d4-5f78-43cd-a51a-f4f705db639a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGPUResources.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticMeshGPUResources.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="MeshData.h">
@@ -33,31 +42,43 @@
     <ClInclude Include="Vertex.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ConstantBufferService.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="RenderContext.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBufferService.h">
+      <Filter>Headerdateien\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGPUResources.h">
+      <Filter>Headerdateien\GPUResources</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshGPUResources.h">
+      <Filter>Headerdateien\GPUResources</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialGPUResources.h">
+      <Filter>Headerdateien\GPUResources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="SceneGPUResources.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticMeshGPUResources.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="MeshData.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="ConstantBufferService.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="RenderContext.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBufferService.cpp">
+      <Filter>Quelldateien\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGPUResources.cpp">
+      <Filter>Quelldateien\GPUResources</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshGPUResources.cpp">
+      <Filter>Quelldateien\GPUResources</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialGPUResources.cpp">
+      <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
