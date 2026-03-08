@@ -18,18 +18,20 @@ void CRenderProxy::RenderScene(CScene& scene)
 {
   m_renderer.BeginFrame();
 
-  m_renderer.BeginScene(scene.GetGPUResources());
-
-  for (auto& pEntity : scene.GetEntities())
   {
-    for (auto& pStaticMesh : pEntity->GetStaticMeshes())
-    {
-      m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetGPUResources());
-      m_renderer.RenderStaticMesh(pStaticMesh->GetGPUResources());
-    }
-  }
+    m_renderer.BeginScene(scene.GetGPUResources());
 
-  m_renderer.EndScene();
+    for (auto& pEntity : scene.GetEntities())
+    {
+      for (auto& pStaticMesh : pEntity->GetStaticMeshes())
+      {
+        m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetGPUResources());
+        m_renderer.RenderStaticMesh(pStaticMesh->GetGPUResources());
+      }
+    }
+
+    m_renderer.EndScene();
+  }
 
   m_renderer.EndFrame();
 }

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ConstantBufferService.h"
+#include "VertexShaderService.h"
+#include "PixelShaderService.h"
+#include "TextureService.h"
 
 namespace yggdrasil
 {
@@ -18,11 +21,18 @@ public:
   rhi::IRHI& GetRHI();
 
   CConstantBufferService& GetConstantBufferService();
+  CVertexShaderService& GetVertexShaderService();
+  CPixelShaderService& GetPixelShaderService();
+  CTextureService& GetTextureService();
 
 private:
 
   rhi::IRHI& m_RHI;
+
   CConstantBufferService m_constantBufferService;
+  CVertexShaderService m_vertexShaderService;
+  CPixelShaderService m_pixelShaderService;
+  CTextureService m_textureService;
 };
 }
 }

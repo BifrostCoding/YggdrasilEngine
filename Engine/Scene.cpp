@@ -25,9 +25,16 @@ void CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
 
   for (auto& pStaticMesh : pEntity->GetStaticMeshes())
   {
+    rendering::TMaterialDesc materialDesc{};
+    
+    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
+    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
+    materialDesc.m_textureFilename      = "./box.jpg";
+
     rendering::CStaticMeshRenderData renderData
     {
-      rendering::CBoxMesh()
+      rendering::CBoxMesh(),
+      materialDesc
     };
 
     m_pRenderProxy->Load(*pStaticMesh.get(), renderData);

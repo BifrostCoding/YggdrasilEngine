@@ -57,6 +57,15 @@
     <ClInclude Include="MaterialGPUResources.h">
       <Filter>Headerdateien\GPUResources</Filter>
     </ClInclude>
+    <ClInclude Include="PixelShaderService.h">
+      <Filter>Headerdateien\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderService.h">
+      <Filter>Headerdateien\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureService.h">
+      <Filter>Headerdateien\Services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -79,6 +88,15 @@
     </ClCompile>
     <ClCompile Include="MaterialGPUResources.cpp">
       <Filter>Quelldateien\GPUResources</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShaderService.cpp">
+      <Filter>Quelldateien\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShaderService.cpp">
+      <Filter>Quelldateien\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureService.cpp">
+      <Filter>Quelldateien\Services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

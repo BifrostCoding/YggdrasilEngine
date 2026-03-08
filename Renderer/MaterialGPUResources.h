@@ -11,6 +11,8 @@ namespace rendering
 //------------------------------------------------
 struct TMaterialDesc final
 {
+  std::string m_vertexShaderFilename;
+  std::string m_pixelShaderFilename;
   std::string m_textureFilename;
 };
 
@@ -26,9 +28,6 @@ public:
 
   common::TResult Initialize(const TMaterialDesc& desc);
 
-  common::TResult CreateVertexShader();
-  common::TResult CreatePixelShader();
-  common::TResult CreateTexture();
   common::TResult CreateRasterizerState();
 
   rhi::IVertexShader* GetVertexShader() const;
@@ -39,10 +38,12 @@ public:
 private:
 
   rhi::IRHI& m_RHI;
+  CRenderContext& m_renderContext;
 
-  std::unique_ptr<rhi::IVertexShader> m_pVertexShader;
-  std::unique_ptr<rhi::IPixelShader> m_pPixelShader;
-  std::unique_ptr<rhi::ITexture> m_pTexture;
+  rhi::IVertexShader* m_pVertexShader;
+  rhi::IPixelShader* m_pPixelShader;
+  rhi::ITexture* m_pTexture;
+
   std::unique_ptr<rhi::IRasterizerState> m_pRasterizerState;
 };
 }

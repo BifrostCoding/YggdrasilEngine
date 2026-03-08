@@ -33,7 +33,7 @@ TResult CImageLoader::Load(const std::string& filename, TImageData& imageData) c
     STBI_rgb_alpha
   );
 
-  if (!imageData.m_data)
+  if (imageData.m_data == nullptr)
   {
     return ERROR_RESULT_COMMON("Failed to load Texture/Image from file");
   }
