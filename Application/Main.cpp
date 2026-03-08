@@ -1,4 +1,5 @@
 #include <Engine/Application.h>
+#include <Common/Keyboard.h>
 
 class CBox : public yggdrasil::AEntity
 {
@@ -16,17 +17,34 @@ public:
 
   void OnUpdate(float deltaTime) override
   {
-    float rotSpeed = 0.5f;
+    glm::vec3& position = GetTransform().GetPosition();
+    glm::quat& rotation = GetTransform().GetRotation();
 
-    glm::quat deltaRotX = glm::angleAxis(rotSpeed * deltaTime, glm::vec3(1, 0, 0));
-    glm::quat deltaRotY = glm::angleAxis(rotSpeed * deltaTime, glm::vec3(0, 1, 0));
-    glm::quat deltaRotZ = glm::angleAxis(rotSpeed * deltaTime, glm::vec3(0, 0, 1));
+    constexpr float MOVE_SPEED = 5.0f;
+    constexpr float ROT_SPEED = glm::radians(90.0f);
 
-    glm::quat deltaRot = deltaRotZ * deltaRotY * deltaRotX;
+    float yaw = 0.0f;
+    if (yggdrasil::input::CKeyboard::IsKeyDown('A')) yaw += 1.0f;
+    if (yggdrasil::input::CKeyboard::IsKeyDown('D')) yaw -= 1.0f;
+    if (yaw != 0.0f)
+    {
+      float angle = yaw * ROT_SPEED * deltaTime;
+      glm::quat qYaw = glm::angleAxis(angle, glm::vec3(0, 1, 0));
+      rotation = glm::normalize(qYaw * rotation);
+    }
 
-    GetTransform().GetRotation() *= deltaRot;
+    glm::vec3 forward = rotation * glm::vec3(0, 0, -1);
+    glm::vec3 movement(0.0f);
+    if (yggdrasil::input::CKeyboard::IsKeyDown('W')) movement -= forward;
+    if (yggdrasil::input::CKeyboard::IsKeyDown('S')) movement += forward;
 
-    GetTransform().GetRotation() = glm::normalize(GetTransform().GetRotation());
+    if (glm::length(movement) > 0.0f)
+    {
+      movement = glm::normalize(movement) * MOVE_SPEED * deltaTime;
+      position += movement;
+    }
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation);
   }
 };
 

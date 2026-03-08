@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <Common/Keyboard.h>
 
 namespace yggdrasil
 {
@@ -95,12 +96,12 @@ LRESULT CALLBACK CWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
   {
     case WM_KEYDOWN:
     {
-      //CKeyboard::OnKeyDown((unsigned int)wParam);
+      input::CKeyboard::OnKeyDown((unsigned int)wParam);
       break;
     }
     case WM_KEYUP:
     {
-      //CKeyboard::OnKeyUp((unsigned int)wParam);
+      input::CKeyboard::OnKeyUp((unsigned int)wParam);
       break;
     }
     case WM_DESTROY:

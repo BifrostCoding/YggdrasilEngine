@@ -2,15 +2,21 @@
 
 #include <array>
 
-constexpr short KEY_COUNT = 256;
-
 namespace yggdrasil
 {
+namespace app
+{
+class CWindow;
+}
+
 namespace input
 {
+constexpr short KEY_COUNT = 256;
+
 class CKeyboard
 {
 friend class CApplication;
+friend class app::CWindow;
 
 public:
 
