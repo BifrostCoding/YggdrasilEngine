@@ -31,7 +31,7 @@ void CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
     materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
     materialDesc.m_textureFilename      = "./box.jpg";
 
-    rendering::CStaticMeshRenderData renderData
+    rendering::TStaticMeshDesc renderData
     {
       rendering::CBoxMesh(),
       materialDesc

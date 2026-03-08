@@ -29,7 +29,7 @@ public:
   void BindMaterial(CMaterialGPUResources* pMaterial);
 
   common::TResult CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pGPUResources) const;
-  common::TResult CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const CStaticMeshRenderData& data);
+  common::TResult CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const TStaticMeshDesc& data);
   common::TResult CreateMaterialGPUResources(std::unique_ptr<CMaterialGPUResources>& pGPUResources, const TMaterialDesc& desc);
 
 private:

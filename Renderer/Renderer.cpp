@@ -78,7 +78,7 @@ common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUReso
   return pGPUResources->Initialize();
 }
 
-common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const CStaticMeshRenderData& data)
+common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const TStaticMeshDesc& data)
 {
   pGPUResources = std::make_unique<CStaticMeshGPUResources>(*m_pRenderContext.get());
 

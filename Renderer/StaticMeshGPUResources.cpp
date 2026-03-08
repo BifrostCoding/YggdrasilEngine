@@ -8,16 +8,21 @@ CStaticMeshGPUResources::CStaticMeshGPUResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
   , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
+  , m_vertexShaderServive(renderContext.GetVertexShaderService())
   , m_indexCount(0U)
   , m_stride(0U)
 {
 }
 
-common::TResult CStaticMeshGPUResources::Initialize(const CStaticMeshRenderData& desc)
+common::TResult CStaticMeshGPUResources::Initialize(const TStaticMeshDesc& desc)
 {
   common::TResult result;
 
-  result = CreateVertexDescriptor(desc.m_pVertexShader);
+  rhi::IVertexShader* pVertexShader = m_vertexShaderServive.Get(desc.m_materialDesc.m_vertexShaderFilename);
+  if (pVertexShader == nullptr)
+    return ERROR_RESULT("can't get vertexShader from service");
+
+  result = CreateVertexDescriptor(pVertexShader);
   if (result.IsError())
     return result;
 

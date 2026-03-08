@@ -9,14 +9,12 @@ namespace yggdrasil
 namespace rendering
 {
 //------------------------------------------------
-// CStaticMeshGPUResourcesDesc
+// TStaticMeshDesc
 //------------------------------------------------
-struct CStaticMeshRenderData final
+struct TStaticMeshDesc final
 {
   rendering::CMeshData m_meshData;
   TMaterialDesc m_materialDesc;
-  //TODO:HACK remove it!!!
-  rhi::IVertexShader* m_pVertexShader;
 };
 
 //------------------------------------------------
@@ -29,7 +27,7 @@ public:
   CStaticMeshGPUResources(CRenderContext& renderContext);
   virtual ~CStaticMeshGPUResources() = default;
 
-  common::TResult Initialize(const CStaticMeshRenderData& desc);
+  common::TResult Initialize(const TStaticMeshDesc& desc);
 
   common::TResult CreateVertexDescriptor(rhi::IVertexShader* m_pVertexShader);
   common::TResult CreateVertexBuffer(const CMeshData& meshData);
@@ -46,6 +44,7 @@ public:
 private:
 
   rhi::IRHI& m_RHI;
+  CVertexShaderService& m_vertexShaderServive;
 
   std::unique_ptr<rhi::IVertexDescriptor> m_pVertexDescriptor;
   std::unique_ptr<rhi::IBuffer> m_pVertexBuffer;

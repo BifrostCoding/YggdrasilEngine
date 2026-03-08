@@ -49,15 +49,13 @@ common::TResult CRenderProxy::Load(CScene& scene)
   return result;
 }
 
-common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, rendering::CStaticMeshRenderData& data)
+common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, rendering::TStaticMeshDesc& data)
 {
   std::unique_ptr<rendering::CMaterialGPUResources> pMaterialGPUResources;
 
   common::TResult result = m_renderer.CreateMaterialGPUResources(pMaterialGPUResources, data.m_materialDesc);
   if (result.IsError())
     return result;
-
-  data.m_pVertexShader = pMaterialGPUResources->GetVertexShader();
 
   std::unique_ptr<rendering::CStaticMeshGPUResources> pStaticMeshGPUResources;
 
