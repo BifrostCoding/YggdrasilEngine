@@ -18,9 +18,11 @@ common::TResult CStaticMeshGPUResources::Initialize(const TStaticMeshDesc& desc)
 {
   common::TResult result;
 
-  rhi::IVertexShader* pVertexShader = m_vertexShaderServive.Get(desc.m_materialDesc.m_vertexShaderFilename);
-  if (pVertexShader == nullptr)
-    return ERROR_RESULT("can't get vertexShader from service");
+  rhi::IVertexShader* pVertexShader = nullptr;
+
+  result = m_vertexShaderServive.Get(desc.m_materialDesc.m_vertexShaderFilename, pVertexShader);
+  if (result.IsError())
+    return result;
 
   result = CreateVertexDescriptor(pVertexShader);
   if (result.IsError())

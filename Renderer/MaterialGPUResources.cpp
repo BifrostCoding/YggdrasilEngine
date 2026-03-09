@@ -17,17 +17,17 @@ common::TResult CMaterialGPUResources::Initialize(const TMaterialDesc& desc)
 {
   common::TResult result;
 
-  m_pVertexShader = m_renderContext.GetVertexShaderService().Get(desc.m_vertexShaderFilename);
-  if (m_pVertexShader == nullptr)
-    return ERROR_RESULT("can't get vertexShader from service");
+  result = m_renderContext.GetVertexShaderService().Get(desc.m_vertexShaderFilename, m_pVertexShader);
+  if (result.IsError())
+    return result;
 
-  m_pPixelShader = m_renderContext.GetPixelShaderService().Get(desc.m_pixelShaderFilename);
-  if (m_pPixelShader == nullptr)
-    return ERROR_RESULT("can't get pixelShader from service");
+  result = m_renderContext.GetPixelShaderService().Get(desc.m_pixelShaderFilename, m_pPixelShader);
+  if (result.IsError())
+    return result;
 
-  m_pTexture = m_renderContext.GetTextureService().Get(desc.m_textureFilename);
-  if (m_pTexture == nullptr)
-    return ERROR_RESULT("can't get texture from service");
+  result = m_renderContext.GetTextureService().Get(desc.m_textureFilename, m_pTexture);
+  if (result.IsError())
+    return result;
 
   result = CreateRasterizerState();
   if (result.IsError())

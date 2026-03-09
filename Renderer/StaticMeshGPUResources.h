@@ -29,7 +29,7 @@ public:
 
   common::TResult Initialize(const TStaticMeshDesc& desc);
 
-  common::TResult CreateVertexDescriptor(rhi::IVertexShader* m_pVertexShader);
+  common::TResult CreateVertexDescriptor(rhi::IVertexShader* pVertexShader);
   common::TResult CreateVertexBuffer(const CMeshData& meshData);
   common::TResult CreateIndexBuffer(const CMeshData& meshData);
 

@@ -9,25 +9,20 @@ CPixelShaderService::CPixelShaderService(rhi::IRHI& RHI)
 {
 }
 
-common::TResult CPixelShaderService::Initialize()
+common::TResult CPixelShaderService::Get(const std::string& filename, rhi::IPixelShader*& pPixelShader)
 {
   common::TResult result;
-  
-  result = CreatePixelShader("./PS_StaticMesh.cso");
-  if (result.IsError())
-    return result;
 
-  return result;
-}
-
-rhi::IPixelShader* CPixelShaderService::Get(const std::string& filename)
-{
   if (m_pixelShaders.find(filename) == m_pixelShaders.end())
   {
-    return nullptr;
+    result = CreatePixelShader(filename);
+    if (result.IsError())
+      return result;
   }
 
-  return m_pixelShaders[filename].get();
+  pPixelShader = m_pixelShaders[filename].get();
+
+  return result;
 }
 
 common::TResult CPixelShaderService::CreatePixelShader(const std::string& filename)

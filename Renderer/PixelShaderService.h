@@ -13,9 +13,7 @@ public:
   CPixelShaderService(rhi::IRHI& RHI);
   virtual ~CPixelShaderService() = default;
 
-  common::TResult Initialize();
-
-  rhi::IPixelShader* Get(const std::string& filename);
+  common::TResult Get(const std::string& filename, rhi::IPixelShader*& pPixelShader);
 
 private:
 

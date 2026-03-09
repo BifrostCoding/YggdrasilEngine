@@ -20,25 +20,7 @@ rhi::IRHI& CRenderContext::GetRHI()
 
 common::TResult CRenderContext::Initialize()
 {
-  common::TResult result;
-
-  result = m_constantBufferService.Initialize();
-  if (result.IsError())
-    return result;
-
-  result = m_vertexShaderService.Initialize();
-  if (result.IsError())
-    return result;
-
-  result = m_pixelShaderService.Initialize();
-  if (result.IsError())
-    return result;
-
-  result = m_textureService.Initialize();
-  if (result.IsError())
-    return result;
-
-  return result;
+  return m_constantBufferService.Initialize();;
 }
 
 CConstantBufferService& CRenderContext::GetConstantBufferService()

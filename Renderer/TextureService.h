@@ -13,9 +13,7 @@ public:
   CTextureService(rhi::IRHI& RHI);
   virtual ~CTextureService() = default;
 
-  common::TResult Initialize();
-
-  rhi::ITexture* Get(const std::string& filename);
+  common::TResult Get(const std::string& filename, rhi::ITexture*& pTexture);
 
 private:
 

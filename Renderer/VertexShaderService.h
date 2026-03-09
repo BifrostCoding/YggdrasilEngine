@@ -13,9 +13,7 @@ public:
   CVertexShaderService(rhi::IRHI& RHI);
   virtual ~CVertexShaderService() = default;
 
-  common::TResult Initialize();
-
-  rhi::IVertexShader* Get(const std::string& filename);
+  common::TResult Get(const std::string& filename, rhi::IVertexShader*& pVertexShader);
 
 private:
 

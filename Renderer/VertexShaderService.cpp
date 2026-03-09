@@ -9,25 +9,20 @@ CVertexShaderService::CVertexShaderService(rhi::IRHI& RHI)
 {
 }
 
-common::TResult CVertexShaderService::Initialize()
+common::TResult CVertexShaderService::Get(const std::string& filename, rhi::IVertexShader*& pVertexShader)
 {
   common::TResult result;
 
-  result = CreateVertexShader("./VS_StaticMesh.cso");
-  if (result.IsError())
-    return result;
-
-  return result;
-}
-
-rhi::IVertexShader* CVertexShaderService::Get(const std::string& filename)
-{
   if (m_VertexShaders.find(filename) == m_VertexShaders.end())
   {
-    return nullptr;
+    result = CreateVertexShader(filename);
+    if (result.IsError())
+      return result;
   }
 
-  return m_VertexShaders[filename].get();
+  pVertexShader = m_VertexShaders[filename].get();
+
+  return result;
 }
 
 common::TResult CVertexShaderService::CreateVertexShader(const std::string& filename)

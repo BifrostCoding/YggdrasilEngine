@@ -9,29 +9,20 @@ CTextureService::CTextureService(rhi::IRHI& RHI)
 {
 }
 
-common::TResult CTextureService::Initialize()
+common::TResult CTextureService::Get(const std::string& filename, rhi::ITexture*& pTexture)
 {
   common::TResult result;
 
-  result = CreateTexture("./box.jpg");
-  if (result.IsError())
-    return result;
-
-  result = CreateTexture("./mario_block.jpg");
-  if (result.IsError())
-    return result;
-
-  return result;
-}
-
-rhi::ITexture* CTextureService::Get(const std::string& filename)
-{
   if (m_Textures.find(filename) == m_Textures.end())
   {
-    return nullptr;
+    result = CreateTexture(filename);
+    if (result.IsError())
+      return result;
   }
 
-  return m_Textures[filename].get();
+  pTexture = m_Textures[filename].get();
+
+  return result;
 }
 
 common::TResult CTextureService::CreateTexture(const std::string& filename)
