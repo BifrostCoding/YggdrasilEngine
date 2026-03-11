@@ -126,6 +126,17 @@ common::TResult CDX11RHI::CreateDepthBuffer(const TDepthBufferDesc& depthBufferD
   return result;
 }
 
+common::TResult CDX11RHI::CreateViewport(const TViewportDesc& viewportDesc, std::unique_ptr<IViewport>& pViewport)
+{
+  auto pDX11Viewport = std::make_unique<CDX11Viewport>();
+
+  common::TResult result = pDX11Viewport->Initialize(viewportDesc);
+
+  pViewport = std::move(pDX11Viewport);
+
+  return result;
+}
+
 common::TResult CDX11RHI::CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState)
 {
   auto pDX11RasterizerState = std::make_unique<CDX11RasterizerState>();

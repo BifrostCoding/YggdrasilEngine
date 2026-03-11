@@ -9,7 +9,7 @@ namespace rhi
 //------------------------------------------------
 // TViewport
 //------------------------------------------------
-struct TViewport final
+struct TViewportDesc final
 {
   float m_x;
   float m_y;
@@ -27,6 +27,16 @@ class IRenderTarget
 public:
 
   virtual ~IRenderTarget() = default;
+};
+
+//------------------------------------------------
+// IViewport
+//------------------------------------------------
+class IViewport
+{
+public:
+
+  virtual ~IViewport() = default;
 };
 }
 }

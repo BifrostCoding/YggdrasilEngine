@@ -24,7 +24,7 @@ public:
   rhi::IRenderTarget* GetRenderTarget() const;
   rhi::IDepthBuffer* GetDepthBuffer() const;
   rhi::IBuffer* GetConstantBuffer() const;
-  const rhi::TViewport& GetViewport() const;
+  rhi::IViewport* GetViewport() const;
   TPSConstantBuffer_Scene* GetPSConstantBufferData() const;
   glm::vec3 GetClearColor() const;
 
@@ -42,7 +42,7 @@ private:
   std::unique_ptr<rhi::IRenderTarget> m_pRenderTarget;
   std::unique_ptr<rhi::IDepthBuffer> m_pDepthBuffer;
   std::unique_ptr<rhi::IBuffer> m_pConstantBuffer;
-  rhi::TViewport m_viewport;
+  std::unique_ptr<rhi::IViewport> m_pViewport;
 
   std::unique_ptr<TPSConstantBuffer_Scene> m_pPSConstantBufferData;
 

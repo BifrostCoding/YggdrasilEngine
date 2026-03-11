@@ -32,6 +32,7 @@ public:
   virtual common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) = 0;
   virtual common::TResult CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTarget) = 0;
   virtual common::TResult CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthBuffer) = 0;
+  virtual common::TResult CreateViewport(const TViewportDesc& viewportDesc, std::unique_ptr<IViewport>& pViewport) = 0;
   virtual common::TResult CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState) = 0;
 
   virtual void CreateCommandList(std::unique_ptr<ICommandList>& pCommandList) = 0;

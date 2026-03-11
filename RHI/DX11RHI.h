@@ -30,6 +30,7 @@ public:
   common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) override;
   common::TResult CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTargetView) override;
   common::TResult CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthStencilView) override;
+  common::TResult CreateViewport(const TViewportDesc& viewportDesc, std::unique_ptr<IViewport>& pViewport) override;
   common::TResult CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState) override;
 
   void CreateCommandList(std::unique_ptr<ICommandList>& pCommandList) override;

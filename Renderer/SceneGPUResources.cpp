@@ -8,7 +8,6 @@ CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWid
   : m_pRHI(pRHI)
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
-  , m_viewport()
   , m_pPSConstantBufferData(std::make_unique<TPSConstantBuffer_Scene>())
   , m_clearColor(0.2f, 0.5f, 0.8f)
 {
@@ -45,12 +44,16 @@ common::TResult CSceneGPUResources::InitializeRenderTarget()
   if (result.IsError())
     return result;
 
-  m_viewport.m_x        = 0;
-  m_viewport.m_y        = 0;
-  m_viewport.m_width    = m_targetWidth;
-  m_viewport.m_height   = m_targetHeight;
-  m_viewport.m_minDepth = 0.0f;
-  m_viewport.m_maxDepth = 1.0f;
+  rhi::TViewportDesc viewportDesc{};
+
+  viewportDesc.m_x        = 0;
+  viewportDesc.m_y        = 0;
+  viewportDesc.m_width    = m_targetWidth;
+  viewportDesc.m_height   = m_targetHeight;
+  viewportDesc.m_minDepth = 0.0f;
+  viewportDesc.m_maxDepth = 1.0f;
+
+  result = m_pRHI->CreateViewport(viewportDesc, m_pViewport);
 
   return result;
 }
@@ -93,9 +96,9 @@ rhi::IBuffer* CSceneGPUResources::GetConstantBuffer() const
   return m_pConstantBuffer.get();
 }
 
-const rhi::TViewport& CSceneGPUResources::GetViewport() const
+rhi::IViewport* CSceneGPUResources::GetViewport() const
 {
-  return m_viewport;
+  return m_pViewport.get();
 }
 
 TPSConstantBuffer_Scene* CSceneGPUResources::GetPSConstantBufferData() const

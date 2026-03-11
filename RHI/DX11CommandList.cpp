@@ -28,18 +28,11 @@ void CDX11CommandList::ClearRenderTarget(IRenderTarget* pRenderTargetView, IDept
   m_pRHI->GetDeviceContext()->OMSetRenderTargets(1, &pD3D11RenderTargetView, pD3D11DepthStencilView);
 }
 
-void CDX11CommandList::BindViewport(const TViewport& viewport)
+void CDX11CommandList::BindViewport(IViewport* pViewport)
 {
-  D3D11_VIEWPORT dx11Viewport{};
+  auto pDX11Viewport = dynamic_cast<CDX11Viewport*>(pViewport);
 
-  dx11Viewport.TopLeftX = viewport.m_x;
-  dx11Viewport.TopLeftY = viewport.m_y;
-  dx11Viewport.Width    = viewport.m_width;
-  dx11Viewport.Height   = viewport.m_height;
-  dx11Viewport.MinDepth = viewport.m_minDepth;
-  dx11Viewport.MaxDepth = viewport.m_maxDepth;
-
-  m_pRHI->GetDeviceContext()->RSSetViewports(1, &dx11Viewport);
+  m_pRHI->GetDeviceContext()->RSSetViewports(1, pDX11Viewport->Get());
 }
 
 void CDX11CommandList::BindVertexDescriptor(IVertexDescriptor* pVertexDescriptor)
