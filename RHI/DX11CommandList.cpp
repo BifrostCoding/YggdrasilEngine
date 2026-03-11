@@ -10,7 +10,7 @@ CDX11CommandList::CDX11CommandList(IRHI* pRHI)
 {
 }
 
-void CDX11CommandList::BeginFrame()
+void CDX11CommandList::Begin()
 {
   m_pRHI->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
@@ -129,12 +129,7 @@ void CDX11CommandList::DrawIndexed(uint32_t indexCount)
   m_pRHI->GetDeviceContext()->DrawIndexed(indexCount, 0, 0);
 }
 
-void CDX11CommandList::Submit()
-{
-  m_pRHI->GetDeviceContext()->Flush();
-}
-
-void CDX11CommandList::EndFrame()
+void CDX11CommandList::End()
 {
   m_pRHI->GetSwapChain()->Present(0, 0);
 }

@@ -14,28 +14,26 @@ common::TResult CRenderProxy::Initialize()
   return m_renderer.Initialize();
 }
 
-void CRenderProxy::RenderScene(CScene& scene)
+void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float deltaTime)
 {
-  m_renderer.BeginFrame();
+  scene.m_camera.Update();
 
+  m_renderer.BeginScene(scene.GetGPUResources());
+
+  for (auto& pEntity : scene.GetEntities())
   {
-    m_renderer.BeginScene(scene.GetGPUResources());
+    pEntity->Update(deltaTime, scene.m_camera);
 
-    for (auto& pEntity : scene.GetEntities())
+    CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
+
+    if (pStaticMesh != nullptr)
     {
-      CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
-
-      if (pStaticMesh != nullptr)
-      {
-        m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetGPUResources());
-        m_renderer.RenderStaticMesh(pStaticMesh->GetGPUResources());
-      }
+      m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetGPUResources());
+      m_renderer.RenderStaticMesh(pStaticMesh->GetGPUResources());
     }
-
-    m_renderer.EndScene();
   }
 
-  m_renderer.EndFrame();
+  m_renderer.EndScene();
 }
 
 common::TResult CRenderProxy::Load(CScene& scene)

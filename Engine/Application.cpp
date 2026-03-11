@@ -62,9 +62,7 @@ void CApplication::Tick()
 {
   m_timer.Update();
 
-  m_pCurrentScene->Update(m_timer.GetEngineTime(), m_timer.GetDeltaTime());
-
-  m_renderProxy.RenderScene(*m_pCurrentScene);
+  m_renderProxy.UpdateAndRenderScene(*m_pCurrentScene, m_timer.GetEngineTime(), m_timer.GetDeltaTime());
 
   input::CKeyboard::EndFrame();
 }

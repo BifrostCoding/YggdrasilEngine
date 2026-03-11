@@ -25,7 +25,7 @@ public:
 
   virtual ~ICommandList() = default;
 
-  virtual void BeginFrame() = 0;
+  virtual void Begin() = 0;
   virtual void ClearRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView, const glm::vec3& color) = 0;
   virtual void BindViewport(const TViewport& viewport) = 0;
   virtual void BindVertexDescriptor(IVertexDescriptor* pVertexDescriptor) = 0;
@@ -37,8 +37,7 @@ public:
   virtual void BindTexture(ITexture* pTexture) = 0;
   virtual void BindRasterizerState(IRasterizerState* pRasterizerState) = 0;
   virtual void DrawIndexed(uint32_t indexCount) = 0;
-  virtual void Submit() = 0;
-  virtual void EndFrame() = 0;
+  virtual void End() = 0;
 };
 }
 }

@@ -6,7 +6,7 @@ namespace rendering
 {
 CStaticMeshGPUResources::CStaticMeshGPUResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
-  , m_pVSConstantBufferData(std::make_unique<TVSConstantBuffer_StaticMesh>())
+  , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
   , m_vertexShaderServive(renderContext.GetVertexShaderService())
   , m_indexCount(0U)

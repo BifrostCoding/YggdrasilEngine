@@ -6,6 +6,7 @@ namespace rendering
 {
 CConstantBufferService::CConstantBufferService(rhi::IRHI& RHI)
   : m_RHI(RHI)
+  , m_pVSConstantBufferData_StaticMesh(std::make_shared<TVSConstantBuffer_StaticMesh>())
 {
 }
 
@@ -42,6 +43,11 @@ common::TResult CConstantBufferService::CreateVSConstantBuffer_StaticMesh()
 std::shared_ptr<rhi::IBuffer> CConstantBufferService::GetVSConstantBufferStaticMesh()
 {
   return m_pVSConstantBuffer_StaticMesh;
+}
+
+std::shared_ptr<TVSConstantBuffer_StaticMesh> CConstantBufferService::GetVSConstantBufferDataStaticMesh()
+{
+  return m_pVSConstantBufferData_StaticMesh;
 }
 }
 }

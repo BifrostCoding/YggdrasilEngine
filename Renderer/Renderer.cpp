@@ -27,18 +27,9 @@ common::TResult CRenderer::Initialize()
   return result;
 }
 
-void CRenderer::BeginFrame()
-{
-  m_pCommandList->BeginFrame();
-}
-
-void CRenderer::EndFrame()
-{
-  m_pCommandList->EndFrame();
-}
-
 void CRenderer::BeginScene(CSceneGPUResources* pScene)
 {
+  m_pCommandList->Begin();
   m_pCommandList->ClearRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer(), pScene->GetClearColor());
   m_pCommandList->BindViewport(pScene->GetViewport());
   m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetPSConstantBufferData());
@@ -46,7 +37,7 @@ void CRenderer::BeginScene(CSceneGPUResources* pScene)
 
 void CRenderer::EndScene()
 {
-  m_pCommandList->Submit();
+  m_pCommandList->End();
 }
 
 void CRenderer::RenderStaticMesh(CStaticMeshGPUResources* pStaticMesh)

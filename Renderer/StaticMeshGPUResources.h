@@ -51,7 +51,7 @@ private:
   std::unique_ptr<rhi::IBuffer> m_pIndexBuffer;
 
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer;
-  std::unique_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData;
+  std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData;
 
   size_t m_indexCount;
   size_t m_stride;

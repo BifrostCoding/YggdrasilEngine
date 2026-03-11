@@ -9,16 +9,6 @@ CScene::CScene(CRenderProxy& renderProxy)
 {
 }
 
-void CScene::Update(long engineTime, float deltaTime)
-{
-  m_camera.Update();
-
-  for (auto& pEntity : m_entities)
-  {
-    pEntity->Update(deltaTime, m_camera);
-  }
-}
-
 auto CScene::CreateStaticMesh(const rendering::TStaticMeshDesc& desc) const
 -> std::expected<std::unique_ptr<CStaticMesh>, common::TResult>
 {

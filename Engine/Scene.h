@@ -27,8 +27,6 @@ public:
 
 private:
 
-  void Update(long engineTime, float deltaTime);
-
   void SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pGPUResources);
   rendering::CSceneGPUResources* GetGPUResources() const;
 

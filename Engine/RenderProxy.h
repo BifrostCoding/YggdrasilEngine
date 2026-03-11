@@ -16,7 +16,7 @@ public:
 
   common::TResult Initialize();
 
-  void RenderScene(CScene& scene);
+  void UpdateAndRenderScene(CScene& scene, float engineTime, float deltaTime);
 
   common::TResult Load(CScene& scene);
   common::TResult Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data);

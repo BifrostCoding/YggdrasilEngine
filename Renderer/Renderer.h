@@ -18,9 +18,6 @@ public:
 
   common::TResult Initialize();
 
-  void BeginFrame();
-  void EndFrame();
-
   void BeginScene(CSceneGPUResources* pScene);
   void EndScene();
 
