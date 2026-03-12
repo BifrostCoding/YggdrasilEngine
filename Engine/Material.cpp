@@ -3,13 +3,13 @@
 
 namespace yggdrasil
 {
-void CMaterial::SetGPUResources(std::unique_ptr<rendering::CMaterialGPUResources> pGPUResources)
+void CMaterial::SetResources(std::unique_ptr<rendering::CMaterialResources> pResources)
 {
-  m_pGPUResources = std::move(pGPUResources);
+  m_pResources = std::move(pResources);
 }
 
-rendering::CMaterialGPUResources* CMaterial::GetGPUResources() const
+rendering::CMaterialResources* CMaterial::GetResources() const
 {
-  return m_pGPUResources.get();
+  return m_pResources.get();
 }
 }

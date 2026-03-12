@@ -1,18 +1,18 @@
-#include "Application.h"
+#include "Engine.h"
 #include <Common/Keyboard.h>
 
 namespace yggdrasil
 {
 namespace app
 {
-CApplication::CApplication(common::TApplicationData& applicationData, common::EBackend backend)
+CEngine::CEngine(common::TApplicationData& applicationData, common::EBackend backend)
   : m_window(applicationData, [&]() { Tick(); })
   , m_renderProxy(applicationData, backend)
   , m_pCurrentScene(nullptr)
 {
 }
 
-common::TResult CApplication::Initialize()
+common::TResult CEngine::Initialize()
 {
   common::TResult result = m_window.Initialize();
 
@@ -27,14 +27,19 @@ common::TResult CApplication::Initialize()
   return result;
 }
 
-void CApplication::Start()
+void CEngine::Start()
 {
   m_window.DoWindowMessageLoop();
 }
 
-std::expected<CScene*, common::TResult> CApplication::CreateScene()
+CRenderProxy& CEngine::GetRenderProxy()
 {
-  std::unique_ptr<CScene> pScene = std::make_unique<CScene>(m_renderProxy);
+  return m_renderProxy;
+}
+
+std::expected<CScene*, common::TResult> CEngine::CreateScene()
+{
+  std::unique_ptr<CScene> pScene = std::make_unique<CScene>(*this);
 
   common::TResult result = m_renderProxy.Load(*pScene.get());
 
@@ -53,12 +58,23 @@ std::expected<CScene*, common::TResult> CApplication::CreateScene()
   return pScenePtr;
 }
 
-CScene* CApplication::GetCurrentScene() const
+CScene* CEngine::GetCurrentScene() const
 {
   return m_pCurrentScene;
 }
 
-void CApplication::Tick()
+std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CEngine::CreateStaticMesh(const rendering::TStaticMeshDesc& desc)
+{
+  std::unique_ptr<CStaticMesh> pStaticMesh = std::make_unique<CStaticMesh>();
+
+  common::TResult result = m_renderProxy.Load(*pStaticMesh.get(), desc);
+  if (result.IsError())
+    return std::unexpected(result);
+
+  return pStaticMesh;
+}
+
+void CEngine::Tick()
 {
   m_timer.Update();
 

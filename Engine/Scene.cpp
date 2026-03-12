@@ -1,29 +1,18 @@
 #include "Scene.h"
 #include "RenderProxy.h"
+#include "Engine.h"
 
 namespace yggdrasil
 {
-CScene::CScene(CRenderProxy& renderProxy)
-  : m_renderProxy(renderProxy)
-  , m_camera(renderProxy.GetViewportWidth(), renderProxy.GetViewportHeight())
+CScene::CScene(app::CEngine& engine)
+  : m_engine(engine)
+  , m_camera(engine.GetRenderProxy().GetViewportWidth(), engine.GetRenderProxy().GetViewportHeight())
 {
-}
-
-auto CScene::CreateStaticMesh(const rendering::TStaticMeshDesc& desc) const
--> std::expected<std::unique_ptr<CStaticMesh>, common::TResult>
-{
-  std::unique_ptr<CStaticMesh> pStaticMesh = std::make_unique<CStaticMesh>();
-
-  common::TResult result = m_renderProxy.Load(*pStaticMesh.get(), desc);
-  if (result.IsError())
-    return std::unexpected(result);
-
-  return pStaticMesh;
 }
 
 common::TResult CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
 {
-  common::TResult result = pEntity->OnInitialize(*this);
+  common::TResult result = pEntity->OnInitialize(m_engine, *this);
   if (result.IsError())
     return result;
 
@@ -35,13 +24,13 @@ std::list<std::unique_ptr<AEntity>>& CScene::GetEntities()
   return m_entities;
 }
 
-void CScene::SetGPUResources(std::unique_ptr<rendering::CSceneGPUResources> pGPUResources)
+void CScene::SetResources(std::unique_ptr<rendering::CSceneResources> pResources)
 {
-  m_pGPUResources = std::move(pGPUResources);
+  m_pResources = std::move(pResources);
 }
 
-rendering::CSceneGPUResources* CScene::GetGPUResources() const
+rendering::CSceneResources* CScene::GetResources() const
 {
-  return m_pGPUResources.get();
+  return m_pResources.get();
 }
 }

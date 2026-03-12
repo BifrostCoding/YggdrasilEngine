@@ -18,7 +18,7 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
 {
   scene.m_camera.Update();
 
-  m_renderer.BeginScene(scene.GetGPUResources());
+  m_renderer.BeginScene(scene.GetResources());
 
   for (auto& pEntity : scene.GetEntities())
   {
@@ -28,8 +28,9 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
 
     if (pStaticMesh != nullptr)
     {
-      m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetGPUResources());
-      m_renderer.RenderStaticMesh(pStaticMesh->GetGPUResources());
+      m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetResources());
+      m_renderer.BindStaticMesh(pStaticMesh->GetResources());
+      m_renderer.SubmitObject();
     }
   }
 
@@ -38,33 +39,33 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
 
 common::TResult CRenderProxy::Load(CScene& scene)
 {
-  std::unique_ptr<rendering::CSceneGPUResources> pSceneGPUResources;
+  std::unique_ptr<rendering::CSceneResources> pSceneResources;
 
-  common::TResult result = m_renderer.CreateSceneGPUResources(pSceneGPUResources);
+  common::TResult result = m_renderer.CreateSceneResources(pSceneResources);
   if (result.IsError())
     return result;
 
-  scene.SetGPUResources(std::move(pSceneGPUResources));
+  scene.SetResources(std::move(pSceneResources));
 
   return result;
 }
 
 common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data)
 {
-  std::unique_ptr<rendering::CMaterialGPUResources> pMaterialGPUResources;
+  std::unique_ptr<rendering::CMaterialResources> pMaterialResources;
 
-  common::TResult result = m_renderer.CreateMaterialGPUResources(pMaterialGPUResources, data.m_materialDesc);
+  common::TResult result = m_renderer.CreateMaterialResources(pMaterialResources, data.m_materialDesc);
   if (result.IsError())
     return result;
 
-  std::unique_ptr<rendering::CStaticMeshGPUResources> pStaticMeshGPUResources;
+  std::unique_ptr<rendering::CStaticMeshResources> pStaticMeshResources;
 
-  result = m_renderer.CreateStaticMeshGPUResources(pStaticMeshGPUResources, data);
+  result = m_renderer.CreateStaticMeshResources(pStaticMeshResources, data);
   if (result.IsError())
     return result;
 
-  staticMesh.SetGPUResources(std::move(pStaticMeshGPUResources));
-  staticMesh.GetMaterial().SetGPUResources(std::move(pMaterialGPUResources));
+  staticMesh.SetResources(std::move(pStaticMeshResources));
+  staticMesh.GetMaterial().SetResources(std::move(pMaterialResources));
 
   return result;
 }

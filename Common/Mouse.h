@@ -10,7 +10,7 @@ class CMouse final
 {
 public:
 
-  friend class CApplication;
+  friend class CEngine;
   friend class CWindow;
 
   CMouse() = delete;

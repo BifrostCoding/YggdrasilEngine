@@ -55,7 +55,7 @@
 #include <intrin.h>
 #include <iostream>
 
-#define DEBUG_WRITE(message) std::cout << message << std::endl;
+#define YGG_WRITE(message) std::cout << message << std::endl
 
 #define YGG_ASSERT(condition, message) \
 if (!(condition)) \

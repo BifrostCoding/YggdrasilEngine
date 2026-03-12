@@ -10,20 +10,24 @@ namespace yggdrasil
 {
 namespace app
 {
-class CApplication
+class CEngine
 {
 public:
 
-  CApplication(common::TApplicationData& applicationData, common::EBackend backend);
-  virtual ~CApplication() = default;
-  CApplication(const CApplication&) = delete;
+  CEngine(common::TApplicationData& applicationData, common::EBackend backend);
+  virtual ~CEngine() = default;
+  CEngine(const CEngine&) = delete;
 
   common::TResult Initialize();
 
   void Start();
 
+  CRenderProxy& GetRenderProxy();
+
   std::expected<CScene*, common::TResult> CreateScene();
   CScene* GetCurrentScene() const;
+
+  std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CreateStaticMesh(const rendering::TStaticMeshDesc& desc);
 
 private:
 

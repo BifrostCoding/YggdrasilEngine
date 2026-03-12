@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Renderer/StaticMeshGPUResources.h>
+#include <Renderer/StaticMeshResources.h>
 #include <Common/Transform.h>
 #include "Material.h"
 
@@ -22,12 +22,12 @@ public:
 
 private:
 
-  void SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pGPUResources);
-  rendering::CStaticMeshGPUResources* GetGPUResources() const;
+  void SetResources(std::unique_ptr<rendering::CStaticMeshResources> pResources);
+  rendering::CStaticMeshResources* GetResources() const;
 
   CMaterial& GetMaterial();
 
-  std::unique_ptr<rendering::CStaticMeshGPUResources> m_pGPUResources;
+  std::unique_ptr<rendering::CStaticMeshResources> m_pResources;
   CMaterial m_material;
 };
 }

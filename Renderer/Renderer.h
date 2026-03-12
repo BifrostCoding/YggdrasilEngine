@@ -1,9 +1,9 @@
 #pragma once
 
 #include <RHI/RHI.h>
-#include "SceneGPUResources.h"
-#include "StaticMeshGPUResources.h"
-#include "MaterialGPUResources.h"
+#include "SceneResources.h"
+#include "StaticMeshResources.h"
+#include "MaterialResources.h"
 
 namespace yggdrasil
 {
@@ -18,22 +18,24 @@ public:
 
   common::TResult Initialize();
 
-  void BeginScene(CSceneGPUResources* pScene);
+  void BeginScene(CSceneResources* pScene);
   void EndScene();
 
-  void RenderStaticMesh(CStaticMeshGPUResources* pStaticMesh);
+  void SubmitObject();
 
-  void BindMaterial(CMaterialGPUResources* pMaterial);
+  void BindMaterial(CMaterialResources* pMaterial);
+  void BindStaticMesh(CStaticMeshResources* pStaticMesh);
 
-  common::TResult CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pGPUResources) const;
-  common::TResult CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const TStaticMeshDesc& data);
-  common::TResult CreateMaterialGPUResources(std::unique_ptr<CMaterialGPUResources>& pGPUResources, const TMaterialDesc& desc);
+  common::TResult CreateSceneResources(std::unique_ptr<CSceneResources>& pResources) const;
+  common::TResult CreateStaticMeshResources(std::unique_ptr<CStaticMeshResources>& pResources, const TStaticMeshDesc& data);
+  common::TResult CreateMaterialResources(std::unique_ptr<CMaterialResources>& pResources, const TMaterialDesc& desc);
 
 private:
 
   struct TRenderData
   {
-    CMaterialGPUResources* m_pCurrentMaterial;
+    CMaterialResources* m_pMaterial;
+    CStaticMeshResources* m_pStaticMesh;
   };
 
   const common::TApplicationData& m_applicationData;

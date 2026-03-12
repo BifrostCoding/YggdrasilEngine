@@ -2,7 +2,7 @@
 
 #include "MeshData.h"
 #include "RenderContext.h"
-#include "MaterialGPUResources.h"
+#include "MaterialResources.h"
 
 namespace yggdrasil
 {
@@ -18,14 +18,14 @@ struct TStaticMeshDesc final
 };
 
 //------------------------------------------------
-// CStaticMeshGPUResources
+// CStaticMeshResources
 //------------------------------------------------
-class CStaticMeshGPUResources
+class CStaticMeshResources
 {
 public:
 
-  CStaticMeshGPUResources(CRenderContext& renderContext);
-  virtual ~CStaticMeshGPUResources() = default;
+  CStaticMeshResources(CRenderContext& renderContext);
+  virtual ~CStaticMeshResources() = default;
 
   common::TResult Initialize(const TStaticMeshDesc& desc);
 

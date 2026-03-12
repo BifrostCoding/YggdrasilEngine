@@ -17,14 +17,14 @@ struct TMaterialDesc final
 };
 
 //------------------------------------------------
-// CMaterialGPUResources
+// CMaterialResources
 //------------------------------------------------
-class CMaterialGPUResources
+class CMaterialResources
 {
 public:
 
-  CMaterialGPUResources(CRenderContext& renderContext);
-  virtual ~CMaterialGPUResources() = default;
+  CMaterialResources(CRenderContext& renderContext);
+  virtual ~CMaterialResources() = default;
 
   common::TResult Initialize(const TMaterialDesc& desc);
 

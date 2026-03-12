@@ -5,6 +5,7 @@
 namespace yggdrasil
 {
 class CCamera;
+namespace app { class CEngine; }
 
 class AEntity
 {
@@ -13,8 +14,8 @@ public:
   AEntity() = default;
   virtual ~AEntity() = default;
 
-  virtual common::TResult OnInitialize(CScene& scene) = 0;
-  virtual void OnUpdate(float deltaTime) = 0;
+  virtual common::TResult OnInitialize(app::CEngine& engine, CScene& scene) = 0;
+  virtual void OnTick(float deltaTime) = 0;
 
   void SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh);
   CStaticMesh* GetStaticMesh();

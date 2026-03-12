@@ -1,10 +1,10 @@
-#include "SceneGPUResources.h"
+#include "SceneResources.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight)
+CSceneResources::CSceneResources(rhi::IRHI* pRHI, const uint32_t targetWidth, const uint32_t targetHeight)
   : m_pRHI(pRHI)
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
@@ -14,7 +14,7 @@ CSceneGPUResources::CSceneGPUResources(rhi::IRHI* pRHI, const uint32_t targetWid
   InitializeDirectionalLight();
 }
 
-common::TResult CSceneGPUResources::Initialize()
+common::TResult CSceneResources::Initialize()
 {
   common::TResult result = InitializeRenderTarget();
   if (result.IsError())
@@ -27,7 +27,7 @@ common::TResult CSceneGPUResources::Initialize()
   return result;
 }
 
-common::TResult CSceneGPUResources::InitializeRenderTarget()
+common::TResult CSceneResources::InitializeRenderTarget()
 {
   common::TResult result = m_pRHI->CreateRenderTarget(m_pRenderTarget);
 
@@ -58,7 +58,7 @@ common::TResult CSceneGPUResources::InitializeRenderTarget()
   return result;
 }
 
-common::TResult CSceneGPUResources::InitializePSConstantBuffer()
+common::TResult CSceneResources::InitializePSConstantBuffer()
 {
   rhi::TBufferDesc constantBufferDesc{};
 
@@ -74,39 +74,39 @@ common::TResult CSceneGPUResources::InitializePSConstantBuffer()
   return m_pRHI->CreateBuffer(constantBufferDesc, constantBufferDataHandle, m_pConstantBuffer);
 }
 
-void CSceneGPUResources::InitializeDirectionalLight()
+void CSceneResources::InitializeDirectionalLight()
 {
   m_pPSConstantBufferData->m_directionalLight.m_direction = glm::vec4(0.25f, 0.5f, -1.0f, 0.0f);
   m_pPSConstantBufferData->m_directionalLight.m_ambient   = glm::vec4(0.2f , 0.2f, 0.2f , 1.0f);
   m_pPSConstantBufferData->m_directionalLight.m_diffuse   = glm::vec4(1.0f , 1.0f, 1.0f , 1.0f);
 }
 
-rhi::IRenderTarget* CSceneGPUResources::GetRenderTarget() const
+rhi::IRenderTarget* CSceneResources::GetRenderTarget() const
 {
   return m_pRenderTarget.get();
 }
 
-rhi::IDepthBuffer* CSceneGPUResources::GetDepthBuffer() const
+rhi::IDepthBuffer* CSceneResources::GetDepthBuffer() const
 {
   return m_pDepthBuffer.get();
 }
 
-rhi::IBuffer* CSceneGPUResources::GetConstantBuffer() const
+rhi::IBuffer* CSceneResources::GetConstantBuffer() const
 {
   return m_pConstantBuffer.get();
 }
 
-rhi::IViewport* CSceneGPUResources::GetViewport() const
+rhi::IViewport* CSceneResources::GetViewport() const
 {
   return m_pViewport.get();
 }
 
-TPSConstantBuffer_Scene* CSceneGPUResources::GetPSConstantBufferData() const
+TPSConstantBuffer_Scene* CSceneResources::GetPSConstantBufferData() const
 {
   return m_pPSConstantBufferData.get();
 }
 
-glm::vec3 CSceneGPUResources::GetClearColor() const
+glm::vec3 CSceneResources::GetClearColor() const
 {
   return m_clearColor;
 }

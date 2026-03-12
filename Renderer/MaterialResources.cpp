@@ -1,10 +1,10 @@
-#include "MaterialGPUResources.h"
+#include "MaterialResources.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-CMaterialGPUResources::CMaterialGPUResources(CRenderContext& renderContext)
+CMaterialResources::CMaterialResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
   , m_renderContext(renderContext)
   , m_pVertexShader(nullptr)
@@ -13,7 +13,7 @@ CMaterialGPUResources::CMaterialGPUResources(CRenderContext& renderContext)
 {
 }
 
-common::TResult CMaterialGPUResources::Initialize(const TMaterialDesc& desc)
+common::TResult CMaterialResources::Initialize(const TMaterialDesc& desc)
 {
   common::TResult result;
 
@@ -36,7 +36,7 @@ common::TResult CMaterialGPUResources::Initialize(const TMaterialDesc& desc)
   return result;
 }
 
-common::TResult CMaterialGPUResources::CreateRasterizerState()
+common::TResult CMaterialResources::CreateRasterizerState()
 {
   rhi::TRasterizerDesc rasterizerDesc{};
 
@@ -47,22 +47,22 @@ common::TResult CMaterialGPUResources::CreateRasterizerState()
   return m_RHI.CreateRasterizerState(rasterizerDesc, m_pRasterizerState);
 }
 
-rhi::IVertexShader* CMaterialGPUResources::GetVertexShader() const
+rhi::IVertexShader* CMaterialResources::GetVertexShader() const
 {
   return m_pVertexShader;
 }
 
-rhi::IPixelShader* CMaterialGPUResources::GetPixelShader() const
+rhi::IPixelShader* CMaterialResources::GetPixelShader() const
 {
   return m_pPixelShader;
 }
 
-rhi::ITexture* CMaterialGPUResources::GetTexture() const
+rhi::ITexture* CMaterialResources::GetTexture() const
 {
   return m_pTexture;
 }
 
-rhi::IRasterizerState* CMaterialGPUResources::GetRasterizerState() const
+rhi::IRasterizerState* CMaterialResources::GetRasterizerState() const
 {
   return m_pRasterizerState.get();
 }

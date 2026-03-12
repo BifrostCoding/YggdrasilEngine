@@ -145,26 +145,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantBufferService.h" />
-    <ClInclude Include="MaterialGPUResources.h" />
+    <ClInclude Include="MaterialResources.h" />
     <ClInclude Include="MeshData.h" />
     <ClInclude Include="PixelShaderService.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="SceneGPUResources.h" />
-    <ClInclude Include="StaticMeshGPUResources.h" />
+    <ClInclude Include="SceneResources.h" />
+    <ClInclude Include="StaticMeshResources.h" />
     <ClInclude Include="TextureService.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexShaderService.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantBufferService.cpp" />
-    <ClCompile Include="MaterialGPUResources.cpp" />
+    <ClCompile Include="MaterialResources.cpp" />
     <ClCompile Include="MeshData.cpp" />
     <ClCompile Include="PixelShaderService.cpp" />
     <ClCompile Include="RenderContext.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="SceneGPUResources.cpp" />
-    <ClCompile Include="StaticMeshGPUResources.cpp" />
+    <ClCompile Include="SceneResources.cpp" />
+    <ClCompile Include="StaticMeshResources.cpp" />
     <ClCompile Include="TextureService.cpp" />
     <ClCompile Include="VertexShaderService.cpp" />
   </ItemGroup>

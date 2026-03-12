@@ -5,7 +5,7 @@ namespace yggdrasil
 {
 void CStaticMesh::Update(CCamera& camera, common::CTransform& transform)
 {
-  rendering::TVSConstantBuffer_StaticMesh* constantBufferData = m_pGPUResources->GetVSConstantBufferData();
+  rendering::TVSConstantBuffer_StaticMesh* constantBufferData = m_pResources->GetVSConstantBufferData();
 
   glm::mat4 worldMatrix       = glm::identity<glm::mat4>();
   glm::mat4 rotationMatrix    = glm::mat4_cast(transform.GetRotation());
@@ -18,14 +18,14 @@ void CStaticMesh::Update(CCamera& camera, common::CTransform& transform)
   constantBufferData->m_World = glm::transpose(worldMatrix);
 }
 
-void CStaticMesh::SetGPUResources(std::unique_ptr<rendering::CStaticMeshGPUResources> pGPUResources)
+void CStaticMesh::SetResources(std::unique_ptr<rendering::CStaticMeshResources> pResources)
 {
-  m_pGPUResources = std::move(pGPUResources);
+  m_pResources = std::move(pResources);
 }
 
-rendering::CStaticMeshGPUResources* CStaticMesh::GetGPUResources() const
+rendering::CStaticMeshResources* CStaticMesh::GetResources() const
 {
-  return m_pGPUResources.get();
+  return m_pResources.get();
 }
 
 CMaterial& CStaticMesh::GetMaterial()

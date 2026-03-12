@@ -10,7 +10,7 @@ void AEntity::Update(float deltaTime, CCamera& camera)
     m_pStaticMesh->Update(camera, m_transform);
   }
 
-  OnUpdate(deltaTime);
+  OnTick(deltaTime);
 }
 
 common::CTransform& AEntity::GetTransform()

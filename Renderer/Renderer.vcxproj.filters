@@ -45,13 +45,13 @@
     <ClInclude Include="ConstantBufferService.h">
       <Filter>Headerdateien\Services</Filter>
     </ClInclude>
-    <ClInclude Include="SceneGPUResources.h">
+    <ClInclude Include="SceneResources.h">
       <Filter>Headerdateien\GPUResources</Filter>
     </ClInclude>
-    <ClInclude Include="StaticMeshGPUResources.h">
+    <ClInclude Include="StaticMeshResources.h">
       <Filter>Headerdateien\GPUResources</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialGPUResources.h">
+    <ClInclude Include="MaterialResources.h">
       <Filter>Headerdateien\GPUResources</Filter>
     </ClInclude>
     <ClInclude Include="PixelShaderService.h">
@@ -77,13 +77,13 @@
     <ClCompile Include="ConstantBufferService.cpp">
       <Filter>Quelldateien\Services</Filter>
     </ClCompile>
-    <ClCompile Include="SceneGPUResources.cpp">
+    <ClCompile Include="SceneResources.cpp">
       <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
-    <ClCompile Include="StaticMeshGPUResources.cpp">
+    <ClCompile Include="StaticMeshResources.cpp">
       <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialGPUResources.cpp">
+    <ClCompile Include="MaterialResources.cpp">
       <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
     <ClCompile Include="PixelShaderService.cpp">

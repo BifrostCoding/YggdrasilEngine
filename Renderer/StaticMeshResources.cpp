@@ -1,10 +1,10 @@
-#include "StaticMeshGPUResources.h"
+#include "StaticMeshResources.h"
 
 namespace yggdrasil
 {
 namespace rendering
 {
-CStaticMeshGPUResources::CStaticMeshGPUResources(CRenderContext& renderContext)
+CStaticMeshResources::CStaticMeshResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
   , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
@@ -14,7 +14,7 @@ CStaticMeshGPUResources::CStaticMeshGPUResources(CRenderContext& renderContext)
 {
 }
 
-common::TResult CStaticMeshGPUResources::Initialize(const TStaticMeshDesc& desc)
+common::TResult CStaticMeshResources::Initialize(const TStaticMeshDesc& desc)
 {
   common::TResult result;
 
@@ -39,7 +39,7 @@ common::TResult CStaticMeshGPUResources::Initialize(const TStaticMeshDesc& desc)
   return result;
 }
 
-common::TResult CStaticMeshGPUResources::CreateVertexDescriptor(rhi::IVertexShader* m_pVertexShader)
+common::TResult CStaticMeshResources::CreateVertexDescriptor(rhi::IVertexShader* m_pVertexShader)
 {
   rhi::TVertexDescriptorDesc vertexDescriptorDesc{};
 
@@ -48,7 +48,7 @@ common::TResult CStaticMeshGPUResources::CreateVertexDescriptor(rhi::IVertexShad
   return m_RHI.CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader, m_pVertexDescriptor);
 }
 
-common::TResult CStaticMeshGPUResources::CreateVertexBuffer(const CMeshData& meshData)
+common::TResult CStaticMeshResources::CreateVertexBuffer(const CMeshData& meshData)
 {
   m_stride = meshData.GetStride();
 
@@ -65,7 +65,7 @@ common::TResult CStaticMeshGPUResources::CreateVertexBuffer(const CMeshData& mes
   return m_RHI.CreateBuffer(vertexBufferDesc, vertexBufferDataHandle, m_pVertexBuffer);
 }
 
-common::TResult CStaticMeshGPUResources::CreateIndexBuffer(const CMeshData& meshData)
+common::TResult CStaticMeshResources::CreateIndexBuffer(const CMeshData& meshData)
 {
   const std::vector<uint32_t>& indices = meshData.GetIndizes();
 
@@ -84,37 +84,37 @@ common::TResult CStaticMeshGPUResources::CreateIndexBuffer(const CMeshData& mesh
   return m_RHI.CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
 }
 
-rhi::IVertexDescriptor* CStaticMeshGPUResources::GetVertexDescriptor() const
+rhi::IVertexDescriptor* CStaticMeshResources::GetVertexDescriptor() const
 {
   return m_pVertexDescriptor.get();
 }
 
-rhi::IBuffer* CStaticMeshGPUResources::GetVertexBuffer() const
+rhi::IBuffer* CStaticMeshResources::GetVertexBuffer() const
 {
   return m_pVertexBuffer.get();
 }
 
-rhi::IBuffer* CStaticMeshGPUResources::GetIndexBuffer() const
+rhi::IBuffer* CStaticMeshResources::GetIndexBuffer() const
 {
   return m_pIndexBuffer.get();
 }
 
-rhi::IBuffer* CStaticMeshGPUResources::GetVSConstantBuffer() const
+rhi::IBuffer* CStaticMeshResources::GetVSConstantBuffer() const
 {
   return m_pVSConstantBuffer.get();
 }
 
-TVSConstantBuffer_StaticMesh* CStaticMeshGPUResources::GetVSConstantBufferData() const
+TVSConstantBuffer_StaticMesh* CStaticMeshResources::GetVSConstantBufferData() const
 {
   return m_pVSConstantBufferData.get();
 }
 
-const size_t CStaticMeshGPUResources::GetStride() const
+const size_t CStaticMeshResources::GetStride() const
 {
   return m_stride;
 }
 
-const size_t CStaticMeshGPUResources::GetIndexCount() const
+const size_t CStaticMeshResources::GetIndexCount() const
 {
   return m_indexCount;
 }

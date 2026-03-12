@@ -33,7 +33,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
+    <ClInclude Include="Engine.h">
       <Filter>Headerdateien\App</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
@@ -59,7 +59,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="Engine.cpp">
       <Filter>Quelldateien\App</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">

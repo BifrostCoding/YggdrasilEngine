@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Renderer/MaterialGPUResources.h>
+#include <Renderer/MaterialResources.h>
 
 namespace yggdrasil
 {
@@ -15,9 +15,9 @@ public:
 
 private:
 
-  void SetGPUResources(std::unique_ptr<rendering::CMaterialGPUResources> pGPUResources);
-  rendering::CMaterialGPUResources* GetGPUResources() const;
+  void SetResources(std::unique_ptr<rendering::CMaterialResources> pResources);
+  rendering::CMaterialResources* GetResources() const;
 
-  std::unique_ptr<rendering::CMaterialGPUResources> m_pGPUResources;
+  std::unique_ptr<rendering::CMaterialResources> m_pResources;
 };
 }

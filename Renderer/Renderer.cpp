@@ -27,7 +27,7 @@ common::TResult CRenderer::Initialize()
   return result;
 }
 
-void CRenderer::BeginScene(CSceneGPUResources* pScene)
+void CRenderer::BeginScene(CSceneResources* pScene)
 {
   m_pCommandList->Begin();
   m_pCommandList->ClearRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer(), pScene->GetClearColor());
@@ -40,47 +40,59 @@ void CRenderer::EndScene()
   m_pCommandList->End();
 }
 
-void CRenderer::RenderStaticMesh(CStaticMeshGPUResources* pStaticMesh)
+void CRenderer::SubmitObject()
 {
-  if(m_renderData.m_pCurrentMaterial != nullptr)
+  if(m_renderData.m_pMaterial != nullptr)
   {
-    m_pCommandList->BindVertexShader(m_renderData.m_pCurrentMaterial->GetVertexShader());
-    m_pCommandList->BindPixelShader(m_renderData.m_pCurrentMaterial->GetPixelShader());
-    m_pCommandList->BindTexture(m_renderData.m_pCurrentMaterial->GetTexture());
-    m_pCommandList->BindRasterizerState(m_renderData.m_pCurrentMaterial->GetRasterizerState());
+    m_pCommandList->BindVertexShader(m_renderData.m_pMaterial->GetVertexShader());
+    m_pCommandList->BindPixelShader(m_renderData.m_pMaterial->GetPixelShader());
+    m_pCommandList->BindTexture(m_renderData.m_pMaterial->GetTexture());
+    m_pCommandList->BindRasterizerState(m_renderData.m_pMaterial->GetRasterizerState());
+
+    m_renderData.m_pMaterial = nullptr;
   }
 
-  m_pCommandList->BindVertexDescriptor(pStaticMesh->GetVertexDescriptor());
-  m_pCommandList->BindVertexBuffer(pStaticMesh->GetVertexBuffer(), pStaticMesh->GetStride());
-  m_pCommandList->BindIndexBuffer(pStaticMesh->GetIndexBuffer());
-  m_pCommandList->BindShaderData(pStaticMesh->GetVSConstantBuffer(), pStaticMesh->GetVSConstantBufferData());
-  m_pCommandList->DrawIndexed(pStaticMesh->GetIndexCount());
+  if (m_renderData.m_pStaticMesh != nullptr)
+  {
+    m_pCommandList->BindVertexDescriptor(m_renderData.m_pStaticMesh->GetVertexDescriptor());
+    m_pCommandList->BindVertexBuffer(m_renderData.m_pStaticMesh->GetVertexBuffer(), m_renderData.m_pStaticMesh->GetStride());
+    m_pCommandList->BindIndexBuffer(m_renderData.m_pStaticMesh->GetIndexBuffer());
+    m_pCommandList->BindShaderData(m_renderData.m_pStaticMesh->GetVSConstantBuffer(), m_renderData.m_pStaticMesh->GetVSConstantBufferData());
+    m_pCommandList->DrawIndexed(m_renderData.m_pStaticMesh->GetIndexCount());
+
+    m_renderData.m_pStaticMesh = nullptr;
+  }
 }
 
-void CRenderer::BindMaterial(CMaterialGPUResources* pMaterial)
+void CRenderer::BindMaterial(CMaterialResources* pMaterial)
 {
-  m_renderData.m_pCurrentMaterial = pMaterial;
+  m_renderData.m_pMaterial = pMaterial;
 }
 
-common::TResult CRenderer::CreateSceneGPUResources(std::unique_ptr<CSceneGPUResources>& pGPUResources) const
+void CRenderer::BindStaticMesh(CStaticMeshResources* pStaticMesh)
 {
-  pGPUResources = std::make_unique<CSceneGPUResources>(m_pRHI.get(), m_applicationData.m_width, m_applicationData.m_height);
-
-  return pGPUResources->Initialize();
+  m_renderData.m_pStaticMesh = pStaticMesh;
 }
 
-common::TResult CRenderer::CreateStaticMeshGPUResources(std::unique_ptr<CStaticMeshGPUResources>& pGPUResources, const TStaticMeshDesc& data)
+common::TResult CRenderer::CreateSceneResources(std::unique_ptr<CSceneResources>& pResources) const
 {
-  pGPUResources = std::make_unique<CStaticMeshGPUResources>(*m_pRenderContext.get());
+  pResources = std::make_unique<CSceneResources>(m_pRHI.get(), m_applicationData.m_width, m_applicationData.m_height);
 
-  return pGPUResources->Initialize(data);
+  return pResources->Initialize();
 }
 
-common::TResult CRenderer::CreateMaterialGPUResources(std::unique_ptr<CMaterialGPUResources>& pGPUResources, const TMaterialDesc& desc)
+common::TResult CRenderer::CreateStaticMeshResources(std::unique_ptr<CStaticMeshResources>& pResources, const TStaticMeshDesc& data)
 {
-  pGPUResources = std::make_unique<CMaterialGPUResources>(*m_pRenderContext.get());
+  pResources = std::make_unique<CStaticMeshResources>(*m_pRenderContext.get());
 
-  return pGPUResources->Initialize(desc);
+  return pResources->Initialize(data);
+}
+
+common::TResult CRenderer::CreateMaterialResources(std::unique_ptr<CMaterialResources>& pResources, const TMaterialDesc& desc)
+{
+  pResources = std::make_unique<CMaterialResources>(*m_pRenderContext.get());
+
+  return pResources->Initialize(desc);
 }
 }
 }
