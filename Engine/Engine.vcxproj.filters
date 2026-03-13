@@ -25,12 +25,6 @@
     <Filter Include="Headerdateien\Scene">
       <UniqueIdentifier>{97f02241-f754-4b45-a447-21838b4220b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Rendering">
-      <UniqueIdentifier>{aac213b1-8c83-48fc-b76a-c061e333b64c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Rendering">
-      <UniqueIdentifier>{c42e96d9-a1e3-47a8-9f6a-b094df72416a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -48,14 +42,17 @@
     <ClInclude Include="Entity.h">
       <Filter>Headerdateien\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Headerdateien\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="StaticMesh.h">
-      <Filter>Headerdateien\Rendering</Filter>
+      <Filter>Headerdateien\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>Headerdateien\Rendering</Filter>
+      <Filter>Headerdateien\Scene</Filter>
     </ClInclude>
     <ClInclude Include="RenderProxy.h">
-      <Filter>Headerdateien\Rendering</Filter>
+      <Filter>Headerdateien\App</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,14 +71,17 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="StaticMesh.cpp">
-      <Filter>Quelldateien\Rendering</Filter>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Quelldateien\Rendering</Filter>
+    <ClCompile Include="StaticMesh.cpp">
+      <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
     <ClCompile Include="RenderProxy.cpp">
-      <Filter>Quelldateien\Rendering</Filter>
+      <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Quelldateien\App</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

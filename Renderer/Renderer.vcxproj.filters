@@ -63,6 +63,9 @@
     <ClInclude Include="TextureService.h">
       <Filter>Headerdateien\Services</Filter>
     </ClInclude>
+    <ClInclude Include="TerrainResources.h">
+      <Filter>Headerdateien\GPUResources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Renderer.cpp">
@@ -94,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="TextureService.cpp">
       <Filter>Quelldateien\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainResources.cpp">
+      <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

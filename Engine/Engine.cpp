@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include <Common/Keyboard.h>
+#include "Terrain.h"
 
 namespace yggdrasil
 {
@@ -72,6 +73,17 @@ std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CEngine::CreateStat
     return std::unexpected(result);
 
   return pStaticMesh;
+}
+
+std::expected<std::unique_ptr<CTerrain>, common::TResult> CEngine::CreateTerrain(std::unique_ptr<rendering::CMeshData> pMeshData, const rendering::TTerrainResourceDesc& desc)
+{
+  std::unique_ptr<CTerrain> pTerrain = std::make_unique<CTerrain>(std::move(pMeshData));
+
+  common::TResult result = m_renderProxy.Load(*pTerrain.get(), desc);
+  if (result.IsError())
+    return std::unexpected(result);
+
+  return pTerrain;
 }
 
 void CEngine::Tick()

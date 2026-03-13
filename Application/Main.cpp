@@ -17,7 +17,7 @@ public:
 
     materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
     materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "./mario_dblock.jpg";
+    materialDesc.m_textureFilename      = "./box.jpg";
 
     yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
     {
@@ -74,6 +74,45 @@ public:
 };
 
 //------------------------------------------------
+// custom - Entity
+//------------------------------------------------
+class CLandscape : public yggdrasil::AEntity
+{
+public:
+
+  CLandscape() = default;
+  virtual ~CLandscape() = default;
+
+  yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
+  {
+    yggdrasil::CTerrainGenerator terrainGenerator(500, 1.0f);
+
+    std::unique_ptr<yggdrasil::rendering::CMeshData> pMeshData = terrainGenerator.GenerateMesh();
+
+    yggdrasil::rendering::TTerrainResourceDesc desc
+    {
+      *pMeshData.get()
+    };
+
+
+    auto terrainResult = engine.CreateTerrain(std::move(pMeshData), desc);
+
+    if (!terrainResult.has_value())
+      return terrainResult.error();
+
+    SetTerrain(std::move(terrainResult.value()));
+
+    GetTransform().GetPosition() = glm::vec3(-250.0f, -1.0f, 0.0f);
+
+    return yggdrasil::common::TResult();
+  }
+
+  void OnTick(float deltaTime) override
+  {
+  }
+};
+
+//------------------------------------------------
 // Main - Function
 //------------------------------------------------
 int main(int argv, char* argc[])
@@ -104,6 +143,13 @@ int main(int argv, char* argc[])
   yggdrasil::CScene* pScene = sceneResult.value();
 
   result = pScene->AddEntity(std::make_unique<CBox>());
+  if (result.IsError())
+  {
+    YGG_WRITE(result.GetText());
+    return -1;
+  }
+
+  result = pScene->AddEntity(std::make_unique<CLandscape>());
   if (result.IsError())
   {
     YGG_WRITE(result.GetText());

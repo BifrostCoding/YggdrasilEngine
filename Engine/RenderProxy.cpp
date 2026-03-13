@@ -1,5 +1,6 @@
 #include "RenderProxy.h"
 #include "Scene.h"
+#include "Terrain.h"
 
 namespace yggdrasil
 {
@@ -30,7 +31,15 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
     {
       m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetResources());
       m_renderer.BindStaticMesh(pStaticMesh->GetResources());
-      m_renderer.SubmitObject();
+      m_renderer.RenderStaticMesh();
+    }
+
+    CTerrain* pTerrain = pEntity->GetTerrain();
+
+    if (pTerrain != nullptr)
+    {
+      m_renderer.BindTerrain(pTerrain->GetResources());
+      m_renderer.RenderTerrain();
     }
   }
 
@@ -66,6 +75,19 @@ common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, const rendering::TSt
 
   staticMesh.SetResources(std::move(pStaticMeshResources));
   staticMesh.GetMaterial().SetResources(std::move(pMaterialResources));
+
+  return result;
+}
+
+common::TResult CRenderProxy::Load(CTerrain& terrain, const rendering::TTerrainResourceDesc& desc)
+{
+  std::unique_ptr<rendering::CTerrainResources> pTerrainRersouces;
+
+  common::TResult result = m_renderer.CreateTerrainResources(pTerrainRersouces, desc);
+  if (result.IsError())
+    return result;
+
+  terrain.SetResources(std::move(pTerrainRersouces));
 
   return result;
 }

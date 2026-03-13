@@ -152,6 +152,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SceneResources.h" />
     <ClInclude Include="StaticMeshResources.h" />
+    <ClInclude Include="TerrainResources.h" />
     <ClInclude Include="TextureService.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexShaderService.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SceneResources.cpp" />
     <ClCompile Include="StaticMeshResources.cpp" />
+    <ClCompile Include="TerrainResources.cpp" />
     <ClCompile Include="TextureService.cpp" />
     <ClCompile Include="VertexShaderService.cpp" />
   </ItemGroup>

@@ -17,6 +17,8 @@ common::TResult CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
     return result;
 
   m_entities.push_back(std::move(pEntity));
+
+  return result;
 }
 
 std::list<std::unique_ptr<AEntity>>& CScene::GetEntities()

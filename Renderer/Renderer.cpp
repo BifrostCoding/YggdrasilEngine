@@ -40,7 +40,7 @@ void CRenderer::EndScene()
   m_pCommandList->End();
 }
 
-void CRenderer::SubmitObject()
+void CRenderer::RenderStaticMesh()
 {
   if(m_renderData.m_pMaterial != nullptr)
   {
@@ -48,8 +48,6 @@ void CRenderer::SubmitObject()
     m_pCommandList->BindPixelShader(m_renderData.m_pMaterial->GetPixelShader());
     m_pCommandList->BindTexture(m_renderData.m_pMaterial->GetTexture());
     m_pCommandList->BindRasterizerState(m_renderData.m_pMaterial->GetRasterizerState());
-
-    m_renderData.m_pMaterial = nullptr;
   }
 
   if (m_renderData.m_pStaticMesh != nullptr)
@@ -59,8 +57,22 @@ void CRenderer::SubmitObject()
     m_pCommandList->BindIndexBuffer(m_renderData.m_pStaticMesh->GetIndexBuffer());
     m_pCommandList->BindShaderData(m_renderData.m_pStaticMesh->GetVSConstantBuffer(), m_renderData.m_pStaticMesh->GetVSConstantBufferData());
     m_pCommandList->DrawIndexed(m_renderData.m_pStaticMesh->GetIndexCount());
+  }
+}
 
-    m_renderData.m_pStaticMesh = nullptr;
+void CRenderer::RenderTerrain()
+{
+  if (m_renderData.m_pTerrain != nullptr)
+  {
+    m_pCommandList->BindVertexShader(m_renderData.m_pTerrain->GetVertexShader());
+    m_pCommandList->BindPixelShader(m_renderData.m_pTerrain->GetPixelShader());
+    m_pCommandList->BindTexture(m_renderData.m_pTerrain->GetTexture());
+    m_pCommandList->BindRasterizerState(m_renderData.m_pTerrain->GetRasterizerState());
+    m_pCommandList->BindVertexDescriptor(m_renderData.m_pTerrain->GetVertexDescriptor());
+    m_pCommandList->BindVertexBuffer(m_renderData.m_pTerrain->GetVertexBuffer(), m_renderData.m_pTerrain->GetStride());
+    m_pCommandList->BindIndexBuffer(m_renderData.m_pTerrain->GetIndexBuffer());
+    m_pCommandList->BindShaderData(m_renderData.m_pTerrain->GetVSConstantBuffer(), m_renderData.m_pTerrain->GetVSConstantBufferData());
+    m_pCommandList->DrawIndexed(m_renderData.m_pTerrain->GetIndexCount());
   }
 }
 
@@ -72,6 +84,11 @@ void CRenderer::BindMaterial(CMaterialResources* pMaterial)
 void CRenderer::BindStaticMesh(CStaticMeshResources* pStaticMesh)
 {
   m_renderData.m_pStaticMesh = pStaticMesh;
+}
+
+void CRenderer::BindTerrain(CTerrainResources* pTerrain)
+{
+  m_renderData.m_pTerrain = pTerrain;
 }
 
 common::TResult CRenderer::CreateSceneResources(std::unique_ptr<CSceneResources>& pResources) const
@@ -91,6 +108,13 @@ common::TResult CRenderer::CreateStaticMeshResources(std::unique_ptr<CStaticMesh
 common::TResult CRenderer::CreateMaterialResources(std::unique_ptr<CMaterialResources>& pResources, const TMaterialDesc& desc)
 {
   pResources = std::make_unique<CMaterialResources>(*m_pRenderContext.get());
+
+  return pResources->Initialize(desc);
+}
+
+common::TResult CRenderer::CreateTerrainResources(std::unique_ptr<CTerrainResources>& pResources, const TTerrainResourceDesc& desc)
+{
+  pResources = std::make_unique<CTerrainResources>(*m_pRenderContext.get());
 
   return pResources->Initialize(desc);
 }
