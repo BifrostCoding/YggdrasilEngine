@@ -13,7 +13,7 @@ struct TTerrainResourceDesc final
 {
   size_t m_stride;
   const void* m_pVerticesData;
-  size_t m_vertexDataSize;
+  size_t m_verticesDataSize;
   const void* m_pIndicesData;
   size_t m_indexCount;
 };

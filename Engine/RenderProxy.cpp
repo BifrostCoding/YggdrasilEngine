@@ -79,11 +79,19 @@ common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, const rendering::TSt
   return result;
 }
 
-common::TResult CRenderProxy::Load(CTerrain& terrain, const rendering::TTerrainResourceDesc& desc)
+common::TResult CRenderProxy::Load(CTerrain& terrain)
 {
+  yggdrasil::rendering::TTerrainResourceDesc terrainResourceDesc{};
+
+  terrainResourceDesc.m_stride           = sizeof(yggdrasil::rendering::TStaticMeshVertex);
+  terrainResourceDesc.m_pVerticesData    = terrain.GetMesh()->m_vertices.data();
+  terrainResourceDesc.m_verticesDataSize = sizeof(yggdrasil::rendering::TStaticMeshVertex) * terrain.GetMesh()->m_vertices.size();
+  terrainResourceDesc.m_pIndicesData     = terrain.GetMesh()->m_indices.data();
+  terrainResourceDesc.m_indexCount       = terrain.GetMesh()->m_indices.size();
+
   std::unique_ptr<rendering::CTerrainResources> pTerrainRersouces;
 
-  common::TResult result = m_renderer.CreateTerrainResources(pTerrainRersouces, desc);
+  common::TResult result = m_renderer.CreateTerrainResources(pTerrainRersouces, terrainResourceDesc);
   if (result.IsError())
     return result;
 

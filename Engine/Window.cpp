@@ -96,6 +96,11 @@ LRESULT CALLBACK CWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
   {
     case WM_KEYDOWN:
     {
+      if (wParam == VK_ESCAPE)
+      {
+        DestroyWindow(hwnd);
+      }
+
       input::CKeyboard::OnKeyDown((unsigned int)wParam);
       break;
     }

@@ -52,7 +52,7 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetTextureService().Get("./gras.jpg", m_pTexture);
+  result = m_renderContext.GetTextureService().Get("./gras.jfif", m_pTexture);
   if (result.IsError())
     return result;
 
@@ -80,7 +80,7 @@ common::TResult CTerrainResources::CreateVertexBuffer(const TTerrainResourceDesc
   common::TDataHandle vertexBufferDataHandle{};
 
   vertexBufferDataHandle.m_pData = desc.m_pVerticesData;
-  vertexBufferDataHandle.m_size  = desc.m_vertexDataSize;
+  vertexBufferDataHandle.m_size  = desc.m_verticesDataSize;
 
   return m_RHI.CreateBuffer(vertexBufferDesc, vertexBufferDataHandle, m_pVertexBuffer);
 }

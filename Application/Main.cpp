@@ -32,7 +32,7 @@ public:
 
     SetStaticMesh(std::move(staticMeshResult.value()));
 
-    GetTransform().GetPosition() = glm::vec3(0.0f, 5.0f, 50.0f);
+    GetTransform().GetPosition() = glm::vec3(50.0f, 15.0f, 50.0f);
 
     return yggdrasil::common::TResult();
   }
@@ -65,43 +65,41 @@ public:
   {
     m_pScene = &scene;
 
-    yggdrasil::CTerrainGenerator terrainGenerator(500, 1.0f);
+    yggdrasil::TTerrainGenerationParams terrainGenerationParams{};
 
-    std::unique_ptr<yggdrasil::TTerrainMesh> terrainMesh = terrainGenerator.GenerateMesh();
+    terrainGenerationParams.m_fieldCount    = 250.0f;
+    terrainGenerationParams.m_fieldWidth    = 1.0f;
+    terrainGenerationParams.m_repeatTexture = 50.0f;
 
-    yggdrasil::rendering::TTerrainResourceDesc desc
-    {
-      sizeof(yggdrasil::rendering::TStaticMeshVertex),
-      terrainMesh->m_vertices.data(),
-      sizeof(yggdrasil::rendering::TStaticMeshVertex)* terrainMesh->m_vertices.size(),
-      terrainMesh->m_indices.data(),
-      terrainMesh->m_indices.size(),
-    };
+    yggdrasil::CTerrainGenerator terrainGenerator(terrainGenerationParams);
 
-    auto terrainResult = engine.CreateTerrain(std::move(terrainMesh), desc);
+    std::unique_ptr<yggdrasil::TTerrainMesh> terrainMesh = terrainGenerator.Generate();
+
+    auto terrainResult = engine.CreateTerrain(std::move(terrainMesh));
 
     if (!terrainResult.has_value())
       return terrainResult.error();
 
     SetTerrain(std::move(terrainResult.value()));
 
-    //GetTransform().GetPosition() = glm::vec3(-250.0f, -1.0f, 0.0f);
-
     return yggdrasil::common::TResult();
   }
 
   void OnTick(float deltaTime) override
   {
+    constexpr static float MOVE_SPEED = 10.0f;
+    constexpr static float ROT_SPEED  = glm::radians(100.0f);
+    constexpr static float GRAVITY    = 9.81f;
+    constexpr static float JUMP_FORCE = 5.0f;
+    constexpr static float ACCEL      = 10.0f; // Beschleunigung / Trägheit
+
     yggdrasil::CCamera& camera = m_pScene->GetCamera();
 
     glm::vec3& position = camera.GetTransform().GetPosition();
     glm::quat& rotation = camera.GetTransform().GetRotation();
 
-    constexpr float MOVE_SPEED = 5.0f;
-    constexpr float ROT_SPEED  = glm::radians(90.0f);
-
+    // --- Rotation ---
     float yaw = 0.0f;
-
     if (yggdrasil::input::CKeyboard::IsKeyDown('A')) yaw += 1.0f;
     if (yggdrasil::input::CKeyboard::IsKeyDown('D')) yaw -= 1.0f;
 
@@ -113,25 +111,61 @@ public:
     }
 
     glm::vec3 forward = rotation * glm::vec3(0, 0, -1);
-    glm::vec3 movement(0.0f);
 
-    if (yggdrasil::input::CKeyboard::IsKeyDown('W')) movement -= forward;
-    if (yggdrasil::input::CKeyboard::IsKeyDown('S')) movement += forward;
+    // --- Zielgeschwindigkeit berechnen ---
+    glm::vec3 targetVelocity(0.0f);
 
-    if (glm::length(movement) > 0.0f)
+    if (yggdrasil::input::CKeyboard::IsKeyDown('W')) targetVelocity -= forward;
+    if (yggdrasil::input::CKeyboard::IsKeyDown('S')) targetVelocity += forward;
+
+    if (glm::length(targetVelocity) > 0.0f)
     {
-      movement = glm::normalize(movement) * MOVE_SPEED * deltaTime;
-      position += movement;
+      targetVelocity = glm::normalize(targetVelocity) * MOVE_SPEED;
     }
 
-    position.y = GetTerrain()->GetHeight(glm::vec2(position.x, position.z)) + 0.5f;
+    // --- Velocity sanft an Zielgeschwindigkeit annähern ---
+    velocity.x = glm::mix(velocity.x, targetVelocity.x, glm::clamp(ACCEL * deltaTime, 0.0f, 1.0f));
+    velocity.z = glm::mix(velocity.z, targetVelocity.z, glm::clamp(ACCEL * deltaTime, 0.0f, 1.0f));
 
+    // --- Gravity & Jump ---
+    velocity.y -= GRAVITY * deltaTime;
+    if (onGround && yggdrasil::input::CKeyboard::IsKeyDown(VK_SPACE))
+    {
+      velocity.y = JUMP_FORCE;
+      onGround = false;
+    }
+
+    if (yggdrasil::input::CKeyboard::IsKeyDown(VK_RETURN))
+    {
+      std::cout << "X: " << position.x << " - Y: " << position.z << std::endl;
+    }
+
+    // --- Position aktualisieren ---
+    position += velocity * deltaTime;
+
+    // --- Terrain Collision ---
+    float terrainHeight = GetTerrain()->GetHeight(glm::vec2(position.x, position.z)) + 0.5f;
+    if (position.y <= terrainHeight)
+    {
+      position.y = terrainHeight;
+      velocity.y = 0.0f;
+      onGround = true;
+    }
+    else
+    {
+      onGround = false;
+    }
+
+    // --- Transform anwenden ---
     glm::translate(glm::mat4(1.0f), position)* glm::mat4_cast(rotation);
   }
 
 private:
 
   yggdrasil::CScene* m_pScene;
+  glm::vec3 velocity{ 0.0f };
+  bool onGround = false;
+  float acceleration = 0.0f;
 };
 
 //------------------------------------------------

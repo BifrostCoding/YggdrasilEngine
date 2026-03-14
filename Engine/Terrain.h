@@ -9,12 +9,24 @@ namespace yggdrasil
 class CCamera;
 
 //------------------------------------------------
+// TTerrainGenerationParams
+//------------------------------------------------
+struct TTerrainGenerationParams final
+{
+  float m_fieldCount;
+  float m_fieldWidth;
+  float m_repeatTexture;
+};
+
+//------------------------------------------------
 // TTerrainMesh
 //------------------------------------------------
 struct TTerrainMesh final
 {
   std::vector<rendering::TStaticMeshVertex> m_vertices;
   std::vector<uint32_t> m_indices;
+  float m_fieldCount;
+  float m_fieldWidth;
 };
 
 //------------------------------------------------
@@ -24,15 +36,18 @@ class CTerrainGenerator final
 {
 public:
 
-  CTerrainGenerator(size_t size, float vertexDistance);
+  CTerrainGenerator(const TTerrainGenerationParams& params);
   virtual ~CTerrainGenerator() = default;
 
-  std::unique_ptr<TTerrainMesh> GenerateMesh() const;
+  std::unique_ptr<TTerrainMesh> Generate() const;
 
 private:
 
-  size_t m_size;
-  float m_vertexDistance;
+  void GenerateVertices(TTerrainMesh* pTerrainMesh) const;
+  void GenerateIndices(TTerrainMesh* pTerrainMesh) const;
+  void CalculateNormals(TTerrainMesh* pTerrainMesh) const;
+
+  TTerrainGenerationParams m_params;
 };
 
 //------------------------------------------------
@@ -52,6 +67,8 @@ public:
   float GetHeight(glm::vec2 position);
 
 private:
+
+  TTerrainMesh* GetMesh();
 
   void SetResources(std::unique_ptr<rendering::CTerrainResources> pResources);
   rendering::CTerrainResources* GetResources() const;

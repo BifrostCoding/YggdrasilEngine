@@ -21,7 +21,7 @@ public:
 
   common::TResult Load(CScene& scene);
   common::TResult Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data);
-  common::TResult Load(CTerrain& terrain, const rendering::TTerrainResourceDesc& desc);
+  common::TResult Load(CTerrain& terrain);
 
   float GetViewportWidth() const;
   float GetViewportHeight() const;
