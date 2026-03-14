@@ -43,7 +43,7 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
     }
   }
 
-  m_renderer.EndScene();
+  m_renderer.EndScene(scene.GetResources());
 }
 
 common::TResult CRenderProxy::Load(CScene& scene)

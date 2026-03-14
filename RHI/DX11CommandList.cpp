@@ -15,12 +15,12 @@ void CDX11CommandList::Begin()
   m_pRHI->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void CDX11CommandList::Clear(IRenderTarget* pRenderTargetView, const glm::vec3& color)
+void CDX11CommandList::Clear(IRenderTarget* pRenderTarget, const glm::vec3& color)
 {
-  CDX11RenderTarget* pDX11RenderTargetView = dynamic_cast<CDX11RenderTarget*>(pRenderTargetView);
+  CDX11RenderTarget* pDX11RenderTarget = dynamic_cast<CDX11RenderTarget*>(pRenderTarget);
 
-  ID3D11RenderTargetView* pD3D11RenderTargetView = pDX11RenderTargetView->GetRenderTargetView();
-  ID3D11DepthStencilView* pD3D11DepthStencilView = pDX11RenderTargetView->GetDepthStencilView();
+  ID3D11RenderTargetView* pD3D11RenderTargetView = pDX11RenderTarget->GetRenderTargetView();
+  ID3D11DepthStencilView* pD3D11DepthStencilView = pDX11RenderTarget->GetDepthStencilView();
 
   m_pRHI->GetDeviceContext()->ClearRenderTargetView(pD3D11RenderTargetView, D3DXCOLOR(color.r, color.g, color.b, 1.0f));
   m_pRHI->GetDeviceContext()->ClearDepthStencilView(pD3D11DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -121,8 +121,18 @@ void CDX11CommandList::DrawIndexed(uint32_t indexCount)
   m_pRHI->GetDeviceContext()->DrawIndexed(indexCount, 0, 0);
 }
 
-void CDX11CommandList::End()
+void CDX11CommandList::End(IRenderTarget* pRenderTarget)
 {
+  CDX11RenderTarget* pDX11RenderTarget = dynamic_cast<CDX11RenderTarget*>(pRenderTarget);
+
+  m_pRHI->GetDeviceContext()->ResolveSubresource(
+    pDX11RenderTarget->GetBackBuffer(),
+    0,
+    pDX11RenderTarget->GetMSAARenderTarget(),
+    0,
+    DXGI_FORMAT_R8G8B8A8_UNORM
+  );
+
   m_pRHI->GetSwapChain()->Present(0, 0);
 }
 }

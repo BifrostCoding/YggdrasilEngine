@@ -20,7 +20,7 @@ public:
   common::TResult Initialize();
 
   void BeginScene(CSceneResources* pScene);
-  void EndScene();
+  void EndScene(CSceneResources* pScene);
 
   void RenderStaticMesh();
   void RenderTerrain();

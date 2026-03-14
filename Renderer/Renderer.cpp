@@ -35,9 +35,9 @@ void CRenderer::BeginScene(CSceneResources* pScene)
   m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetPSConstantBufferData());
 }
 
-void CRenderer::EndScene()
+void CRenderer::EndScene(CSceneResources* pScene)
 {
-  m_pCommandList->End();
+  m_pCommandList->End(pScene->GetRenderTarget());
 }
 
 void CRenderer::RenderStaticMesh()

@@ -16,7 +16,7 @@ CDX11CommandList(IRHI* pRHI);
 virtual ~CDX11CommandList() = default;
 
 void Begin() override;
-void Clear(IRenderTarget* pRenderTargetView, const glm::vec3& color) override;
+void Clear(IRenderTarget* pRenderTarget, const glm::vec3& color) override;
 void BindViewport(IViewport* pViewport) override;
 void BindVertexDescriptor(IVertexDescriptor* pVertexDescriptor) override;
 void BindVertexBuffer(IBuffer* pBuffer, UINT stride) override;
@@ -27,7 +27,7 @@ void BindPixelShader(IPixelShader* pVertexShader) override;
 void BindTexture(ITexture* pTexture) override;
 void BindRasterizerState(IRasterizerState* pRasterizerState) override;
 void DrawIndexed(uint32_t indexCount) override;
-void End() override;
+void End(IRenderTarget* pRenderTarget) override;
 
 private:
 

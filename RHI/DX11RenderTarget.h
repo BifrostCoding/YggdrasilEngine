@@ -22,14 +22,23 @@ public:
 
   ID3D11RenderTargetView* GetRenderTargetView() const;
   ID3D11DepthStencilView* GetDepthStencilView() const;
+  ID3D11Texture2D* GetBackBuffer() const;
+  ID3D11Texture2D* GetMSAARenderTarget() const;
 
 private:
 
+  common::TResult IntializeRenderTargetView(CDX11RHI* pRHI);
   common::TResult InitializeDepthBuffer(CDX11RHI* pRHI, const TRenderTargetDesc& desc);
+  common::TResult InitializeMSAARenderTarget(CDX11RHI* pRHI, const TRenderTargetDesc& desc);
 
+  ID3D11Texture2D* m_pBackBuffer;
   ID3D11RenderTargetView* m_pRenderTargetView;
   ID3D11Texture2D* m_pDepthBuffer;
   ID3D11DepthStencilView* m_pDepthStencilView;
+  ID3D11Texture2D* m_pMSAARenderTarget;
+
+  UINT m_sampleCount;
+  UINT m_quality;
 };
 
 //------------------------------------------------
