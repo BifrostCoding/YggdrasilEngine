@@ -104,6 +104,17 @@ common::TResult CDX11RHI::CreateTexture(const TTextureDesc& textureDesc, std::un
   return result;
 }
 
+common::TResult CDX11RHI::CreateSampler(std::unique_ptr<ISampler>& pSampler)
+{
+  auto pDX11Sampler = std::make_unique<CDX11Sampler>();
+
+  common::TResult result = pDX11Sampler->Initialize(this);
+
+  pSampler = std::move(pDX11Sampler);
+
+  return result;
+}
+
 common::TResult CDX11RHI::CreateRenderTarget(const TRenderTargetDesc& desc, std::unique_ptr<IRenderTarget>& pRenderTarget)
 {
   auto pDX11RenderTarget= std::make_unique<CDX11RenderTarget>();

@@ -150,6 +150,7 @@
     <ClInclude Include="PixelShaderService.h" />
     <ClInclude Include="RenderContext.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="SamplerService.h" />
     <ClInclude Include="SceneResources.h" />
     <ClInclude Include="StaticMeshResources.h" />
     <ClInclude Include="TerrainResources.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="PixelShaderService.cpp" />
     <ClCompile Include="RenderContext.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="SamplerService.cpp" />
     <ClCompile Include="SceneResources.cpp" />
     <ClCompile Include="StaticMeshResources.cpp" />
     <ClCompile Include="TerrainResources.cpp" />

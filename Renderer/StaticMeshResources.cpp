@@ -9,6 +9,7 @@ CStaticMeshResources::CStaticMeshResources(CRenderContext& renderContext)
   , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferData_StaticMesh())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBuffer_StaticMesh())
   , m_vertexShaderServive(renderContext.GetVertexShaderService())
+  , m_pSampler(renderContext.GetSamplerService().GetSampler_Default())
   , m_indexCount(0U)
   , m_stride(0U)
 {
@@ -102,6 +103,11 @@ rhi::IBuffer* CStaticMeshResources::GetIndexBuffer() const
 rhi::IBuffer* CStaticMeshResources::GetVSConstantBuffer() const
 {
   return m_pVSConstantBuffer.get();
+}
+
+rhi::ISampler* CStaticMeshResources::GetSampler() const
+{
+  return m_pSampler.get();
 }
 
 TVSConstantBuffer_StaticMesh* CStaticMeshResources::GetVSConstantBufferData() const

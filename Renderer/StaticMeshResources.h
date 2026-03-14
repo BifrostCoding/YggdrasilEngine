@@ -37,6 +37,7 @@ public:
   rhi::IBuffer* GetVertexBuffer() const;
   rhi::IBuffer* GetIndexBuffer() const;
   rhi::IBuffer* GetVSConstantBuffer() const;
+  rhi::ISampler* GetSampler() const;
 
   TVSConstantBuffer_StaticMesh* GetVSConstantBufferData() const;
 
@@ -52,6 +53,7 @@ private:
   std::unique_ptr<rhi::IBuffer> m_pVertexBuffer;
   std::unique_ptr<rhi::IBuffer> m_pIndexBuffer;
 
+  std::shared_ptr<rhi::ISampler> m_pSampler;
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer;
   std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData;
 

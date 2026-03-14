@@ -34,6 +34,7 @@ public:
   virtual void BindVertexShader(IVertexShader* pVertexShader) = 0;
   virtual void BindPixelShader(IPixelShader* pVertexShader) = 0;
   virtual void BindTexture(ITexture* pTexture) = 0;
+  virtual void BindSampler(ISampler* pSampler) = 0;
   virtual void BindRasterizerState(IRasterizerState* pRasterizerState) = 0;
   virtual void DrawIndexed(uint32_t indexCount) = 0;
   virtual void End(IRenderTarget* pRenderTarget) = 0;

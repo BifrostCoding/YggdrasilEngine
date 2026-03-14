@@ -6,16 +6,17 @@ namespace yggdrasil
 {
 namespace rhi
 {
+//------------------------------------------------
+// CDX11Texture
+//------------------------------------------------
 CDX11Texture::CDX11Texture()
   : m_pShaderResourceView(nullptr)
-  , m_pSamplerState(nullptr)
 {
 }
 
 CDX11Texture::~CDX11Texture()
 {
-  RELEASE_PTR(m_pShaderResourceView);
-  RELEASE_PTR(m_pSamplerState);
+  RELEASE_PTR(m_pShaderResourceView)
 }
 
 common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& textureDesc)
@@ -56,6 +57,29 @@ common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& tex
 
   texture->Release();
 
+  return common::TResult();
+}
+
+ID3D11ShaderResourceView* CDX11Texture::GetShaderResourceView() const
+{
+  return m_pShaderResourceView;
+}
+
+//------------------------------------------------
+// CDX11Sampler
+//------------------------------------------------
+CDX11Sampler::CDX11Sampler()
+  : m_pSamplerState(nullptr)
+{
+}
+
+CDX11Sampler::~CDX11Sampler()
+{
+  RELEASE_PTR(m_pSamplerState);
+}
+
+common::TResult CDX11Sampler::Initialize(CDX11RHI* pRHI)
+{
   D3D11_SAMPLER_DESC sampDesc{};
 
   sampDesc.Filter         = D3D11_FILTER_ANISOTROPIC;
@@ -67,7 +91,7 @@ common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& tex
   sampDesc.MinLOD         = 0;
   sampDesc.MaxLOD         = D3D11_FLOAT32_MAX;
 
-  hr = pRHI->GetDevice()->CreateSamplerState(&sampDesc, &m_pSamplerState);
+  HRESULT hr = pRHI->GetDevice()->CreateSamplerState(&sampDesc, &m_pSamplerState);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to create SamplerState");
@@ -75,12 +99,7 @@ common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& tex
   return common::TResult();
 }
 
-ID3D11ShaderResourceView* CDX11Texture::GetShaderResourceView() const
-{
-  return m_pShaderResourceView;
-}
-
-ID3D11SamplerState* CDX11Texture::GetSamplerState() const
+ID3D11SamplerState* CDX11Sampler::GetSamplerState() const
 {
   return m_pSamplerState;
 }

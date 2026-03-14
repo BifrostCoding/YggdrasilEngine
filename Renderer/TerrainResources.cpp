@@ -13,6 +13,7 @@ CTerrainResources::CTerrainResources(CRenderContext& renderContext)
   , m_renderContext(renderContext)
   , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferData_Terrain())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBuffer_Terrain())
+  , m_pSampler(renderContext.GetSamplerService().GetSampler_Default())
   , m_pVertexShader(nullptr)
   , m_pPixelShader(nullptr)
   , m_pTexture(nullptr)
@@ -153,6 +154,11 @@ rhi::IPixelShader* CTerrainResources::GetPixelShader() const
 rhi::ITexture* CTerrainResources::GetTexture() const
 {
   return m_pTexture;
+}
+
+rhi::ISampler* CTerrainResources::GetSampler() const
+{
+  return m_pSampler.get();
 }
 
 TVSConstantBuffer_Terrain* CTerrainResources::GetVSConstantBufferData() const

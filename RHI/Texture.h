@@ -23,5 +23,15 @@ public:
 
   virtual ~ITexture() = default;
 };
+
+//------------------------------------------------
+// ISampler
+//------------------------------------------------
+class ISampler
+{
+public:
+
+  virtual ~ISampler() = default;
+};
 }
 }

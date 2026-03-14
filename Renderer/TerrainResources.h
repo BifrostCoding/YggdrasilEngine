@@ -42,6 +42,7 @@ public:
   rhi::IVertexShader* GetVertexShader() const;
   rhi::IPixelShader* GetPixelShader() const;
   rhi::ITexture* GetTexture() const;
+  rhi::ISampler* GetSampler() const;
   rhi::IRasterizerState* GetRasterizerState() const;
 
   TVSConstantBuffer_Terrain* GetVSConstantBufferData() const;
@@ -63,6 +64,7 @@ private:
   rhi::IPixelShader* m_pPixelShader;
   rhi::ITexture* m_pTexture;
 
+  std::shared_ptr<rhi::ISampler> m_pSampler;
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer;
   std::shared_ptr<TVSConstantBuffer_Terrain> m_pVSConstantBufferData;
 

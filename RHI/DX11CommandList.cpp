@@ -103,9 +103,16 @@ void CDX11CommandList::BindTexture(ITexture* pTexture)
   CDX11Texture* pDX11Texture = dynamic_cast<CDX11Texture*>(pTexture);
 
   ID3D11ShaderResourceView* pShaderResourceView = pDX11Texture->GetShaderResourceView();
-  ID3D11SamplerState* pSamplerState = pDX11Texture->GetSamplerState();
 
   m_pRHI->GetDeviceContext()->PSSetShaderResources(0, 1, &pShaderResourceView);
+}
+
+void CDX11CommandList::BindSampler(ISampler* pSampler)
+{
+  CDX11Sampler* pDX11Sampler = dynamic_cast<CDX11Sampler*>(pSampler);
+
+  ID3D11SamplerState* pSamplerState = pDX11Sampler->GetSamplerState();
+
   m_pRHI->GetDeviceContext()->PSSetSamplers(0, 1, &pSamplerState);
 }
 

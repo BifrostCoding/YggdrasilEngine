@@ -56,6 +56,7 @@ void CRenderer::RenderStaticMesh()
     m_pCommandList->BindVertexBuffer(m_renderData.m_pStaticMesh->GetVertexBuffer(), m_renderData.m_pStaticMesh->GetStride());
     m_pCommandList->BindIndexBuffer(m_renderData.m_pStaticMesh->GetIndexBuffer());
     m_pCommandList->BindShaderData(m_renderData.m_pStaticMesh->GetVSConstantBuffer(), m_renderData.m_pStaticMesh->GetVSConstantBufferData());
+    m_pCommandList->BindSampler(m_renderData.m_pStaticMesh->GetSampler());
     m_pCommandList->DrawIndexed(m_renderData.m_pStaticMesh->GetIndexCount());
   }
 }
@@ -67,6 +68,7 @@ void CRenderer::RenderTerrain()
     m_pCommandList->BindVertexShader(m_renderData.m_pTerrain->GetVertexShader());
     m_pCommandList->BindPixelShader(m_renderData.m_pTerrain->GetPixelShader());
     m_pCommandList->BindTexture(m_renderData.m_pTerrain->GetTexture());
+    m_pCommandList->BindSampler(m_renderData.m_pTerrain->GetSampler());
     m_pCommandList->BindRasterizerState(m_renderData.m_pTerrain->GetRasterizerState());
     m_pCommandList->BindVertexDescriptor(m_renderData.m_pTerrain->GetVertexDescriptor());
     m_pCommandList->BindVertexBuffer(m_renderData.m_pTerrain->GetVertexBuffer(), m_renderData.m_pTerrain->GetStride());

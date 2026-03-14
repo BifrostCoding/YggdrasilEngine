@@ -10,6 +10,7 @@ CRenderContext::CRenderContext(rhi::IRHI& RHI)
   , m_vertexShaderService(RHI)
   , m_pixelShaderService(RHI)
   , m_textureService(RHI)
+  , m_samplerService(RHI)
 {
 }
 
@@ -20,7 +21,15 @@ rhi::IRHI& CRenderContext::GetRHI()
 
 common::TResult CRenderContext::Initialize()
 {
-  return m_constantBufferService.Initialize();;
+  common::TResult result = m_constantBufferService.Initialize();
+  if (result.IsError())
+    return result;
+
+  result = m_samplerService.Initialize();
+  if (result.IsError())
+    return result;
+
+  return result;
 }
 
 CConstantBufferService& CRenderContext::GetConstantBufferService()
@@ -41,6 +50,11 @@ CPixelShaderService& CRenderContext::GetPixelShaderService()
 CTextureService& CRenderContext::GetTextureService()
 {
   return m_textureService;
+}
+
+CSamplerService& CRenderContext::GetSamplerService()
+{
+  return m_samplerService;
 }
 }
 }

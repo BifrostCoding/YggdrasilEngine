@@ -72,7 +72,7 @@ public:
     terrainGenerationParams.m_repeatTexture = 50.0f;
     terrainGenerationParams.m_noiseScale    = 0.01f;
     terrainGenerationParams.m_height        = 30.0f;
-    terrainGenerationParams.m_octaves       = 6;
+    terrainGenerationParams.m_octaves       = 5;
 
     yggdrasil::CTerrainGenerator terrainGenerator(terrainGenerationParams);
 
@@ -94,14 +94,13 @@ public:
     constexpr static float ROT_SPEED  = glm::radians(100.0f);
     constexpr static float GRAVITY    = 9.81f;
     constexpr static float JUMP_FORCE = 5.0f;
-    constexpr static float ACCEL      = 10.0f; // Beschleunigung / Trägheit
+    constexpr static float ACCEL      = 10.0f;
 
     yggdrasil::CCamera& camera = m_pScene->GetCamera();
 
     glm::vec3& position = camera.GetTransform().GetPosition();
     glm::quat& rotation = camera.GetTransform().GetRotation();
 
-    // --- Rotation ---
     float yaw = 0.0f;
     if (yggdrasil::input::CKeyboard::IsKeyDown('A')) yaw += 1.0f;
     if (yggdrasil::input::CKeyboard::IsKeyDown('D')) yaw -= 1.0f;
@@ -115,7 +114,6 @@ public:
 
     glm::vec3 forward = rotation * glm::vec3(0, 0, -1);
 
-    // --- Zielgeschwindigkeit berechnen ---
     glm::vec3 targetVelocity(0.0f);
 
     if (yggdrasil::input::CKeyboard::IsKeyDown('W')) targetVelocity -= forward;
@@ -126,11 +124,9 @@ public:
       targetVelocity = glm::normalize(targetVelocity) * MOVE_SPEED;
     }
 
-    // --- Velocity sanft an Zielgeschwindigkeit annähern ---
     velocity.x = glm::mix(velocity.x, targetVelocity.x, glm::clamp(ACCEL * deltaTime, 0.0f, 1.0f));
     velocity.z = glm::mix(velocity.z, targetVelocity.z, glm::clamp(ACCEL * deltaTime, 0.0f, 1.0f));
 
-    // --- Gravity & Jump ---
     velocity.y -= GRAVITY * deltaTime;
     if (onGround && yggdrasil::input::CKeyboard::IsKeyDown(VK_SPACE))
     {
@@ -143,11 +139,9 @@ public:
       std::cout << "X: " << position.x << " - Z: " << position.z << std::endl;
     }
 
-    // --- Position aktualisieren ---
     position += velocity * deltaTime;
 
-    // --- Terrain Collision ---
-    float terrainHeight = GetTerrain()->GetHeight(glm::vec2(position.x, position.z)) + 0.5f;
+    float terrainHeight = GetTerrain()->GetHeight(glm::vec2(position.x, position.z)) + 0.75f;
     if (position.y <= terrainHeight)
     {
       position.y = terrainHeight;
@@ -159,7 +153,6 @@ public:
       onGround = false;
     }
 
-    // --- Transform anwenden ---
     glm::translate(glm::mat4(1.0f), position)* glm::mat4_cast(rotation);
   }
 

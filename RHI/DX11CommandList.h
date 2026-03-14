@@ -25,6 +25,7 @@ void BindShaderData(IBuffer* pBuffer, const void* pData) override;
 void BindVertexShader(IVertexShader* pVertexShader) override;
 void BindPixelShader(IPixelShader* pVertexShader) override;
 void BindTexture(ITexture* pTexture) override;
+void BindSampler(ISampler* pSampler) override;
 void BindRasterizerState(IRasterizerState* pRasterizerState) override;
 void DrawIndexed(uint32_t indexCount) override;
 void End(IRenderTarget* pRenderTarget) override;

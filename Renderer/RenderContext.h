@@ -4,6 +4,7 @@
 #include "VertexShaderService.h"
 #include "PixelShaderService.h"
 #include "TextureService.h"
+#include "SamplerService.h"
 
 namespace yggdrasil
 {
@@ -24,6 +25,7 @@ public:
   CVertexShaderService& GetVertexShaderService();
   CPixelShaderService& GetPixelShaderService();
   CTextureService& GetTextureService();
+  CSamplerService& GetSamplerService();
 
 private:
 
@@ -33,6 +35,7 @@ private:
   CVertexShaderService m_vertexShaderService;
   CPixelShaderService m_pixelShaderService;
   CTextureService m_textureService;
+  CSamplerService m_samplerService;
 };
 }
 }
