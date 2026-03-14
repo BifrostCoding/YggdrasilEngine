@@ -52,7 +52,7 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetTextureService().Get("./gras.jfif", m_pTexture);
+  result = m_renderContext.GetTextureService().Get("./gras.jpg", m_pTexture);
   if (result.IsError())
     return result;
 

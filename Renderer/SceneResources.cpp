@@ -9,7 +9,7 @@ CSceneResources::CSceneResources(rhi::IRHI* pRHI, const uint32_t targetWidth, co
   , m_targetWidth(targetWidth)
   , m_targetHeight(targetHeight)
   , m_pPSConstantBufferData(std::make_unique<TPSConstantBuffer_Scene>())
-  , m_clearColor(0.14f, 0.36f, 0.58f)
+  , m_clearColor(0.3f, 0.46f, 0.68f)
 {
   InitializeDirectionalLight();
 }

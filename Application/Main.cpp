@@ -32,7 +32,7 @@ public:
 
     SetStaticMesh(std::move(staticMeshResult.value()));
 
-    GetTransform().GetPosition() = glm::vec3(50.0f, 15.0f, 50.0f);
+    GetTransform().GetPosition() = glm::vec3(100, 0.0f, 100.0f);
 
     return yggdrasil::common::TResult();
   }
@@ -67,9 +67,12 @@ public:
 
     yggdrasil::TTerrainGenerationParams terrainGenerationParams{};
 
-    terrainGenerationParams.m_fieldCount    = 250.0f;
+    terrainGenerationParams.m_fieldCount    = 200.0f;
     terrainGenerationParams.m_fieldWidth    = 1.0f;
-    terrainGenerationParams.m_repeatTexture = 50.0f;
+    terrainGenerationParams.m_repeatTexture = 100.0f;
+    terrainGenerationParams.m_noiseScale    = 0.01f;
+    terrainGenerationParams.m_height        = 30.0f;
+    terrainGenerationParams.m_octaves       = 6;
 
     yggdrasil::CTerrainGenerator terrainGenerator(terrainGenerationParams);
 
@@ -135,9 +138,9 @@ public:
       onGround = false;
     }
 
-    if (yggdrasil::input::CKeyboard::IsKeyDown(VK_RETURN))
+    if (yggdrasil::input::CKeyboard::IsKeyPressed(VK_RETURN))
     {
-      std::cout << "X: " << position.x << " - Y: " << position.z << std::endl;
+      std::cout << "X: " << position.x << " - Z: " << position.z << std::endl;
     }
 
     // --- Position aktualisieren ---

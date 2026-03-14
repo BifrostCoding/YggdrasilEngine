@@ -16,6 +16,9 @@ struct TTerrainGenerationParams final
   float m_fieldCount;
   float m_fieldWidth;
   float m_repeatTexture;
+  int   m_octaves;
+  float m_height;
+  float m_noiseScale;
 };
 
 //------------------------------------------------

@@ -45,8 +45,10 @@ void CTerrainGenerator::GenerateVertices(TTerrainMesh* pTerrainMesh) const
     {
       rendering::TStaticMeshVertex v{};
 
+      float noiseValue = perlin.octave2D_01(x * m_params.m_noiseScale, z * m_params.m_noiseScale, m_params.m_octaves);
+
       v.m_position.x = x * m_params.m_fieldWidth;
-      v.m_position.y = 15.0f * perlin.octave2D_01(x * 0.02f, z * 0.02f, 4);;
+      v.m_position.y = m_params.m_height * noiseValue - (m_params.m_height / 2.0f);
       v.m_position.z = z * m_params.m_fieldWidth;
 
       v.m_uv.x = (static_cast<float>(x) / (terrainWidth / m_params.m_repeatTexture));
