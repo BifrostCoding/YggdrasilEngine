@@ -104,25 +104,14 @@ common::TResult CDX11RHI::CreateTexture(const TTextureDesc& textureDesc, std::un
   return result;
 }
 
-common::TResult CDX11RHI::CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTarget)
+common::TResult CDX11RHI::CreateRenderTarget(const TRenderTargetDesc& desc, std::unique_ptr<IRenderTarget>& pRenderTarget)
 {
   auto pDX11RenderTarget= std::make_unique<CDX11RenderTarget>();
 
-  common::TResult result = pDX11RenderTarget->Initialize(this);
+  common::TResult result = pDX11RenderTarget->Initialize(this, desc);
 
   pRenderTarget= std::move(pDX11RenderTarget);
 
-  return result;
-}
-
-common::TResult CDX11RHI::CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthStencilView)
-{
-  auto pDX11DepthStencilView = std::make_unique<CDX11DepthBuffer>();
-
-  common::TResult result = pDX11DepthStencilView->Initialize(this, depthBufferDesc);
-
-  pDepthStencilView = std::move(pDX11DepthStencilView);
-  
   return result;
 }
 

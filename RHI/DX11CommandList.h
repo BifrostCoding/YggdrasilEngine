@@ -16,7 +16,7 @@ CDX11CommandList(IRHI* pRHI);
 virtual ~CDX11CommandList() = default;
 
 void Begin() override;
-void ClearRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView, const glm::vec3& color) override;
+void Clear(IRenderTarget* pRenderTargetView, const glm::vec3& color) override;
 void BindViewport(IViewport* pViewport) override;
 void BindVertexDescriptor(IVertexDescriptor* pVertexDescriptor) override;
 void BindVertexBuffer(IBuffer* pBuffer, UINT stride) override;

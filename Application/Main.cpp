@@ -17,7 +17,7 @@ public:
 
     materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
     materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "./box.jpg";
+    materialDesc.m_textureFilename      = "./mario_block.jpg";
 
     yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
     {
@@ -32,18 +32,70 @@ public:
 
     SetStaticMesh(std::move(staticMeshResult.value()));
 
-    GetTransform().GetPosition() = glm::vec3(0.0f, 0.0f, 5.0f);
+    GetTransform().GetPosition() = glm::vec3(0.0f, 5.0f, 50.0f);
 
     return yggdrasil::common::TResult();
   }
 
   void OnTick(float deltaTime) override
   {
-    glm::vec3& position = GetTransform().GetPosition();
     glm::quat& rotation = GetTransform().GetRotation();
+    constexpr float ROT_SPEED = glm::radians(90.0f);
+    float angle = ROT_SPEED * deltaTime;
+    glm::quat qYaw = glm::angleAxis(angle, glm::vec3(0, 1, 0));
+    rotation = glm::normalize(qYaw * rotation);
+  }
+};
+
+//------------------------------------------------
+// custom - Entity
+//------------------------------------------------
+class CLandscape : public yggdrasil::AEntity
+{
+public:
+
+  CLandscape()
+    : m_pScene(nullptr)
+  {
+  }
+
+  virtual ~CLandscape() = default;
+
+  yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
+  {
+    m_pScene = &scene;
+
+    yggdrasil::CTerrainGenerator terrainGenerator(500, 1.0f);
+
+    std::unique_ptr<yggdrasil::rendering::CMeshData> pMeshData = terrainGenerator.GenerateMesh();
+
+    yggdrasil::rendering::TTerrainResourceDesc desc
+    {
+      *pMeshData.get()
+    };
+
+
+    auto terrainResult = engine.CreateTerrain(std::move(pMeshData), desc);
+
+    if (!terrainResult.has_value())
+      return terrainResult.error();
+
+    SetTerrain(std::move(terrainResult.value()));
+
+    GetTransform().GetPosition() = glm::vec3(-250.0f, -1.0f, 0.0f);
+
+    return yggdrasil::common::TResult();
+  }
+
+  void OnTick(float deltaTime) override
+  {
+    yggdrasil::CCamera& camera = m_pScene->GetCamera();
+
+    glm::vec3& position = camera.GetTransform().GetPosition();
+    glm::quat& rotation = camera.GetTransform().GetRotation();
 
     constexpr float MOVE_SPEED = 5.0f;
-    constexpr float ROT_SPEED = glm::radians(90.0f);
+    constexpr float ROT_SPEED  = glm::radians(90.0f);
 
     float yaw = 0.0f;
 
@@ -69,47 +121,12 @@ public:
       position += movement;
     }
 
-    glm::translate(glm::mat4(1.0f), position) * glm::mat4_cast(rotation);
-  }
-};
-
-//------------------------------------------------
-// custom - Entity
-//------------------------------------------------
-class CLandscape : public yggdrasil::AEntity
-{
-public:
-
-  CLandscape() = default;
-  virtual ~CLandscape() = default;
-
-  yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
-  {
-    yggdrasil::CTerrainGenerator terrainGenerator(500, 1.0f);
-
-    std::unique_ptr<yggdrasil::rendering::CMeshData> pMeshData = terrainGenerator.GenerateMesh();
-
-    yggdrasil::rendering::TTerrainResourceDesc desc
-    {
-      *pMeshData.get()
-    };
-
-
-    auto terrainResult = engine.CreateTerrain(std::move(pMeshData), desc);
-
-    if (!terrainResult.has_value())
-      return terrainResult.error();
-
-    SetTerrain(std::move(terrainResult.value()));
-
-    GetTransform().GetPosition() = glm::vec3(-250.0f, -1.0f, 0.0f);
-
-    return yggdrasil::common::TResult();
+    glm::translate(glm::mat4(1.0f), position)* glm::mat4_cast(rotation);
   }
 
-  void OnTick(float deltaTime) override
-  {
-  }
+private:
+
+  yggdrasil::CScene* m_pScene;
 };
 
 //------------------------------------------------

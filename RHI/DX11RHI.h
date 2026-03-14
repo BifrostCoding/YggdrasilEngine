@@ -7,7 +7,6 @@
 #include "DX11PixelShader.h"
 #include "DX11Texture.h"
 #include "DX11RenderTarget.h"
-#include "DX11DepthBuffer.h"
 #include "DX11RasterizerState.h"
 #include "DX11CommandList.h"
 
@@ -28,8 +27,7 @@ public:
   common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) override;
   common::TResult CreatePixelShader(const TPixelShaderDesc& pixelShaderDesc, std::unique_ptr<IPixelShader>& pPixelShader) override;
   common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) override;
-  common::TResult CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTargetView) override;
-  common::TResult CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthStencilView) override;
+  common::TResult CreateRenderTarget(const TRenderTargetDesc& desc, std::unique_ptr<IRenderTarget>& pRenderTarget) override;
   common::TResult CreateViewport(const TViewportDesc& viewportDesc, std::unique_ptr<IViewport>& pViewport) override;
   common::TResult CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState) override;
 

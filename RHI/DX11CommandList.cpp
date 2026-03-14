@@ -15,13 +15,12 @@ void CDX11CommandList::Begin()
   m_pRHI->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void CDX11CommandList::ClearRenderTarget(IRenderTarget* pRenderTargetView, IDepthBuffer* pDepthStencilView, const glm::vec3& color)
+void CDX11CommandList::Clear(IRenderTarget* pRenderTargetView, const glm::vec3& color)
 {
   CDX11RenderTarget* pDX11RenderTargetView = dynamic_cast<CDX11RenderTarget*>(pRenderTargetView);
-  CDX11DepthBuffer* pDX11DepthStencilView = dynamic_cast<CDX11DepthBuffer*>(pDepthStencilView);
 
-  ID3D11RenderTargetView* pD3D11RenderTargetView = pDX11RenderTargetView->Get();
-  ID3D11DepthStencilView* pD3D11DepthStencilView = pDX11DepthStencilView->Get();
+  ID3D11RenderTargetView* pD3D11RenderTargetView = pDX11RenderTargetView->GetRenderTargetView();
+  ID3D11DepthStencilView* pD3D11DepthStencilView = pDX11RenderTargetView->GetDepthStencilView();
 
   m_pRHI->GetDeviceContext()->ClearRenderTargetView(pD3D11RenderTargetView, D3DXCOLOR(color.r, color.g, color.b, 1.0f));
   m_pRHI->GetDeviceContext()->ClearDepthStencilView(pD3D11DepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);

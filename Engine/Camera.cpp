@@ -29,6 +29,11 @@ void CCamera::Update()
   m_viewMatrix = glm::lookAtRH(position, target, up);
 }
 
+common::CTransform& CCamera::GetTransform()
+{
+  return m_transform;
+}
+
 const glm::mat4 CCamera::GetViewMatrix() const
 {
   return m_viewMatrix;

@@ -10,6 +10,11 @@ CScene::CScene(app::CEngine& engine)
 {
 }
 
+CCamera& CScene::GetCamera()
+{
+  return m_camera;
+}
+
 common::TResult CScene::AddEntity(std::unique_ptr<AEntity> pEntity)
 {
   common::TResult result = pEntity->OnInitialize(m_engine, *this);

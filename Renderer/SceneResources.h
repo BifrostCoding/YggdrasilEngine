@@ -22,7 +22,6 @@ public:
   common::TResult Initialize();
 
   rhi::IRenderTarget* GetRenderTarget() const;
-  rhi::IDepthBuffer* GetDepthBuffer() const;
   rhi::IBuffer* GetConstantBuffer() const;
   rhi::IViewport* GetViewport() const;
   TPSConstantBuffer_Scene* GetPSConstantBufferData() const;
@@ -40,7 +39,6 @@ private:
   const uint32_t m_targetHeight;
 
   std::unique_ptr<rhi::IRenderTarget> m_pRenderTarget;
-  std::unique_ptr<rhi::IDepthBuffer> m_pDepthBuffer;
   std::unique_ptr<rhi::IBuffer> m_pConstantBuffer;
   std::unique_ptr<rhi::IViewport> m_pViewport;
 

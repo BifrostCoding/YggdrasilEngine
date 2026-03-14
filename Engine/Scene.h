@@ -19,6 +19,8 @@ public:
   CScene(app::CEngine& engine);
   virtual ~CScene() = default;
 
+  CCamera& GetCamera();
+
   common::TResult AddEntity(std::unique_ptr<AEntity> pEntity);
   std::list<std::unique_ptr<AEntity>>& GetEntities();
 

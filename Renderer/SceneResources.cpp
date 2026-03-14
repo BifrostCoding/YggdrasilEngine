@@ -29,17 +29,12 @@ common::TResult CSceneResources::Initialize()
 
 common::TResult CSceneResources::InitializeRenderTarget()
 {
-  common::TResult result = m_pRHI->CreateRenderTarget(m_pRenderTarget);
+  rhi::TRenderTargetDesc desc{};
 
-  if (result.IsError())
-    return result;
+  desc.m_width  = m_targetWidth;
+  desc.m_height = m_targetHeight;
 
-  rhi::TDepthBufferDesc depthBufferDesc{};
-
-  depthBufferDesc.m_width  = m_targetWidth;
-  depthBufferDesc.m_height = m_targetHeight;
-
-  result = m_pRHI->CreateDepthBuffer(depthBufferDesc, m_pDepthBuffer);
+  common::TResult result = m_pRHI->CreateRenderTarget(desc, m_pRenderTarget);
 
   if (result.IsError())
     return result;
@@ -84,11 +79,6 @@ void CSceneResources::InitializeDirectionalLight()
 rhi::IRenderTarget* CSceneResources::GetRenderTarget() const
 {
   return m_pRenderTarget.get();
-}
-
-rhi::IDepthBuffer* CSceneResources::GetDepthBuffer() const
-{
-  return m_pDepthBuffer.get();
 }
 
 rhi::IBuffer* CSceneResources::GetConstantBuffer() const

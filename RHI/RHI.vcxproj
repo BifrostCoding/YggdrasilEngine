@@ -139,10 +139,8 @@
   <ItemGroup>
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="CommandList.h" />
-    <ClInclude Include="DepthBuffer.h" />
     <ClInclude Include="DX11Buffer.h" />
     <ClInclude Include="DX11CommandList.h" />
-    <ClInclude Include="DX11DepthBuffer.h" />
     <ClInclude Include="DX11RasterizerState.h" />
     <ClInclude Include="DX11VertexDescriptor.h" />
     <ClInclude Include="DX11PixelShader.h" />
@@ -166,7 +164,6 @@
   <ItemGroup>
     <ClCompile Include="DX11Buffer.cpp" />
     <ClCompile Include="DX11CommandList.cpp" />
-    <ClCompile Include="DX11DepthBuffer.cpp" />
     <ClCompile Include="DX11RasterizerState.cpp" />
     <ClCompile Include="DX11VertexDescriptor.cpp" />
     <ClCompile Include="DX11PixelShader.cpp" />

@@ -69,12 +69,6 @@
     <ClInclude Include="PixelShader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DepthBuffer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11DepthBuffer.h">
-      <Filter>Headerdateien\Backends\DX11</Filter>
-    </ClInclude>
     <ClInclude Include="RenderTarget.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -114,9 +108,6 @@
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11PixelShader.cpp">
-      <Filter>Quelldateien\Backends\DX11</Filter>
-    </ClCompile>
-    <ClCompile Include="DX11DepthBuffer.cpp">
       <Filter>Quelldateien\Backends\DX11</Filter>
     </ClCompile>
     <ClCompile Include="DX11RenderTarget.cpp">

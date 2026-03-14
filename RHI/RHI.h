@@ -7,7 +7,6 @@
 #include "PixelShader.h"
 #include "Texture.h"
 #include "RenderTarget.h"
-#include "DepthBuffer.h"
 #include "RasterizerState.h"
 #include "CommandList.h"
 
@@ -30,8 +29,7 @@ public:
   virtual common::TResult CreateVertexShader(const TVertexShaderDesc& vertexShaderDesc, std::unique_ptr<IVertexShader>& pVertexShader) = 0;
   virtual common::TResult CreatePixelShader(const TPixelShaderDesc& pixelShaderDesc, std::unique_ptr<IPixelShader>& pPixelShader) = 0;
   virtual common::TResult CreateTexture(const TTextureDesc& textureDesc, std::unique_ptr<ITexture>& pTexture) = 0;
-  virtual common::TResult CreateRenderTarget(std::unique_ptr<IRenderTarget>& pRenderTarget) = 0;
-  virtual common::TResult CreateDepthBuffer(const TDepthBufferDesc& depthBufferDesc, std::unique_ptr<IDepthBuffer>& pDepthBuffer) = 0;
+  virtual common::TResult CreateRenderTarget(const TRenderTargetDesc& desc, std::unique_ptr<IRenderTarget>& pRenderTarget) = 0;
   virtual common::TResult CreateViewport(const TViewportDesc& viewportDesc, std::unique_ptr<IViewport>& pViewport) = 0;
   virtual common::TResult CreateRasterizerState(const TRasterizerDesc& rasterizerDesc, std::unique_ptr<IRasterizerState>& pRasterizerState) = 0;
 

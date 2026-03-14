@@ -18,13 +18,18 @@ public:
   CDX11RenderTarget();
   virtual ~CDX11RenderTarget();
 
-  common::TResult Initialize(CDX11RHI* pRHI);
+  common::TResult Initialize(CDX11RHI* pRHI, const TRenderTargetDesc& desc);
 
-  ID3D11RenderTargetView* Get() const;
+  ID3D11RenderTargetView* GetRenderTargetView() const;
+  ID3D11DepthStencilView* GetDepthStencilView() const;
 
 private:
 
+  common::TResult InitializeDepthBuffer(CDX11RHI* pRHI, const TRenderTargetDesc& desc);
+
   ID3D11RenderTargetView* m_pRenderTargetView;
+  ID3D11Texture2D* m_pDepthBuffer;
+  ID3D11DepthStencilView* m_pDepthStencilView;
 };
 
 //------------------------------------------------

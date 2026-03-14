@@ -14,6 +14,8 @@ public:
 
   void Update();
 
+  common::CTransform& GetTransform();
+
   const glm::mat4 GetViewMatrix() const;
   const glm::mat4 GetProjectionMatrix() const;
 

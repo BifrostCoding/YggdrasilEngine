@@ -7,6 +7,15 @@ namespace yggdrasil
 namespace rhi
 {
 //------------------------------------------------
+// TRenderTargetDesc
+//------------------------------------------------
+struct TRenderTargetDesc final
+{
+  uint32_t m_width;
+  uint32_t m_height;
+};
+
+//------------------------------------------------
 // TViewport
 //------------------------------------------------
 struct TViewportDesc final

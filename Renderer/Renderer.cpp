@@ -30,7 +30,7 @@ common::TResult CRenderer::Initialize()
 void CRenderer::BeginScene(CSceneResources* pScene)
 {
   m_pCommandList->Begin();
-  m_pCommandList->ClearRenderTarget(pScene->GetRenderTarget(), pScene->GetDepthBuffer(), pScene->GetClearColor());
+  m_pCommandList->Clear(pScene->GetRenderTarget(), pScene->GetClearColor());
   m_pCommandList->BindViewport(pScene->GetViewport());
   m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetPSConstantBufferData());
 }
