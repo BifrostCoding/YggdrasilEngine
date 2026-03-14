@@ -14,6 +14,8 @@ CDX11RenderTarget::CDX11RenderTarget()
   , m_pDepthBuffer(nullptr)
   , m_pDepthStencilView(nullptr)
   , m_pMSAARenderTarget(nullptr)
+  , m_quality(0U)
+  , m_sampleCount(4U)
 {
 }
 
@@ -30,20 +32,9 @@ common::TResult CDX11RenderTarget::Initialize(CDX11RHI* pRHI, const TRenderTarge
 {
   common::TResult result;
 
-  m_sampleCount = 4;
-
-  UINT qualityLevels = 0;
-
-  pRHI->GetDevice()->CheckMultisampleQualityLevels(
-    DXGI_FORMAT_R8G8B8A8_UNORM,
-    m_sampleCount,
-    &qualityLevels
-  );
-
-  if (qualityLevels == 0)
-    return ERROR_RESULT("MSAA not supported");
-
-  m_quality = qualityLevels - 1U;
+  result = InitializeMSAA(pRHI);
+  if (result.IsError())
+    return result;
 
   result = InitializeMSAARenderTarget(pRHI, desc);
   if (result.IsError())
@@ -58,6 +49,24 @@ common::TResult CDX11RenderTarget::Initialize(CDX11RHI* pRHI, const TRenderTarge
     return result;
 
   return result;
+}
+
+common::TResult CDX11RenderTarget::InitializeMSAA(CDX11RHI* pRHI)
+{
+  UINT qualityLevels = 0;
+
+  pRHI->GetDevice()->CheckMultisampleQualityLevels(
+    DXGI_FORMAT_R8G8B8A8_UNORM,
+    m_sampleCount,
+    &qualityLevels
+  );
+
+  if (qualityLevels == 0)
+    return ERROR_RESULT("MSAA not supported");
+
+  m_quality = qualityLevels - 1U;
+
+  return common::TResult();
 }
 
 common::TResult CDX11RenderTarget::IntializeRenderTargetView(CDX11RHI* pRHI)

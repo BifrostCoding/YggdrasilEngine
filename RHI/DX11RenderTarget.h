@@ -27,6 +27,7 @@ public:
 
 private:
 
+  common::TResult InitializeMSAA(CDX11RHI* pRHI);
   common::TResult IntializeRenderTargetView(CDX11RHI* pRHI);
   common::TResult InitializeDepthBuffer(CDX11RHI* pRHI, const TRenderTargetDesc& desc);
   common::TResult InitializeMSAARenderTarget(CDX11RHI* pRHI, const TRenderTargetDesc& desc);
