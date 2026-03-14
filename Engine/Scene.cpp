@@ -10,6 +10,16 @@ CScene::CScene(app::CEngine& engine)
 {
 }
 
+void CScene::Update(float engineTime)
+{
+  m_camera.Update();
+
+  rendering::TPSConstantBuffer_Scene* pConstantBufferData = m_pResources->GetPSConstantBufferData();
+
+  pConstantBufferData->m_engineTime     = engineTime;
+  pConstantBufferData->m_cameraPosition = m_camera.GetTransform().GetPosition();
+}
+
 CCamera& CScene::GetCamera()
 {
   return m_camera;

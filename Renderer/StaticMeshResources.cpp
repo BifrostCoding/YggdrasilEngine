@@ -6,8 +6,8 @@ namespace rendering
 {
 CStaticMeshResources::CStaticMeshResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
-  , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
-  , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
+  , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferData_StaticMesh())
+  , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBuffer_StaticMesh())
   , m_vertexShaderServive(renderContext.GetVertexShaderService())
   , m_indexCount(0U)
   , m_stride(0U)

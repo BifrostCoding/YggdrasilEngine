@@ -17,7 +17,7 @@ common::TResult CRenderProxy::Initialize()
 
 void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float deltaTime)
 {
-  scene.m_camera.Update();
+  scene.Update(engineTime);
 
   m_renderer.BeginScene(scene.GetResources());
 

@@ -44,7 +44,7 @@ public:
   rhi::ITexture* GetTexture() const;
   rhi::IRasterizerState* GetRasterizerState() const;
 
-  TVSConstantBuffer_StaticMesh* GetVSConstantBufferData() const;
+  TVSConstantBuffer_Terrain* GetVSConstantBufferData() const;
 
   const size_t GetStride() const;
   const size_t GetIndexCount() const;
@@ -64,7 +64,7 @@ private:
   rhi::ITexture* m_pTexture;
 
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer;
-  std::shared_ptr<TVSConstantBuffer_StaticMesh> m_pVSConstantBufferData;
+  std::shared_ptr<TVSConstantBuffer_Terrain> m_pVSConstantBufferData;
 
   size_t m_indexCount;
   size_t m_stride;

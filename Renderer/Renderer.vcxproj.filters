@@ -28,6 +28,12 @@
     <Filter Include="Headerdateien\GPUResources">
       <UniqueIdentifier>{7c3c44d4-5f78-43cd-a51a-f4f705db639a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\StaticMesh">
+      <UniqueIdentifier>{363eeef6-f464-4077-8fa4-f693b998c8a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Terrain">
+      <UniqueIdentifier>{3e935950-9148-4db8-9d78-39532b66487c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -104,13 +110,22 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_StaticMesh.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\StaticMesh</Filter>
     </FxCompile>
     <FxCompile Include="StaticMesh.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\StaticMesh</Filter>
+    </FxCompile>
+    <FxCompile Include="Terrain.hlsl">
+      <Filter>Shader\Terrain</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Terrain.hlsl">
+      <Filter>Shader\Terrain</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Terrain.hlsl">
+      <Filter>Shader\Terrain</Filter>
     </FxCompile>
     <FxCompile Include="VS_StaticMesh.hlsl">
-      <Filter>Shader</Filter>
+      <Filter>Shader\StaticMesh</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -43,6 +43,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> CDX11VertexDescriptor::GetLayoutDesc
   switch (vertexType)
   {
     case EVertexType::StaticMesh:
+    case EVertexType::Terrain:
     {
       return
       {

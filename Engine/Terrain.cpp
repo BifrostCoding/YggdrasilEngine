@@ -124,7 +124,7 @@ CTerrain::CTerrain(std::unique_ptr<TTerrainMesh> pTerrainMesh)
 
 void CTerrain::Update(CCamera& camera, common::CTransform& transform)
 {
-  rendering::TVSConstantBuffer_StaticMesh* constantBufferData = m_pResources->GetVSConstantBufferData();
+  rendering::TVSConstantBuffer_Terrain* constantBufferData = m_pResources->GetVSConstantBufferData();
 
   glm::mat4 worldMatrix       = glm::identity<glm::mat4>();
   glm::mat4 rotationMatrix    = glm::mat4_cast(transform.GetRotation());

@@ -4,12 +4,15 @@ namespace yggdrasil
 {
 namespace rendering
 {
+constexpr const char* VS_TERRAIN_NAME = "./VS_Terrain.cso";
+constexpr const char* PS_TERRAIN_NAME = "./PS_Terrain.cso";
+
 //TODO: replace all "StaticMesh" with "Terrain"
 CTerrainResources::CTerrainResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
   , m_renderContext(renderContext)
-  , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferDataStaticMesh())
-  , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBufferStaticMesh())
+  , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferData_Terrain())
+  , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBuffer_Terrain())
   , m_pVertexShader(nullptr)
   , m_pPixelShader(nullptr)
   , m_pTexture(nullptr)
@@ -24,7 +27,7 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
 
   rhi::IVertexShader* pVertexShader = nullptr;
 
-  result = m_renderContext.GetVertexShaderService().Get("./VS_StaticMesh.cso", pVertexShader);
+  result = m_renderContext.GetVertexShaderService().Get(VS_TERRAIN_NAME, pVertexShader);
   if (result.IsError())
     return result;
 
@@ -44,11 +47,11 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetVertexShaderService().Get("./VS_StaticMesh.cso", m_pVertexShader);
+  result = m_renderContext.GetVertexShaderService().Get(VS_TERRAIN_NAME, m_pVertexShader);
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetPixelShaderService().Get("./PS_StaticMesh.cso", m_pPixelShader);
+  result = m_renderContext.GetPixelShaderService().Get(PS_TERRAIN_NAME, m_pPixelShader);
   if (result.IsError())
     return result;
 
@@ -63,7 +66,7 @@ common::TResult CTerrainResources::CreateVertexDescriptor(rhi::IVertexShader* m_
 {
   rhi::TVertexDescriptorDesc vertexDescriptorDesc{};
 
-  vertexDescriptorDesc.m_vertexType = rhi::EVertexType::StaticMesh;
+  vertexDescriptorDesc.m_vertexType = rhi::EVertexType::Terrain;
 
   return m_RHI.CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader, m_pVertexDescriptor);
 }
@@ -152,7 +155,7 @@ rhi::ITexture* CTerrainResources::GetTexture() const
   return m_pTexture;
 }
 
-TVSConstantBuffer_StaticMesh* CTerrainResources::GetVSConstantBufferData() const
+TVSConstantBuffer_Terrain* CTerrainResources::GetVSConstantBufferData() const
 {
   return m_pVSConstantBufferData.get();
 }

@@ -12,6 +12,7 @@ namespace rhi
 enum class EVertexType
 {
   StaticMesh,
+  Terrain,
 };
 
 //------------------------------------------------

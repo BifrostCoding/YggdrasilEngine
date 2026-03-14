@@ -63,6 +63,8 @@ struct TDirectionalLight final
 struct TPSConstantBuffer_Scene final
 {
   TDirectionalLight m_directionalLight;
+  float m_engineTime;
+  glm::vec3 m_cameraPosition;
 };
 }
 }

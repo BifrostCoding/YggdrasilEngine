@@ -1,4 +1,4 @@
-#include "StaticMesh.hlsl"
+#include "Terrain.hlsl"
 
 float4 PSMain(PS_INPUT input) : SV_TARGET
 {
