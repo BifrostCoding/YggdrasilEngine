@@ -67,22 +67,25 @@ public:
 
     yggdrasil::CTerrainGenerator terrainGenerator(500, 1.0f);
 
-    std::unique_ptr<yggdrasil::rendering::CMeshData> pMeshData = terrainGenerator.GenerateMesh();
+    std::unique_ptr<yggdrasil::TTerrainMesh> terrainMesh = terrainGenerator.GenerateMesh();
 
     yggdrasil::rendering::TTerrainResourceDesc desc
     {
-      *pMeshData.get()
+      sizeof(yggdrasil::rendering::TStaticMeshVertex),
+      terrainMesh->m_vertices.data(),
+      sizeof(yggdrasil::rendering::TStaticMeshVertex)* terrainMesh->m_vertices.size(),
+      terrainMesh->m_indices.data(),
+      terrainMesh->m_indices.size(),
     };
 
-
-    auto terrainResult = engine.CreateTerrain(std::move(pMeshData), desc);
+    auto terrainResult = engine.CreateTerrain(std::move(terrainMesh), desc);
 
     if (!terrainResult.has_value())
       return terrainResult.error();
 
     SetTerrain(std::move(terrainResult.value()));
 
-    GetTransform().GetPosition() = glm::vec3(-250.0f, -1.0f, 0.0f);
+    //GetTransform().GetPosition() = glm::vec3(-250.0f, -1.0f, 0.0f);
 
     return yggdrasil::common::TResult();
   }
@@ -120,6 +123,8 @@ public:
       movement = glm::normalize(movement) * MOVE_SPEED * deltaTime;
       position += movement;
     }
+
+    position.y = GetTerrain()->GetHeight(glm::vec2(position.x, position.z)) + 0.5f;
 
     glm::translate(glm::mat4(1.0f), position)* glm::mat4_cast(rotation);
   }

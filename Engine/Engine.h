@@ -30,7 +30,7 @@ public:
   CScene* GetCurrentScene() const;
 
   std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CreateStaticMesh(const rendering::TStaticMeshDesc& desc);
-  std::expected<std::unique_ptr<CTerrain>, common::TResult> CreateTerrain(std::unique_ptr<rendering::CMeshData> pMeshData, const rendering::TTerrainResourceDesc& desc);
+  std::expected<std::unique_ptr<CTerrain>, common::TResult> CreateTerrain(std::unique_ptr<yggdrasil::TTerrainMesh> pTerrainMesh, const rendering::TTerrainResourceDesc& desc);
 
 private:
 

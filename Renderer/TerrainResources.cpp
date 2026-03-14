@@ -32,11 +32,11 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
   if (result.IsError())
     return result;
 
-  result = CreateVertexBuffer(desc.m_meshData);
+  result = CreateVertexBuffer(desc);
   if (result.IsError())
     return result;
 
-  result = CreateIndexBuffer(desc.m_meshData);
+  result = CreateIndexBuffer(desc);
   if (result.IsError())
     return result;
 
@@ -68,9 +68,9 @@ common::TResult CTerrainResources::CreateVertexDescriptor(rhi::IVertexShader* m_
   return m_RHI.CreateVertexDescriptor(vertexDescriptorDesc, m_pVertexShader, m_pVertexDescriptor);
 }
 
-common::TResult CTerrainResources::CreateVertexBuffer(const CMeshData& meshData)
+common::TResult CTerrainResources::CreateVertexBuffer(const TTerrainResourceDesc& desc)
 {
-  m_stride = meshData.GetStride();
+  m_stride = desc.m_stride;
 
   rhi::TBufferDesc vertexBufferDesc{};
 
@@ -79,17 +79,15 @@ common::TResult CTerrainResources::CreateVertexBuffer(const CMeshData& meshData)
 
   common::TDataHandle vertexBufferDataHandle{};
 
-  vertexBufferDataHandle.m_pData  = meshData.GetVerticesData();
-  vertexBufferDataHandle.m_size   = meshData.GetVertexDataSize();
+  vertexBufferDataHandle.m_pData = desc.m_pVerticesData;
+  vertexBufferDataHandle.m_size  = desc.m_vertexDataSize;
 
   return m_RHI.CreateBuffer(vertexBufferDesc, vertexBufferDataHandle, m_pVertexBuffer);
 }
 
-common::TResult CTerrainResources::CreateIndexBuffer(const CMeshData& meshData)
+common::TResult CTerrainResources::CreateIndexBuffer(const TTerrainResourceDesc& desc)
 {
-  const std::vector<uint32_t>& indices = meshData.GetIndizes();
-
-  m_indexCount = indices.size();
+  m_indexCount = desc.m_indexCount;
 
   rhi::TBufferDesc indexBufferDesc{};
 
@@ -98,8 +96,8 @@ common::TResult CTerrainResources::CreateIndexBuffer(const CMeshData& meshData)
 
   common::TDataHandle indexBufferDataHandle{};
 
-  indexBufferDataHandle.m_pData = indices.data();
-  indexBufferDataHandle.m_size  = sizeof(uint32_t) * indices.size();
+  indexBufferDataHandle.m_pData = desc.m_pIndicesData;
+  indexBufferDataHandle.m_size  = sizeof(uint32_t) * m_indexCount;
 
   return m_RHI.CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
 }

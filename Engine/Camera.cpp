@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 constexpr const float FOV = 0.4f;
-constexpr const float NEAR_PLANE = 1.0f;
+constexpr const float NEAR_PLANE = 0.1f;
 constexpr const float FAR_PLANE = 1000.0f;
 
 namespace yggdrasil

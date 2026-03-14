@@ -1,8 +1,6 @@
 #pragma once
 
-#include "MeshData.h"
 #include "RenderContext.h"
-#include "MaterialResources.h"
 
 namespace yggdrasil
 {
@@ -13,7 +11,11 @@ namespace rendering
 //------------------------------------------------
 struct TTerrainResourceDesc final
 {
-  CMeshData m_meshData;
+  size_t m_stride;
+  const void* m_pVerticesData;
+  size_t m_vertexDataSize;
+  const void* m_pIndicesData;
+  size_t m_indexCount;
 };
 
 //------------------------------------------------
@@ -29,8 +31,8 @@ public:
   common::TResult Initialize(const TTerrainResourceDesc& desc);
 
   common::TResult CreateVertexDescriptor(rhi::IVertexShader* pVertexShader);
-  common::TResult CreateVertexBuffer(const CMeshData& meshData);
-  common::TResult CreateIndexBuffer(const CMeshData& meshData);
+  common::TResult CreateVertexBuffer(const TTerrainResourceDesc& desc);
+  common::TResult CreateIndexBuffer(const TTerrainResourceDesc& desc);
   common::TResult CreateRasterizerState();
 
   rhi::IVertexDescriptor* GetVertexDescriptor() const;

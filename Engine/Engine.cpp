@@ -75,9 +75,9 @@ std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CEngine::CreateStat
   return pStaticMesh;
 }
 
-std::expected<std::unique_ptr<CTerrain>, common::TResult> CEngine::CreateTerrain(std::unique_ptr<rendering::CMeshData> pMeshData, const rendering::TTerrainResourceDesc& desc)
+std::expected<std::unique_ptr<CTerrain>, common::TResult> CEngine::CreateTerrain(std::unique_ptr<yggdrasil::TTerrainMesh> pTerrainMesh, const rendering::TTerrainResourceDesc& desc)
 {
-  std::unique_ptr<CTerrain> pTerrain = std::make_unique<CTerrain>(std::move(pMeshData));
+  std::unique_ptr<CTerrain> pTerrain = std::make_unique<CTerrain>(std::move(pTerrainMesh));
 
   common::TResult result = m_renderProxy.Load(*pTerrain.get(), desc);
   if (result.IsError())
