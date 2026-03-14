@@ -17,7 +17,7 @@ public:
 
     materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
     materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "./mario_block.jpg";
+    materialDesc.m_textureFilename      = "./minikuh.jpg";
 
     yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
     {
@@ -69,7 +69,7 @@ public:
 
     terrainGenerationParams.m_fieldCount    = 200.0f;
     terrainGenerationParams.m_fieldWidth    = 1.0f;
-    terrainGenerationParams.m_repeatTexture = 100.0f;
+    terrainGenerationParams.m_repeatTexture = 50.0f;
     terrainGenerationParams.m_noiseScale    = 0.01f;
     terrainGenerationParams.m_height        = 30.0f;
     terrainGenerationParams.m_octaves       = 6;

@@ -2,17 +2,34 @@
 
 float4 PSMain(PS_INPUT input) : SV_TARGET
 {
+  // Normal normalisieren
   input.normal = normalize(input.normal);
 
+  // Texturfarbe
   float4 diffuse = ObjTexture.Sample(ObjSamplerState, input.TexCoord);
 
-  float3 color = diffuse * light.ambient;
-  color += saturate(dot(light.dir, input.normal) * light.diffuse * diffuse);
+  // Ambient (leicht kühl, damit Schatten nicht neutral sind)
+  float3 ambientColor = diffuse.rgb * light.ambient.rgb;
 
-  float fogStart = 20.0f;
-  float fogEnd = 100.0f;
+  // Berechne Lichtintensität
+  float NdotL = saturate(dot(light.dir, input.normal));
 
-  float3 fogColor = float3(0.6, 0.7, 0.8);
+  // Grundbeleuchtung (ohne diffuse nochmal zu multiplizieren)
+  float3 litColor = diffuse.rgb * light.diffuse.rgb * NdotL;
+
+  // Schattenblau definieren
+  float3 shadowTint = float3(0.0f, 0.015f, 0.04f); // kühler Blauton
+
+  // Schatten färben: je dunkler das Licht, desto mehr Blau
+  litColor = lerp(shadowTint, litColor, NdotL);
+
+  // Kombiniere Ambient + Licht
+  float3 color = ambientColor + litColor;
+
+  float fogStart = 40.0f;
+  float fogEnd   = 120.0f;
+
+  float3 fogColor = float3(0.5f, 0.7f, 0.95f);
   
   // Fog
   float dist = distance(cameraPos, input.WorldPos);
