@@ -18,7 +18,9 @@ cbuffer cbPerObject
 	float4x4 World;
 };
 
-Texture2D ObjTexture;
+Texture2D TextureDefault : register(t0);
+Texture2D TextureSlope   : register(t1);
+
 SamplerState ObjSamplerState;
 
 struct VS_INPUT

@@ -33,7 +33,7 @@ public:
   virtual void BindShaderData(IBuffer* pBuffer, const void* pData) = 0;
   virtual void BindVertexShader(IVertexShader* pVertexShader) = 0;
   virtual void BindPixelShader(IPixelShader* pVertexShader) = 0;
-  virtual void BindTexture(ITexture* pTexture) = 0;
+  virtual void BindTexture(uint16_t slot, ITexture* pTexture) = 0;
   virtual void BindSampler(ISampler* pSampler) = 0;
   virtual void BindRasterizerState(IRasterizerState* pRasterizerState) = 0;
   virtual void DrawIndexed(uint32_t indexCount) = 0;

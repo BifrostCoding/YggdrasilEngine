@@ -41,7 +41,8 @@ public:
   rhi::IBuffer* GetVSConstantBuffer() const;
   rhi::IVertexShader* GetVertexShader() const;
   rhi::IPixelShader* GetPixelShader() const;
-  rhi::ITexture* GetTexture() const;
+  rhi::ITexture* GetTexture_Default() const;
+  rhi::ITexture* GetTexture_Slope() const;
   rhi::ISampler* GetSampler() const;
   rhi::IRasterizerState* GetRasterizerState() const;
 
@@ -62,7 +63,8 @@ private:
 
   rhi::IVertexShader* m_pVertexShader;
   rhi::IPixelShader* m_pPixelShader;
-  rhi::ITexture* m_pTexture;
+  rhi::ITexture* m_pTexture_Default;
+  rhi::ITexture* m_pTexture_Slope;
 
   std::shared_ptr<rhi::ISampler> m_pSampler;
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer;

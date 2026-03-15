@@ -1,5 +1,29 @@
 #include "Common.h"
 
+//------------------------------------------------------
+// Debug
+//------------------------------------------------------
+void YggWrite(const std::string& text, ETerminalColor color)
+{
+  if (color == ETerminalColor::TERMINAL_COLOR_WHITE)
+  {
+    std::cout << text << std::endl;
+    return;
+  }
+
+  std::string start = "\033[";
+  std::string end = "\033[0m";
+
+  switch (color)
+  {
+    case TERMINAL_COLOR_RED: start += "31m"; break;
+    case TERMINAL_COLOR_GREEN: start += "32m"; break;
+    case TERMINAL_COLOR_BLUE: start += "34m"; break;
+  }
+
+  std::cout << start + text + end << std::endl;
+}
+
 namespace yggdrasil
 {
 namespace common

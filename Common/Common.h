@@ -50,12 +50,17 @@
 //------------------------------------------------
 // DEBUG_WRITE, YGG_ASSERT
 //------------------------------------------------
+
+enum ETerminalColor { TERMINAL_COLOR_WHITE, TERMINAL_COLOR_RED, TERMINAL_COLOR_GREEN, TERMINAL_COLOR_BLUE };
+
+void YggWrite(const std::string& text, ETerminalColor color = TERMINAL_COLOR_WHITE);
+
 #ifdef _DEBUG
 
 #include <intrin.h>
 #include <iostream>
 
-#define YGG_WRITE(message) std::cout << message << std::endl
+#define YGG_WRITE(message, color) YggWrite(message, color)
 
 #define YGG_ASSERT(condition, message) \
 if (!(condition)) \
@@ -71,7 +76,7 @@ if (!(condition)) \
 #else
 
 #define YGG_ASSERT(condition, message)
-#define DEBUG_WRITE(message)
+#define YGG_WRITE(message)
 
 #endif
 

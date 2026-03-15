@@ -46,7 +46,7 @@ void CRenderer::RenderStaticMesh()
   {
     m_pCommandList->BindVertexShader(m_renderData.m_pMaterial->GetVertexShader());
     m_pCommandList->BindPixelShader(m_renderData.m_pMaterial->GetPixelShader());
-    m_pCommandList->BindTexture(m_renderData.m_pMaterial->GetTexture());
+    m_pCommandList->BindTexture(0, m_renderData.m_pMaterial->GetTexture());
     m_pCommandList->BindRasterizerState(m_renderData.m_pMaterial->GetRasterizerState());
   }
 
@@ -67,7 +67,8 @@ void CRenderer::RenderTerrain()
   {
     m_pCommandList->BindVertexShader(m_renderData.m_pTerrain->GetVertexShader());
     m_pCommandList->BindPixelShader(m_renderData.m_pTerrain->GetPixelShader());
-    m_pCommandList->BindTexture(m_renderData.m_pTerrain->GetTexture());
+    m_pCommandList->BindTexture(0, m_renderData.m_pTerrain->GetTexture_Default());
+    m_pCommandList->BindTexture(1, m_renderData.m_pTerrain->GetTexture_Slope());
     m_pCommandList->BindSampler(m_renderData.m_pTerrain->GetSampler());
     m_pCommandList->BindRasterizerState(m_renderData.m_pTerrain->GetRasterizerState());
     m_pCommandList->BindVertexDescriptor(m_renderData.m_pTerrain->GetVertexDescriptor());

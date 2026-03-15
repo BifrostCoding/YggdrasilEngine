@@ -6,16 +6,23 @@ float4 PSMain(PS_INPUT input) : SV_TARGET
   input.normal = normalize(input.normal);
 
   // Texturfarbe
-  float4 diffuse = ObjTexture.Sample(ObjSamplerState, input.TexCoord);
+  float4 colorDefault = TextureDefault.Sample(ObjSamplerState, input.TexCoord);
+  float4 colorSlope   = TextureSlope.Sample(ObjSamplerState, input.TexCoord);
+  
+  float slope = 1.0f - input.normal.y;
+
+  float blendAmount = saturate(slope / 0.2f);
+  
+  float3 diffuse = lerp(colorDefault, colorSlope, blendAmount);
 
   // Ambient (leicht kühl, damit Schatten nicht neutral sind)
-  float3 ambientColor = diffuse.rgb * light.ambient.rgb;
+  float3 ambientColor = diffuse * light.ambient.rgb;
 
   // Berechne Lichtintensität
   float NdotL = saturate(dot(light.dir, input.normal));
 
   // Grundbeleuchtung (ohne diffuse nochmal zu multiplizieren)
-  float3 litColor = diffuse.rgb * light.diffuse.rgb * NdotL;
+  float3 litColor = diffuse * light.diffuse.rgb * NdotL;
 
   // Schattenblau definieren
   float3 shadowTint = float3(0.0f, 0.015f, 0.04f); // kühler Blauton
@@ -37,5 +44,5 @@ float4 PSMain(PS_INPUT input) : SV_TARGET
 
   color = lerp(fogColor, color, fogFactor);
 
-  return float4(color, diffuse.a);
+  return float4(color, 1.0f);
 }

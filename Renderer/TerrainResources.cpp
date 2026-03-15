@@ -16,7 +16,8 @@ CTerrainResources::CTerrainResources(CRenderContext& renderContext)
   , m_pSampler(renderContext.GetSamplerService().GetSampler_Default())
   , m_pVertexShader(nullptr)
   , m_pPixelShader(nullptr)
-  , m_pTexture(nullptr)
+  , m_pTexture_Default(nullptr)
+  , m_pTexture_Slope(nullptr)
   , m_indexCount(0U)
   , m_stride(0U)
 {
@@ -56,7 +57,11 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetTextureService().Get("./gras.jpg", m_pTexture);
+  result = m_renderContext.GetTextureService().Get("./gras.jpg", m_pTexture_Default);
+  if (result.IsError())
+    return result;
+
+  result = m_renderContext.GetTextureService().Get("./cliff.jfif", m_pTexture_Slope);
   if (result.IsError())
     return result;
 
@@ -151,9 +156,14 @@ rhi::IPixelShader* CTerrainResources::GetPixelShader() const
   return m_pPixelShader;
 }
 
-rhi::ITexture* CTerrainResources::GetTexture() const
+rhi::ITexture* CTerrainResources::GetTexture_Default() const
 {
-  return m_pTexture;
+  return m_pTexture_Default;
+}
+
+rhi::ITexture* CTerrainResources::GetTexture_Slope() const
+{
+  return m_pTexture_Slope;
 }
 
 rhi::ISampler* CTerrainResources::GetSampler() const

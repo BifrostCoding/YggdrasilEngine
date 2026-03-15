@@ -71,7 +71,7 @@ public:
     terrainGenerationParams.m_fieldWidth    = 1.0f;
     terrainGenerationParams.m_repeatTexture = 50.0f;
     terrainGenerationParams.m_noiseScale    = 0.01f;
-    terrainGenerationParams.m_height        = 30.0f;
+    terrainGenerationParams.m_height        = 60.0f;
     terrainGenerationParams.m_octaves       = 5;
 
     yggdrasil::CTerrainGenerator terrainGenerator(terrainGenerationParams);
@@ -169,6 +169,8 @@ private:
 //------------------------------------------------
 int main(int argv, char* argc[])
 {
+  YGG_WRITE("Yggrasil Start...", TERMINAL_COLOR_GREEN);
+
   yggdrasil::common::TApplicationData applicationData{};
 
   applicationData.m_hinstance = GetModuleHandle(nullptr);
@@ -181,14 +183,14 @@ int main(int argv, char* argc[])
   yggdrasil::common::TResult result = app.Initialize();
   if (result.IsError())
   {
-    YGG_WRITE(result.GetText());
+    YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);
     return -1;
   }
 
   std::expected<yggdrasil::CScene*, yggdrasil::common::TResult> sceneResult = app.CreateScene();
   if (!sceneResult.has_value())
   {
-    YGG_WRITE(sceneResult.error().GetText());
+    YGG_WRITE(sceneResult.error().GetText(), TERMINAL_COLOR_RED);
     return -1;
   }
 
@@ -197,14 +199,14 @@ int main(int argv, char* argc[])
   result = pScene->AddEntity(std::make_unique<CBox>());
   if (result.IsError())
   {
-    YGG_WRITE(result.GetText());
+    YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);
     return -1;
   }
 
   result = pScene->AddEntity(std::make_unique<CLandscape>());
   if (result.IsError())
   {
-    YGG_WRITE(result.GetText());
+    YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);
     return -1;
   }
 

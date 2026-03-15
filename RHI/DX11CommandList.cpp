@@ -98,13 +98,13 @@ void CDX11CommandList::BindPixelShader(IPixelShader* pPixelShader)
   m_pRHI->GetDeviceContext()->PSSetShader(pDX11PixelShader->Get(), nullptr, 0);
 }
 
-void CDX11CommandList::BindTexture(ITexture* pTexture)
+void CDX11CommandList::BindTexture(uint16_t slot, ITexture* pTexture)
 {
   CDX11Texture* pDX11Texture = dynamic_cast<CDX11Texture*>(pTexture);
 
   ID3D11ShaderResourceView* pShaderResourceView = pDX11Texture->GetShaderResourceView();
 
-  m_pRHI->GetDeviceContext()->PSSetShaderResources(0, 1, &pShaderResourceView);
+  m_pRHI->GetDeviceContext()->PSSetShaderResources(slot, 1, &pShaderResourceView);
 }
 
 void CDX11CommandList::BindSampler(ISampler* pSampler)
