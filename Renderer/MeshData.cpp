@@ -5,9 +5,8 @@ namespace yggdrasil
 {
 namespace rendering
 {
-CMeshData::CMeshData(rhi::EVertexType vertexType)
-  : m_vertexType(vertexType)
-  , m_size(0U)
+CMeshData::CMeshData()
+  : m_size(0U)
   , m_stride(0U)
 {
 }
@@ -16,11 +15,6 @@ void CMeshData::SetIndices(const std::vector<uint32_t>& indices)
 {
   m_indices.resize(indices.size());
   memcpy(m_indices.data(), indices.data(), sizeof(uint32_t) * indices.size());
-}
-
-const rhi::EVertexType CMeshData::GetRenderLayout() const
-{
-  return m_vertexType;
 }
 
 const std::vector<uint32_t>& CMeshData::GetIndizes() const
@@ -48,7 +42,6 @@ const size_t CMeshData::GetVertexDataSize() const
 //------------------------------------------------------
 
 CBoxMesh::CBoxMesh()
-  : CMeshData(rhi::EVertexType::StaticMesh)
 {
   std::vector<TStaticMeshVertex> vertices =
   {

@@ -17,6 +17,8 @@ public:
   glm::quat& GetRotation();
   glm::vec3& GetScale();
 
+  void Rotate(const float degrees, const glm::vec3& angle);
+
 private:
 
   glm::vec3 m_position;

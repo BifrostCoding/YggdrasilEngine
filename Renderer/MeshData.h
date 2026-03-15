@@ -2,6 +2,7 @@
 
 #include <Common/Common.h>
 #include <RHI/RHI.h>
+#include "Vertex.h"
 
 namespace yggdrasil
 {
@@ -11,12 +12,11 @@ class CMeshData
 {
 public:
 
-  CMeshData(rhi::EVertexType vertexType);
+  CMeshData();
   virtual ~CMeshData() = default;
 
   void SetIndices(const std::vector<uint32_t>& indices);
 
-  const rhi::EVertexType GetRenderLayout() const;
   const std::vector<uint32_t>& GetIndizes() const;
   const void* GetVerticesData() const;
   const size_t GetStride() const;
@@ -34,7 +34,6 @@ public:
 
 private:
 
-  rhi::EVertexType m_vertexType;
   std::vector<std::byte> m_vertexData;
   std::vector<uint32_t> m_indices;
   size_t m_stride;

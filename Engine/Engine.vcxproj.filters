@@ -25,6 +25,12 @@
     <Filter Include="Headerdateien\Scene">
       <UniqueIdentifier>{97f02241-f754-4b45-a447-21838b4220b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\FileSystem">
+      <UniqueIdentifier>{2c2b62ae-18ff-4679-b84f-c71782311f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\FileSystem">
+      <UniqueIdentifier>{c0bf8e5d-3799-4d7a-bc52-c3edd7362eb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -51,6 +57,9 @@
     <ClInclude Include="RenderProxy.h">
       <Filter>Headerdateien\App</Filter>
     </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>Headerdateien\FileSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -76,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="RenderProxy.cpp">
       <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>Quelldateien\FileSystem</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

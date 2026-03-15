@@ -71,12 +71,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\</LibraryPath>
+    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;C:\Program Files\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;C:\Program Files\Assimp\lib\x64</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\</LibraryPath>
+    <IncludePath>C:\Users\patri\source\repos\YggdrasilEngine\;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;C:\Program Files\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x64;C:\Users\patri\source\repos\YggdrasilEngine\ExternLibs\Include\glm-master\;C:\Program Files\Assimp\lib\x64</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

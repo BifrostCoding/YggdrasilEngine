@@ -1,49 +1,37 @@
 #include <Engine/Engine.h>
 #include <Common/Keyboard.h>
+#include <Engine/ModelLoader.h>
 
 //------------------------------------------------
 // custom - Entity
 //------------------------------------------------
-class CBox : public yggdrasil::AEntity
+class CHouse : public yggdrasil::AEntity
 {
 public:
 
-  CBox() = default;
-  virtual ~CBox() = default;
+  CHouse() = default;
+  virtual ~CHouse() = default;
 
   yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
   {
-    yggdrasil::rendering::TMaterialDesc materialDesc{};
+    yggdrasil::filesystem::CModelLoader modelLoader(engine);
 
-    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
-    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "./mario_block.jpg";
-
-    yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
-    {
-      yggdrasil::rendering::CBoxMesh(),
-      materialDesc
-    };
-
-    auto staticMeshResult = engine.CreateStaticMesh(staticMeshDesc);
+    auto staticMeshResult = modelLoader.LoadStaticMesh(R"(C:\Users\patri\OneDrive\Desktop\House_1.fbx)");
 
     if (!staticMeshResult.has_value())
       return staticMeshResult.error();
 
     SetStaticMesh(std::move(staticMeshResult.value()));
 
-    GetTransform().GetPosition() = glm::vec3(100, 10.0f, 100.0f);
+    GetTransform().GetPosition() = glm::vec3(100, 2.5f, 100.0f);
+    GetTransform().GetScale() *= 3.0f;
+    GetTransform().Rotate(-90, glm::vec3(1.0f, 0.0f, 0.0f));
 
     return yggdrasil::common::TResult();
   }
 
   void OnTick(float deltaTime) override
   {
-    glm::quat& rotation = GetTransform().GetRotation();
-    constexpr float ROT_SPEED = glm::radians(90.0f);
-    float angle = ROT_SPEED * deltaTime;
-    glm::quat qYaw = glm::angleAxis(angle, glm::vec3(0, 1, 0));
-    rotation = glm::normalize(qYaw * rotation);
   }
 };
 
@@ -148,7 +136,8 @@ public:
 
     if (yggdrasil::input::CKeyboard::IsKeyPressed(VK_RETURN))
     {
-      std::cout << "X: " << position.x << " - Z: " << position.z << std::endl;
+      std::string posStr = "X: " + std::to_string(position.x) + " - Y: " + std::to_string(position.y) + " - Z: " + std::to_string(position.z);
+      YGG_WRITE(posStr, TERMINAL_COLOR_BLUE);
     }
 
     position += velocity * deltaTime;
@@ -208,7 +197,7 @@ int main(int argv, char* argc[])
 
   yggdrasil::CScene* pScene = sceneResult.value();
 
-  result = pScene->AddEntity(std::make_unique<CBox>());
+  result = pScene->AddEntity(std::make_unique<CHouse>());
   if (result.IsError())
   {
     YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);

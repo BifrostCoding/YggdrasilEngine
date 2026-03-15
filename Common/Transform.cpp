@@ -25,5 +25,11 @@ glm::vec3& CTransform::GetScale()
 {
   return m_scale;
 }
+
+void CTransform::Rotate(float degrees, const glm::vec3& angle)
+{
+  glm::quat yaw = glm::angleAxis(glm::radians(degrees), angle);
+  m_rotation    = glm::normalize(yaw * m_rotation);
+}
 }
 }
