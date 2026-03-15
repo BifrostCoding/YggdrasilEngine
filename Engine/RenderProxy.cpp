@@ -4,6 +4,8 @@
 
 namespace yggdrasil
 {
+constexpr const float FRUSTUM_CULLING_RADIUS_ENTITY = 2.0f;
+
 CRenderProxy::CRenderProxy(const common::TApplicationData& applicationData, common::EBackend backend)
   : m_applicationData(applicationData)
   , m_renderer(applicationData, backend)
@@ -25,13 +27,16 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
   {
     pEntity->Update(deltaTime, scene.m_camera);
 
-    CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
-
-    if (pStaticMesh != nullptr)
+    if (scene.m_camera.SphereInFrustum(pEntity->GetTransform().GetPosition(), FRUSTUM_CULLING_RADIUS_ENTITY))
     {
-      m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetResources());
-      m_renderer.BindStaticMesh(pStaticMesh->GetResources());
-      m_renderer.RenderStaticMesh();
+      CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
+
+      if (pStaticMesh != nullptr)
+      {
+        m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetResources());
+        m_renderer.BindStaticMesh(pStaticMesh->GetResources());
+        m_renderer.RenderStaticMesh();
+      }
     }
 
     CTerrain* pTerrain = pEntity->GetTerrain();

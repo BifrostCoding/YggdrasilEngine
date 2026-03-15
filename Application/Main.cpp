@@ -67,7 +67,7 @@ public:
 
     yggdrasil::TTerrainGenerationParams params{};
 
-    params.m_seed          = 12345U;
+    params.m_seed          = 1234567890U;
     params.m_fieldCount    = 200.0f;
     params.m_fieldWidth    = 1.0f;
     params.m_repeatTexture = 50.0f;

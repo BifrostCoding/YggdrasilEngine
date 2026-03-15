@@ -44,33 +44,71 @@ const glm::mat4 CCamera::GetProjectionMatrix() const
   return m_projectionMatrix;
 }
 
-//void CCamera::SetPosition(const TVector3& position)
-//{
-//  m_transform.SetPosition(position);
-//}
-//
-//void CCamera::SetRotation(const TVector3& rotation)
-//{
-//  m_transform.SetRotation(rotation);
-//}
-//
-//void CCamera::SetScale(const TVector3& scale)
-//{
-//  m_transform.SetScale(scale);
-//}
-//
-//TVector3 CCamera::GetPosition() const
-//{
-//  return m_transform.GetPosition();
-//}
-//
-//TVector3 CCamera::GetRotation() const
-//{
-//  return m_transform.GetRotation();
-//}
-//
-//TVector3 CCamera::GetScale() const
-//{
-//  return m_transform.GetScale();
-//}
+bool CCamera::SphereInFrustum(glm::vec3 center, float radius) const
+{
+  TFrustum frustum = ExtractFrustum();
+
+  for (size_t i = 0U; i < 6U; i++)
+  {
+    float distance = glm::dot(frustum.m_planes[i].m_normal, center) + frustum.m_planes[i].m_distance;
+
+    if (distance < -radius)
+      return false;
+  }
+
+  return true;
+}
+
+TFrustum CCamera::ExtractFrustum() const
+{
+  TFrustum frustum{};
+
+  const glm::mat4 viewProj = m_projectionMatrix * m_viewMatrix;
+
+  // Left
+  frustum.m_planes[0].m_normal.x = viewProj[0][3] + viewProj[0][0];
+  frustum.m_planes[0].m_normal.y = viewProj[1][3] + viewProj[1][0];
+  frustum.m_planes[0].m_normal.z = viewProj[2][3] + viewProj[2][0];
+  frustum.m_planes[0].m_distance = viewProj[3][3] + viewProj[3][0];
+
+  // Right
+  frustum.m_planes[1].m_normal.x = viewProj[0][3] - viewProj[0][0];
+  frustum.m_planes[1].m_normal.y = viewProj[1][3] - viewProj[1][0];
+  frustum.m_planes[1].m_normal.z = viewProj[2][3] - viewProj[2][0];
+  frustum.m_planes[1].m_distance = viewProj[3][3] - viewProj[3][0];
+
+  // Bottom
+  frustum.m_planes[2].m_normal.x = viewProj[0][3] + viewProj[0][1];
+  frustum.m_planes[2].m_normal.y = viewProj[1][3] + viewProj[1][1];
+  frustum.m_planes[2].m_normal.z = viewProj[2][3] + viewProj[2][1];
+  frustum.m_planes[2].m_distance = viewProj[3][3] + viewProj[3][1];
+
+  // Top
+  frustum.m_planes[3].m_normal.x = viewProj[0][3] - viewProj[0][1];
+  frustum.m_planes[3].m_normal.y = viewProj[1][3] - viewProj[1][1];
+  frustum.m_planes[3].m_normal.z = viewProj[2][3] - viewProj[2][1];
+  frustum.m_planes[3].m_distance = viewProj[3][3] - viewProj[3][1];
+
+  // Near
+  frustum.m_planes[4].m_normal.x = viewProj[0][3] + viewProj[0][2];
+  frustum.m_planes[4].m_normal.y = viewProj[1][3] + viewProj[1][2];
+  frustum.m_planes[4].m_normal.z = viewProj[2][3] + viewProj[2][2];
+  frustum.m_planes[4].m_distance = viewProj[3][3] + viewProj[3][2];
+
+  // Far
+  frustum.m_planes[5].m_normal.x = viewProj[0][3] - viewProj[0][2];
+  frustum.m_planes[5].m_normal.y = viewProj[1][3] - viewProj[1][2];
+  frustum.m_planes[5].m_normal.z = viewProj[2][3] - viewProj[2][2];
+  frustum.m_planes[5].m_distance = viewProj[3][3] - viewProj[3][2];
+
+  // Normalisieren
+  for (int i = 0; i < 6; i++)
+  {
+    float length = glm::length(frustum.m_planes[i].m_normal);
+    frustum.m_planes[i].m_normal /= length;
+    frustum.m_planes[i].m_distance /= length;
+  }
+
+  return frustum;
+}
 }
