@@ -6,6 +6,7 @@ namespace rendering
 {
 CStaticMeshResources::CStaticMeshResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
+  , m_renderContext(renderContext)
   , m_pVSConstantBufferData(renderContext.GetConstantBufferService().GetVSConstantBufferData_StaticMesh())
   , m_pVSConstantBuffer(renderContext.GetConstantBufferService().GetVSConstantBuffer_StaticMesh())
   , m_vertexShaderServive(renderContext.GetVertexShaderService())
@@ -36,6 +37,23 @@ common::TResult CStaticMeshResources::Initialize(const TStaticMeshDesc& desc)
   result = CreateIndexBuffer(desc.m_meshData);
   if (result.IsError())
     return result;
+
+  result = m_renderContext.GetVertexShaderService().Get(desc.m_materialDesc.m_vertexShaderFilename, m_pVertexShader);
+  if (result.IsError())
+    return result;
+
+  result = m_renderContext.GetPixelShaderService().Get(desc.m_materialDesc.m_pixelShaderFilename, m_pPixelShader);
+  if (result.IsError())
+    return result;
+
+  result = m_renderContext.GetTextureService().Get(desc.m_materialDesc.m_textureFilename, m_pTexture);
+  if (result.IsError())
+    return result;
+
+  result = CreateRasterizerState();
+  if (result.IsError())
+    return result;
+
 
   return result;
 }
@@ -85,6 +103,17 @@ common::TResult CStaticMeshResources::CreateIndexBuffer(const CMeshData& meshDat
   return m_RHI.CreateBuffer(indexBufferDesc, indexBufferDataHandle, m_pIndexBuffer);
 }
 
+common::TResult CStaticMeshResources::CreateRasterizerState()
+{
+  rhi::TRasterizerDesc rasterizerDesc{};
+
+  rasterizerDesc.m_cullMode  = rhi::ECullMode::Back;
+  rasterizerDesc.m_fillMode  = rhi::EFillMode::Solid;
+  rasterizerDesc.m_frontFace = rhi::EFrontFace::Clockwise;
+
+  return m_RHI.CreateRasterizerState(rasterizerDesc, m_pRasterizerState);
+}
+
 rhi::IVertexDescriptor* CStaticMeshResources::GetVertexDescriptor() const
 {
   return m_pVertexDescriptor.get();
@@ -113,6 +142,26 @@ rhi::ISampler* CStaticMeshResources::GetSampler() const
 TVSConstantBuffer_StaticMesh* CStaticMeshResources::GetVSConstantBufferData() const
 {
   return m_pVSConstantBufferData.get();
+}
+
+rhi::IVertexShader* CStaticMeshResources::GetVertexShader() const
+{
+  return m_pVertexShader;
+}
+
+rhi::IPixelShader* CStaticMeshResources::GetPixelShader() const
+{
+  return m_pPixelShader;
+}
+
+rhi::ITexture* CStaticMeshResources::GetTexture() const
+{
+  return m_pTexture;
+}
+
+rhi::IRasterizerState* CStaticMeshResources::GetRasterizerState() const
+{
+  return m_pRasterizerState.get();
 }
 
 const size_t CStaticMeshResources::GetStride() const

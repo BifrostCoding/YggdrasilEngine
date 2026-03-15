@@ -27,9 +27,4 @@ rendering::CStaticMeshResources* CStaticMesh::GetResources() const
 {
   return m_pResources.get();
 }
-
-CMaterial& CStaticMesh::GetMaterial()
-{
-  return m_material;
-}
 }

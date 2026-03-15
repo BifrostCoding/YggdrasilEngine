@@ -4,8 +4,6 @@
 
 namespace yggdrasil
 {
-constexpr const float FRUSTUM_CULLING_RADIUS_ENTITY = 2.0f;
-
 CRenderProxy::CRenderProxy(const common::TApplicationData& applicationData, common::EBackend backend)
   : m_applicationData(applicationData)
   , m_renderer(applicationData, backend)
@@ -21,21 +19,19 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
 {
   scene.Update(engineTime);
 
-  m_renderer.BeginScene(scene.GetResources());
+  m_renderer.BeginScene(*scene.GetResources());
 
   for (auto& pEntity : scene.GetEntities())
   {
     pEntity->Update(deltaTime, scene.m_camera);
 
-    if (scene.m_camera.SphereInFrustum(pEntity->GetTransform().GetPosition(), FRUSTUM_CULLING_RADIUS_ENTITY))
+    if (scene.m_camera.SphereInFrustum(pEntity->GetTransform().GetPosition(), DEFAULT_FRUSTUM_CULLING_RADIUS))
     {
       CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
 
       if (pStaticMesh != nullptr)
       {
-        m_renderer.BindMaterial(pStaticMesh->GetMaterial().GetResources());
-        m_renderer.BindStaticMesh(pStaticMesh->GetResources());
-        m_renderer.RenderStaticMesh();
+        m_renderer.RenderStaticMesh(*pStaticMesh->GetResources());
       }
     }
 
@@ -43,12 +39,11 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
 
     if (pTerrain != nullptr)
     {
-      m_renderer.BindTerrain(pTerrain->GetResources());
-      m_renderer.RenderTerrain();
+      m_renderer.RenderTerrain(*pTerrain->GetResources());
     }
   }
 
-  m_renderer.EndScene(scene.GetResources());
+  m_renderer.EndScene(*scene.GetResources());
 }
 
 common::TResult CRenderProxy::Load(CScene& scene)
@@ -66,20 +61,13 @@ common::TResult CRenderProxy::Load(CScene& scene)
 
 common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data)
 {
-  std::unique_ptr<rendering::CMaterialResources> pMaterialResources;
-
-  common::TResult result = m_renderer.CreateMaterialResources(pMaterialResources, data.m_materialDesc);
-  if (result.IsError())
-    return result;
-
   std::unique_ptr<rendering::CStaticMeshResources> pStaticMeshResources;
 
-  result = m_renderer.CreateStaticMeshResources(pStaticMeshResources, data);
+  common::TResult result = m_renderer.CreateStaticMeshResources(pStaticMeshResources, data);
   if (result.IsError())
     return result;
 
   staticMesh.SetResources(std::move(pStaticMeshResources));
-  staticMesh.GetMaterial().SetResources(std::move(pMaterialResources));
 
   return result;
 }

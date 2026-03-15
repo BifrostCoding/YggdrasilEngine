@@ -57,9 +57,6 @@
     <ClInclude Include="StaticMeshResources.h">
       <Filter>Headerdateien\GPUResources</Filter>
     </ClInclude>
-    <ClInclude Include="MaterialResources.h">
-      <Filter>Headerdateien\GPUResources</Filter>
-    </ClInclude>
     <ClInclude Include="PixelShaderService.h">
       <Filter>Headerdateien\Services</Filter>
     </ClInclude>
@@ -93,9 +90,6 @@
       <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
     <ClCompile Include="StaticMeshResources.cpp">
-      <Filter>Quelldateien\GPUResources</Filter>
-    </ClCompile>
-    <ClCompile Include="MaterialResources.cpp">
       <Filter>Quelldateien\GPUResources</Filter>
     </ClCompile>
     <ClCompile Include="PixelShaderService.cpp">

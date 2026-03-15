@@ -5,6 +5,8 @@
 
 namespace yggdrasil
 {
+constexpr float DEFAULT_FRUSTUM_CULLING_RADIUS = 2.0f;
+
 //------------------------------------------------
 // TFrustumPlane
 //------------------------------------------------
@@ -14,6 +16,9 @@ struct TFrustumPlane final
   float m_distance;
 };
 
+//------------------------------------------------
+// TFrustumPlane
+//------------------------------------------------
 struct TFrustum final
 {
   TFrustumPlane m_planes[6];

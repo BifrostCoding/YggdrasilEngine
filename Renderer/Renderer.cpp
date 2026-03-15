@@ -8,7 +8,6 @@ CRenderer::CRenderer(const common::TApplicationData& applicationData, common::EB
   : m_applicationData(applicationData)
   , m_pRHI(rhi::CreateInstance(backend))
   , m_pRenderContext(std::make_unique<CRenderContext>(*m_pRHI.get()))
-  , m_renderData()
 {
 }
 
@@ -27,72 +26,47 @@ common::TResult CRenderer::Initialize()
   return result;
 }
 
-void CRenderer::BeginScene(CSceneResources* pScene)
+void CRenderer::BeginScene(CSceneResources& scene)
 {
   m_pCommandList->Begin();
-  m_pCommandList->Clear(pScene->GetRenderTarget(), pScene->GetClearColor());
-  m_pCommandList->BindViewport(pScene->GetViewport());
-  m_pCommandList->BindShaderData(pScene->GetConstantBuffer(), pScene->GetPSConstantBufferData());
+  m_pCommandList->Clear(scene.GetRenderTarget(), scene.GetClearColor());
+  m_pCommandList->BindViewport(scene.GetViewport());
+  m_pCommandList->BindShaderData(scene.GetConstantBuffer(), scene.GetPSConstantBufferData());
 }
 
-void CRenderer::EndScene(CSceneResources* pScene)
+void CRenderer::EndScene(CSceneResources& scene)
 {
-  m_pCommandList->End(pScene->GetRenderTarget());
+  m_pCommandList->End(scene.GetRenderTarget());
 }
 
-void CRenderer::RenderStaticMesh()
+void CRenderer::RenderStaticMesh(CStaticMeshResources& staticMeshResources)
 {
-  if(m_renderData.m_pMaterial != nullptr)
-  {
-    m_pCommandList->BindVertexShader(m_renderData.m_pMaterial->GetVertexShader());
-    m_pCommandList->BindPixelShader(m_renderData.m_pMaterial->GetPixelShader());
-    m_pCommandList->BindTexture(0, m_renderData.m_pMaterial->GetTexture());
-    m_pCommandList->BindRasterizerState(m_renderData.m_pMaterial->GetRasterizerState());
-  }
-
-  if (m_renderData.m_pStaticMesh != nullptr)
-  {
-    m_pCommandList->BindVertexDescriptor(m_renderData.m_pStaticMesh->GetVertexDescriptor());
-    m_pCommandList->BindVertexBuffer(m_renderData.m_pStaticMesh->GetVertexBuffer(), m_renderData.m_pStaticMesh->GetStride());
-    m_pCommandList->BindIndexBuffer(m_renderData.m_pStaticMesh->GetIndexBuffer());
-    m_pCommandList->BindShaderData(m_renderData.m_pStaticMesh->GetVSConstantBuffer(), m_renderData.m_pStaticMesh->GetVSConstantBufferData());
-    m_pCommandList->BindSampler(m_renderData.m_pStaticMesh->GetSampler());
-    m_pCommandList->DrawIndexed(m_renderData.m_pStaticMesh->GetIndexCount());
-  }
+  m_pCommandList->BindVertexShader(staticMeshResources.GetVertexShader());
+  m_pCommandList->BindPixelShader(staticMeshResources.GetPixelShader());
+  m_pCommandList->BindTexture(0, staticMeshResources.GetTexture());
+  m_pCommandList->BindRasterizerState(staticMeshResources.GetRasterizerState());
+  m_pCommandList->BindVertexDescriptor(staticMeshResources.GetVertexDescriptor());
+  m_pCommandList->BindVertexBuffer(staticMeshResources.GetVertexBuffer(), staticMeshResources.GetStride());
+  m_pCommandList->BindIndexBuffer(staticMeshResources.GetIndexBuffer());
+  m_pCommandList->BindShaderData(staticMeshResources.GetVSConstantBuffer(), staticMeshResources.GetVSConstantBufferData());
+  m_pCommandList->BindSampler(staticMeshResources.GetSampler());
+  m_pCommandList->DrawIndexed(staticMeshResources.GetIndexCount());
 }
 
-void CRenderer::RenderTerrain()
+void CRenderer::RenderTerrain(CTerrainResources& terrainResources)
 {
-  if (m_renderData.m_pTerrain != nullptr)
-  {
-    m_pCommandList->BindVertexShader(m_renderData.m_pTerrain->GetVertexShader());
-    m_pCommandList->BindPixelShader(m_renderData.m_pTerrain->GetPixelShader());
-    m_pCommandList->BindTexture(0U, m_renderData.m_pTerrain->GetTexture_Default());
-    m_pCommandList->BindTexture(1U, m_renderData.m_pTerrain->GetTexture_Slope());
-    m_pCommandList->BindTexture(2U, m_renderData.m_pTerrain->GetTexture_Peek());
-    m_pCommandList->BindSampler(m_renderData.m_pTerrain->GetSampler());
-    m_pCommandList->BindRasterizerState(m_renderData.m_pTerrain->GetRasterizerState());
-    m_pCommandList->BindVertexDescriptor(m_renderData.m_pTerrain->GetVertexDescriptor());
-    m_pCommandList->BindVertexBuffer(m_renderData.m_pTerrain->GetVertexBuffer(), m_renderData.m_pTerrain->GetStride());
-    m_pCommandList->BindIndexBuffer(m_renderData.m_pTerrain->GetIndexBuffer());
-    m_pCommandList->BindShaderData(m_renderData.m_pTerrain->GetVSConstantBuffer(), m_renderData.m_pTerrain->GetVSConstantBufferData());
-    m_pCommandList->DrawIndexed(m_renderData.m_pTerrain->GetIndexCount());
-  }
-}
-
-void CRenderer::BindMaterial(CMaterialResources* pMaterial)
-{
-  m_renderData.m_pMaterial = pMaterial;
-}
-
-void CRenderer::BindStaticMesh(CStaticMeshResources* pStaticMesh)
-{
-  m_renderData.m_pStaticMesh = pStaticMesh;
-}
-
-void CRenderer::BindTerrain(CTerrainResources* pTerrain)
-{
-  m_renderData.m_pTerrain = pTerrain;
+  m_pCommandList->BindVertexShader(terrainResources.GetVertexShader());
+  m_pCommandList->BindPixelShader(terrainResources.GetPixelShader());
+  m_pCommandList->BindTexture(0U, terrainResources.GetTexture_Default());
+  m_pCommandList->BindTexture(1U, terrainResources.GetTexture_Slope());
+  m_pCommandList->BindTexture(2U, terrainResources.GetTexture_Peek());
+  m_pCommandList->BindSampler(terrainResources.GetSampler());
+  m_pCommandList->BindRasterizerState(terrainResources.GetRasterizerState());
+  m_pCommandList->BindVertexDescriptor(terrainResources.GetVertexDescriptor());
+  m_pCommandList->BindVertexBuffer(terrainResources.GetVertexBuffer(), terrainResources.GetStride());
+  m_pCommandList->BindIndexBuffer(terrainResources.GetIndexBuffer());
+  m_pCommandList->BindShaderData(terrainResources.GetVSConstantBuffer(), terrainResources.GetVSConstantBufferData());
+  m_pCommandList->DrawIndexed(terrainResources.GetIndexCount());
 }
 
 common::TResult CRenderer::CreateSceneResources(std::unique_ptr<CSceneResources>& pResources) const
@@ -107,13 +81,6 @@ common::TResult CRenderer::CreateStaticMeshResources(std::unique_ptr<CStaticMesh
   pResources = std::make_unique<CStaticMeshResources>(*m_pRenderContext.get());
 
   return pResources->Initialize(data);
-}
-
-common::TResult CRenderer::CreateMaterialResources(std::unique_ptr<CMaterialResources>& pResources, const TMaterialDesc& desc)
-{
-  pResources = std::make_unique<CMaterialResources>(*m_pRenderContext.get());
-
-  return pResources->Initialize(desc);
 }
 
 common::TResult CRenderer::CreateTerrainResources(std::unique_ptr<CTerrainResources>& pResources, const TTerrainResourceDesc& desc)

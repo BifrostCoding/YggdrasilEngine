@@ -145,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantBufferService.h" />
-    <ClInclude Include="MaterialResources.h" />
     <ClInclude Include="MeshData.h" />
     <ClInclude Include="PixelShaderService.h" />
     <ClInclude Include="RenderContext.h" />
@@ -160,7 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConstantBufferService.cpp" />
-    <ClCompile Include="MaterialResources.cpp" />
     <ClCompile Include="MeshData.cpp" />
     <ClCompile Include="PixelShaderService.cpp" />
     <ClCompile Include="RenderContext.cpp" />

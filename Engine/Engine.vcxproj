@@ -148,7 +148,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Material.h" />
     <ClInclude Include="RenderProxy.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="StaticMesh.h" />
@@ -159,7 +158,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Material.cpp" />
     <ClCompile Include="RenderProxy.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
