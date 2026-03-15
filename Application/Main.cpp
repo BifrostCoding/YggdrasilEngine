@@ -17,7 +17,7 @@ public:
 
     materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
     materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "./minikuh.jpg";
+    materialDesc.m_textureFilename      = "./mario_block.jpg";
 
     yggdrasil::rendering::TStaticMeshDesc staticMeshDesc
     {
@@ -32,7 +32,7 @@ public:
 
     SetStaticMesh(std::move(staticMeshResult.value()));
 
-    GetTransform().GetPosition() = glm::vec3(100, 0.0f, 100.0f);
+    GetTransform().GetPosition() = glm::vec3(100, 10.0f, 100.0f);
 
     return yggdrasil::common::TResult();
   }
@@ -65,25 +65,37 @@ public:
   {
     m_pScene = &scene;
 
-    yggdrasil::TTerrainGenerationParams terrainGenerationParams{};
+    yggdrasil::TTerrainGenerationParams params{};
 
-    terrainGenerationParams.m_fieldCount    = 200.0f;
-    terrainGenerationParams.m_fieldWidth    = 1.0f;
-    terrainGenerationParams.m_repeatTexture = 50.0f;
-    terrainGenerationParams.m_noiseScale    = 0.01f;
-    terrainGenerationParams.m_height        = 60.0f;
-    terrainGenerationParams.m_octaves       = 5;
+    params.m_seed          = 12345U;
+    params.m_fieldCount    = 200.0f;
+    params.m_fieldWidth    = 1.0f;
+    params.m_repeatTexture = 50.0f;
+    params.m_noiseScale    = 0.01f;
+    params.m_height        = 50.0f;
+    params.m_octaves       = 6;
+    params.m_flattenFactor = 4.0f;
 
-    yggdrasil::CTerrainGenerator terrainGenerator(terrainGenerationParams);
+    yggdrasil::CTerrainGenerator terrainGenerator(params);
 
     std::unique_ptr<yggdrasil::TTerrainMesh> terrainMesh = terrainGenerator.Generate();
 
-    auto terrainResult = engine.CreateTerrain(std::move(terrainMesh));
+    yggdrasil::TTerrainDesc terrainDesc{};
+
+    terrainDesc.m_defaultTextureFilename = "./gras.jpg";
+    terrainDesc.m_slopeTextureFilename   = "./cliff.jfif";
+    terrainDesc.m_peekTextureFilename    = "./snow.jpg";
+
+    auto terrainResult = engine.CreateTerrain(std::move(terrainMesh), terrainDesc);
 
     if (!terrainResult.has_value())
       return terrainResult.error();
 
     SetTerrain(std::move(terrainResult.value()));
+
+    glm::vec3& camPos = scene.GetCamera().GetTransform().GetPosition();
+
+    camPos = glm::vec3(50.0f, 0.0f, 50.0f);
 
     return yggdrasil::common::TResult();
   }

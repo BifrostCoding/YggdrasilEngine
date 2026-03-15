@@ -13,12 +13,24 @@ class CCamera;
 //------------------------------------------------
 struct TTerrainGenerationParams final
 {
+  uint32_t m_seed;
   float m_fieldCount;
   float m_fieldWidth;
   float m_repeatTexture;
-  int   m_octaves;
+  int m_octaves;
   float m_height;
   float m_noiseScale;
+  float m_flattenFactor;
+};
+
+//------------------------------------------------
+// TTerrainDesc
+//------------------------------------------------
+struct TTerrainDesc final
+{
+  std::string m_defaultTextureFilename;
+  std::string m_slopeTextureFilename;
+  std::string m_peekTextureFilename;
 };
 
 //------------------------------------------------
@@ -26,7 +38,7 @@ struct TTerrainGenerationParams final
 //------------------------------------------------
 struct TTerrainMesh final
 {
-  std::vector<rendering::TStaticMeshVertex> m_vertices;
+  std::vector<rendering::TTerrainVertex> m_vertices;
   std::vector<uint32_t> m_indices;
   float m_fieldCount;
   float m_fieldWidth;

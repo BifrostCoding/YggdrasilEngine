@@ -13,9 +13,9 @@ CDX11RHI::CDX11RHI()
 
 CDX11RHI::~CDX11RHI()
 {
-  RELEASE_PTR(m_pSwapChain);
   RELEASE_PTR(m_pDeviceContext);
   RELEASE_PTR(m_pDevice);
+  RELEASE_PTR(m_pSwapChain);
 }
 
 common::TResult CDX11RHI::Initialize(const common::TApplicationData& applicationData)

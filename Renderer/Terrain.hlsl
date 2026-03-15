@@ -20,6 +20,7 @@ cbuffer cbPerObject
 
 Texture2D TextureDefault : register(t0);
 Texture2D TextureSlope   : register(t1);
+Texture2D TexturePeek    : register(t2);
 
 SamplerState ObjSamplerState;
 

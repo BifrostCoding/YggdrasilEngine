@@ -79,15 +79,19 @@ common::TResult CRenderProxy::Load(CStaticMesh& staticMesh, const rendering::TSt
   return result;
 }
 
-common::TResult CRenderProxy::Load(CTerrain& terrain)
+common::TResult CRenderProxy::Load(CTerrain& terrain, const TTerrainDesc& desc)
 {
   yggdrasil::rendering::TTerrainResourceDesc terrainResourceDesc{};
 
-  terrainResourceDesc.m_stride           = sizeof(yggdrasil::rendering::TStaticMeshVertex);
+  terrainResourceDesc.m_stride           = sizeof(yggdrasil::rendering::TTerrainVertex);
   terrainResourceDesc.m_pVerticesData    = terrain.GetMesh()->m_vertices.data();
-  terrainResourceDesc.m_verticesDataSize = sizeof(yggdrasil::rendering::TStaticMeshVertex) * terrain.GetMesh()->m_vertices.size();
+  terrainResourceDesc.m_verticesDataSize = sizeof(yggdrasil::rendering::TTerrainVertex) * terrain.GetMesh()->m_vertices.size();
   terrainResourceDesc.m_pIndicesData     = terrain.GetMesh()->m_indices.data();
   terrainResourceDesc.m_indexCount       = terrain.GetMesh()->m_indices.size();
+
+  terrainResourceDesc.m_defaultTextureFilename = desc.m_defaultTextureFilename;
+  terrainResourceDesc.m_slopeTextureFilename   = desc.m_slopeTextureFilename;
+  terrainResourceDesc.m_peekTextureFilename    = desc.m_peekTextureFilename;
 
   std::unique_ptr<rendering::CTerrainResources> pTerrainRersouces;
 

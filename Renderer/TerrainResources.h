@@ -16,6 +16,9 @@ struct TTerrainResourceDesc final
   size_t m_verticesDataSize;
   const void* m_pIndicesData;
   size_t m_indexCount;
+  std::string m_defaultTextureFilename;
+  std::string m_slopeTextureFilename;
+  std::string m_peekTextureFilename;
 };
 
 //------------------------------------------------
@@ -43,6 +46,7 @@ public:
   rhi::IPixelShader* GetPixelShader() const;
   rhi::ITexture* GetTexture_Default() const;
   rhi::ITexture* GetTexture_Slope() const;
+  rhi::ITexture* GetTexture_Peek() const;
   rhi::ISampler* GetSampler() const;
   rhi::IRasterizerState* GetRasterizerState() const;
 
@@ -65,6 +69,7 @@ private:
   rhi::IPixelShader* m_pPixelShader;
   rhi::ITexture* m_pTexture_Default;
   rhi::ITexture* m_pTexture_Slope;
+  rhi::ITexture* m_pTexture_Peek;
 
   std::shared_ptr<rhi::ISampler> m_pSampler;
   std::shared_ptr<rhi::IBuffer> m_pVSConstantBuffer;

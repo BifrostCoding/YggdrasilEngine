@@ -15,5 +15,15 @@ struct TStaticMeshVertex final
   glm::vec2 m_uv;
   glm::vec3 m_normal;
 };
+
+//------------------------------------------------
+// TTerrainVertex
+//------------------------------------------------
+struct TTerrainVertex final
+{
+  glm::vec3 m_position;
+  glm::vec2 m_uv;
+  glm::vec3 m_normal;
+};
 }
 }

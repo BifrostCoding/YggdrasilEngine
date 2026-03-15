@@ -7,6 +7,7 @@ namespace yggdrasil
 class CScene;
 class CStaticMesh;
 class CTerrain;
+struct TTerrainDesc;
 
 class CRenderProxy final
 {
@@ -21,7 +22,7 @@ public:
 
   common::TResult Load(CScene& scene);
   common::TResult Load(CStaticMesh& staticMesh, const rendering::TStaticMeshDesc& data);
-  common::TResult Load(CTerrain& terrain);
+  common::TResult Load(CTerrain& terrain, const TTerrainDesc& desc);
 
   float GetViewportWidth() const;
   float GetViewportHeight() const;

@@ -18,7 +18,7 @@ float4 PSMain(PS_INPUT input) : SV_TARGET
   float3 litColor = diffuse.rgb * light.diffuse.rgb * NdotL;
 
   // Schattenblau definieren
-  float3 shadowTint = float3(0.0f, 0.02f, 0.05f); // kühler Blauton
+  float3 shadowTint = float3(0.0f, 0.015f, 0.075f); // kühler Blauton
 
   // Schatten färben: je dunkler das Licht, desto mehr Blau
   litColor = lerp(shadowTint, litColor, NdotL);

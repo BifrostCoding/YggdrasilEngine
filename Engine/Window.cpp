@@ -98,7 +98,8 @@ LRESULT CALLBACK CWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
     {
       if (wParam == VK_ESCAPE)
       {
-        DestroyWindow(hwnd);
+        PostQuitMessage(0);
+        return 0;
       }
 
       input::CKeyboard::OnKeyDown((unsigned int)wParam);

@@ -35,7 +35,7 @@ void CTerrainGenerator::GenerateVertices(TTerrainMesh* pTerrainMesh) const
 
   pTerrainMesh->m_vertices.reserve(verticesSize);
 
-  const siv::PerlinNoise::seed_type seed = 123456U;
+  const siv::PerlinNoise::seed_type seed = m_params.m_seed;
 
   const siv::PerlinNoise perlin{ seed };
 
@@ -43,12 +43,14 @@ void CTerrainGenerator::GenerateVertices(TTerrainMesh* pTerrainMesh) const
   {
     for (int x = 0; x < vertexCountPerSide; x++)
     {
-      rendering::TStaticMeshVertex v{};
+      rendering::TTerrainVertex v{};
 
       float noiseValue = perlin.octave2D_01(x * m_params.m_noiseScale, z * m_params.m_noiseScale, m_params.m_octaves);
 
+      float heightValue = pow(noiseValue, m_params.m_flattenFactor);
+
       v.m_position.x = x * m_params.m_fieldWidth;
-      v.m_position.y = m_params.m_height * noiseValue - (m_params.m_height / 2.0f);
+      v.m_position.y = m_params.m_height * heightValue;
       v.m_position.z = z * m_params.m_fieldWidth;
 
       v.m_uv.x = (static_cast<float>(x) / (terrainWidth / m_params.m_repeatTexture));

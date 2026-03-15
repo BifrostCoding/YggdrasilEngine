@@ -7,7 +7,6 @@ namespace rendering
 constexpr const char* VS_TERRAIN_NAME = "./VS_Terrain.cso";
 constexpr const char* PS_TERRAIN_NAME = "./PS_Terrain.cso";
 
-//TODO: replace all "StaticMesh" with "Terrain"
 CTerrainResources::CTerrainResources(CRenderContext& renderContext)
   : m_RHI(renderContext.GetRHI())
   , m_renderContext(renderContext)
@@ -18,6 +17,7 @@ CTerrainResources::CTerrainResources(CRenderContext& renderContext)
   , m_pPixelShader(nullptr)
   , m_pTexture_Default(nullptr)
   , m_pTexture_Slope(nullptr)
+  , m_pTexture_Peek(nullptr)
   , m_indexCount(0U)
   , m_stride(0U)
 {
@@ -57,11 +57,15 @@ common::TResult CTerrainResources::Initialize(const TTerrainResourceDesc& desc)
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetTextureService().Get("./gras.jpg", m_pTexture_Default);
+  result = m_renderContext.GetTextureService().Get(desc.m_defaultTextureFilename, m_pTexture_Default);
   if (result.IsError())
     return result;
 
-  result = m_renderContext.GetTextureService().Get("./cliff.jfif", m_pTexture_Slope);
+  result = m_renderContext.GetTextureService().Get(desc.m_slopeTextureFilename, m_pTexture_Slope);
+  if (result.IsError())
+    return result;
+
+  result = m_renderContext.GetTextureService().Get(desc.m_peekTextureFilename, m_pTexture_Peek);
   if (result.IsError())
     return result;
 
@@ -164,6 +168,11 @@ rhi::ITexture* CTerrainResources::GetTexture_Default() const
 rhi::ITexture* CTerrainResources::GetTexture_Slope() const
 {
   return m_pTexture_Slope;
+}
+
+rhi::ITexture* CTerrainResources::GetTexture_Peek() const
+{
+  return m_pTexture_Peek;
 }
 
 rhi::ISampler* CTerrainResources::GetSampler() const

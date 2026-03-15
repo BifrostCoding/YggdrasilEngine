@@ -67,8 +67,9 @@ void CRenderer::RenderTerrain()
   {
     m_pCommandList->BindVertexShader(m_renderData.m_pTerrain->GetVertexShader());
     m_pCommandList->BindPixelShader(m_renderData.m_pTerrain->GetPixelShader());
-    m_pCommandList->BindTexture(0, m_renderData.m_pTerrain->GetTexture_Default());
-    m_pCommandList->BindTexture(1, m_renderData.m_pTerrain->GetTexture_Slope());
+    m_pCommandList->BindTexture(0U, m_renderData.m_pTerrain->GetTexture_Default());
+    m_pCommandList->BindTexture(1U, m_renderData.m_pTerrain->GetTexture_Slope());
+    m_pCommandList->BindTexture(2U, m_renderData.m_pTerrain->GetTexture_Peek());
     m_pCommandList->BindSampler(m_renderData.m_pTerrain->GetSampler());
     m_pCommandList->BindRasterizerState(m_renderData.m_pTerrain->GetRasterizerState());
     m_pCommandList->BindVertexDescriptor(m_renderData.m_pTerrain->GetVertexDescriptor());
