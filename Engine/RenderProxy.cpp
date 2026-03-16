@@ -23,27 +23,63 @@ void CRenderProxy::UpdateAndRenderScene(CScene& scene, float engineTime, float d
 
   for (auto& pEntity : scene.GetEntities())
   {
-    pEntity->Update(deltaTime, scene.m_camera);
-
-    if (scene.m_camera.SphereInFrustum(pEntity->GetTransform().GetPosition(), DEFAULT_FRUSTUM_CULLING_RADIUS))
-    {
-      CStaticMesh* pStaticMesh = pEntity->GetStaticMesh();
-
-      if (pStaticMesh != nullptr)
-      {
-        m_renderer.RenderStaticMesh(*pStaticMesh->GetResources());
-      }
-    }
-
-    CTerrain* pTerrain = pEntity->GetTerrain();
-
-    if (pTerrain != nullptr)
-    {
-      m_renderer.RenderTerrain(*pTerrain->GetResources());
-    }
+    UpdateAndRenderEntity(*pEntity, scene, deltaTime);
   }
 
   m_renderer.EndScene(*scene.GetResources());
+}
+
+void CRenderProxy::UpdateAndRenderEntity(AEntity& entity, CScene& scene, float deltaTime)
+{
+  entity.Tick(deltaTime);
+
+  for (auto& keyValue : entity.GetComponents())
+  {
+    component::AComponent* pComponent = keyValue.second.get();
+
+    switch (pComponent->GetType())
+    {
+      case component::EComponentType::StaticMesh:
+      {
+        auto& c = *static_cast<component::CStaticMeshComponent*>(pComponent);
+        UpdateAndRenderStaticMeshComponent(c, entity, scene.GetCamera());
+        break;
+      }
+      case component::EComponentType::Terrain:
+      {
+        auto& c = *static_cast<component::CTerrainComponent*>(pComponent);
+        UpdateAndRenderTerrainComponent(c, entity, scene.GetCamera());
+        break;
+      }
+    }
+  }
+}
+
+void CRenderProxy::UpdateAndRenderStaticMeshComponent(component::CStaticMeshComponent& c, AEntity& entity, CCamera& camera)
+{
+  c.Update(entity.GetTransform().GetWorldMatrix(), camera);
+
+  if (camera.SphereInFrustum(entity.GetTransform().GetPosition(), DEFAULT_FRUSTUM_CULLING_RADIUS))
+  {
+    CStaticMesh* pStaticMesh = c.GetStaticMesh();
+
+    if (pStaticMesh != nullptr)
+    {
+      m_renderer.RenderStaticMesh(*pStaticMesh->GetResources());
+    }
+  }
+}
+
+void CRenderProxy::UpdateAndRenderTerrainComponent(component::CTerrainComponent& c, AEntity& entity, CCamera& camera)
+{
+  c.Update(entity.GetTransform().GetWorldMatrix(), camera);
+
+  CTerrain* pTerrain = c.GetTerrain();
+
+  if (pTerrain != nullptr)
+  {
+    m_renderer.RenderTerrain(*pTerrain->GetResources());
+  }
 }
 
 common::TResult CRenderProxy::Load(CScene& scene)

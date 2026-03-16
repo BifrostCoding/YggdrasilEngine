@@ -21,7 +21,11 @@ public:
     if (!staticMeshResult.has_value())
       return staticMeshResult.error();
 
-    SetStaticMesh(std::move(staticMeshResult.value()));
+    auto pStaticMeshComponent = std::make_unique<yggdrasil::component::CStaticMeshComponent>();
+
+    pStaticMeshComponent->SetStaticMesh(std::move(staticMeshResult.value()));
+
+    AddComponent("house", std::move(pStaticMeshComponent));
 
     GetTransform().GetPosition() = glm::vec3(100, 2.5f, 100.0f);
     GetTransform().GetScale() *= 3.0f;
@@ -79,7 +83,13 @@ public:
     if (!terrainResult.has_value())
       return terrainResult.error();
 
-    SetTerrain(std::move(terrainResult.value()));
+    m_pTerrain = terrainResult.value().get();
+
+    auto pTerrainComponent = std::make_unique<yggdrasil::component::CTerrainComponent>();
+
+    pTerrainComponent->SetTerrain(std::move(terrainResult.value()));
+
+    AddComponent("terrain1", std::move(pTerrainComponent));
 
     glm::vec3& camPos = scene.GetCamera().GetTransform().GetPosition();
 
@@ -142,7 +152,7 @@ public:
 
     position += velocity * deltaTime;
 
-    float terrainHeight = GetTerrain()->GetHeight(glm::vec2(position.x, position.z)) + 0.75f;
+    float terrainHeight = m_pTerrain->GetHeight(glm::vec2(position.x, position.z)) + 0.75f;
     if (position.y <= terrainHeight)
     {
       position.y = terrainHeight;
@@ -159,6 +169,7 @@ public:
 
 private:
 
+  yggdrasil::CTerrain* m_pTerrain;
   yggdrasil::CScene* m_pScene;
   glm::vec3 velocity{ 0.0f };
   bool onGround = false;

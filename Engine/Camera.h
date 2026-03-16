@@ -41,7 +41,7 @@ public:
   const glm::mat4 GetViewMatrix() const;
   const glm::mat4 GetProjectionMatrix() const;
 
-  bool SphereInFrustum(glm::vec3 center, float radius) const;
+  bool SphereInFrustum(const glm::vec3& center, float radius) const;
 
 private:
 

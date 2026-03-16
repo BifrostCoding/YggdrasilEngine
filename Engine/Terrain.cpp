@@ -124,19 +124,12 @@ CTerrain::CTerrain(std::unique_ptr<TTerrainMesh> pTerrainMesh)
 {
 }
 
-void CTerrain::Update(CCamera& camera, common::CTransform& transform)
+void CTerrain::Update(const glm::mat4& transform, CCamera& camera)
 {
   rendering::TVSConstantBuffer_Terrain* constantBufferData = m_pResources->GetVSConstantBufferData();
 
-  glm::mat4 worldMatrix       = glm::identity<glm::mat4>();
-  glm::mat4 rotationMatrix    = glm::mat4_cast(transform.GetRotation());
-  glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), transform.GetPosition());
-  glm::mat4 scaleMatrix       = glm::scale(glm::mat4(1.0f), transform.GetScale());
-
-  worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-
-  constantBufferData->m_WVP   = glm::transpose(camera.GetProjectionMatrix() * camera.GetViewMatrix() * worldMatrix);
-  constantBufferData->m_World = glm::transpose(worldMatrix);
+  constantBufferData->m_WVP   = glm::transpose(camera.GetProjectionMatrix() * camera.GetViewMatrix() * transform);
+  constantBufferData->m_World = glm::transpose(transform);
 }
 
 float CTerrain::GetHeight(glm::vec2 position)

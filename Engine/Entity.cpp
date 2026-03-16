@@ -3,17 +3,8 @@
 
 namespace yggdrasil
 {
-void AEntity::Update(float deltaTime, CCamera& camera)
+void AEntity::Tick(float deltaTime)
 {
-  if (m_pStaticMesh != nullptr)
-  {
-    m_pStaticMesh->Update(camera, m_transform);
-  }
-  else if (m_pTerrain != nullptr)
-  {
-    m_pTerrain->Update(camera, m_transform);
-  }
-
   OnTick(deltaTime);
 }
 
@@ -22,23 +13,16 @@ common::CTransform& AEntity::GetTransform()
   return m_transform;
 }
 
-void AEntity::SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh)
+void AEntity::AddComponent(const std::string& name, std::unique_ptr<component::AComponent> pComponent)
 {
-  m_pStaticMesh = std::move(pStaticMesh);
+  if (m_components.find(name) != m_components.end())
+    return;
+
+  m_components[name] = std::move(pComponent);
 }
 
-CStaticMesh* AEntity::GetStaticMesh()
+std::unordered_map<std::string, std::unique_ptr<component::AComponent>>& AEntity::GetComponents()
 {
-  return m_pStaticMesh.get();
-}
-
-void AEntity::SetTerrain(std::unique_ptr<CTerrain> pTerrain)
-{
-  m_pTerrain = std::move(pTerrain);
-}
-
-CTerrain* AEntity::GetTerrain()
-{
-  return m_pTerrain.get();
+  return m_components;
 }
 }

@@ -17,7 +17,7 @@ public:
   CStaticMesh() = default;
   virtual ~CStaticMesh() = default;
 
-  void Update(CCamera& camera, common::CTransform& transform);
+  void Update(const glm::mat4& transform, CCamera& camera);
 
 private:
 

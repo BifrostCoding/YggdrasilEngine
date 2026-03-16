@@ -7,6 +7,8 @@
 
 namespace yggdrasil
 {
+class CCamera;
+
 namespace component
 {
 //------------------------------------------------
@@ -19,14 +21,18 @@ enum class EComponentType
 };
 
 //------------------------------------------------
-// CComponent
+// AComponent
 //------------------------------------------------
-class CComponent
+class AComponent
 {
 public:
 
-  CComponent(const EComponentType type);
-  virtual ~CComponent() = default;
+  AComponent(const EComponentType type);
+  virtual ~AComponent() = default;
+
+  EComponentType GetType() const;
+
+  virtual void OnTick(float deltaTime);
 
 private:
 
@@ -34,24 +40,26 @@ private:
 };
 
 //------------------------------------------------
-// CSceneComponent
+// ASceneComponent
 //------------------------------------------------
-class CSceneComponent : public CComponent
+class ASceneComponent : public AComponent
 {
 public:
 
-  CSceneComponent(const EComponentType type);
-  virtual ~CSceneComponent() = default;
+  ASceneComponent(const EComponentType type);
+  virtual ~ASceneComponent() = default;
 
-private:
+  virtual void Update(const glm::mat4& parentTransform, CCamera& camera) = 0;
 
-  common::CTransform m_transform;
+protected:
+
+  glm::mat4 m_transform;
 };
 
 //------------------------------------------------
 // CStaticMeshComponent
 //------------------------------------------------
-class CStaticMeshComponent : public CSceneComponent
+class CStaticMeshComponent : public ASceneComponent
 {
 public:
 
@@ -64,6 +72,8 @@ public:
   void AddChild(std::unique_ptr<CStaticMeshComponent> pStaticMeshComponent);
   std::list<std::unique_ptr<CStaticMeshComponent>>& GetChilds();
 
+  void Update(const glm::mat4& parentTransform, CCamera& camera) override;
+
 private:
 
   std::unique_ptr<CStaticMesh> m_pStaticMesh;
@@ -73,7 +83,7 @@ private:
 //------------------------------------------------
 // CStaticMeshComponent
 //------------------------------------------------
-class CTerrainComponent : public CSceneComponent
+class CTerrainComponent : public ASceneComponent
 {
 public:
 
@@ -82,6 +92,8 @@ public:
 
   void SetTerrain(std::unique_ptr<CTerrain> pStaticMesh);
   CTerrain* GetTerrain();
+
+  void Update(const glm::mat4& parentTransform, CCamera& camera) override;
 
 private:
 

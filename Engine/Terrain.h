@@ -78,7 +78,7 @@ public:
   CTerrain(std::unique_ptr<TTerrainMesh> pTerrainMesh);
   virtual ~CTerrain() = default;
 
-  void Update(CCamera& camera, common::CTransform& transform);
+  void Update(const glm::mat4& transform, CCamera& camera);
   float GetHeight(glm::vec2 position);
 
 private:

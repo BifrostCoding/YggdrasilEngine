@@ -5,18 +5,28 @@ namespace yggdrasil
 namespace component
 {
 //------------------------------------------------
-// CComponent
+// AComponent
 //------------------------------------------------
-CComponent::CComponent(const EComponentType type)
+AComponent::AComponent(const EComponentType type)
   : m_type(type)
 {
 }
 
+EComponentType AComponent::GetType() const
+{
+  return m_type;
+}
+
+void AComponent::OnTick(float deltaTime)
+{
+}
+
 //------------------------------------------------
-// CSceneComponent
+// ASceneComponent
 //------------------------------------------------
-CSceneComponent::CSceneComponent(const EComponentType type)
-  : CComponent(type)
+ASceneComponent::ASceneComponent(const EComponentType type)
+  : AComponent(type)
+  , m_transform(glm::identity<glm::mat4>())
 {
 }
 
@@ -24,7 +34,7 @@ CSceneComponent::CSceneComponent(const EComponentType type)
 // CStaticMeshComponent
 //------------------------------------------------
 CStaticMeshComponent::CStaticMeshComponent()
-  : CSceneComponent(EComponentType::StaticMesh)
+  : ASceneComponent(EComponentType::StaticMesh)
 {
 
 }
@@ -49,11 +59,19 @@ std::list<std::unique_ptr<CStaticMeshComponent>>& CStaticMeshComponent::GetChild
   return m_childs;
 }
 
+void CStaticMeshComponent::Update(const glm::mat4& parentTransform, CCamera& camera)
+{
+  if (m_pStaticMesh == nullptr)
+    return;
+
+  m_pStaticMesh->Update(parentTransform * m_transform, camera);
+}
+
 //------------------------------------------------
 // CTerrainComponent
 //------------------------------------------------
 CTerrainComponent::CTerrainComponent()
-  : CSceneComponent(EComponentType::Terrain)
+  : ASceneComponent(EComponentType::Terrain)
 {
 }
 
@@ -65,6 +83,14 @@ void CTerrainComponent::SetTerrain(std::unique_ptr<CTerrain> pTerrain)
 CTerrain* CTerrainComponent::GetTerrain()
 {
   return m_pTerrain.get();
+}
+
+void CTerrainComponent::Update(const glm::mat4& parentTransform, CCamera& camera)
+{
+  if (m_pTerrain == nullptr)
+    return;
+
+  m_pTerrain->Update(parentTransform * m_transform, camera);
 }
 }
 }

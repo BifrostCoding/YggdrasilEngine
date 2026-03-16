@@ -44,7 +44,7 @@ const glm::mat4 CCamera::GetProjectionMatrix() const
   return m_projectionMatrix;
 }
 
-bool CCamera::SphereInFrustum(glm::vec3 center, float radius) const
+bool CCamera::SphereInFrustum(const glm::vec3& center, float radius) const
 {
   TFrustum frustum = ExtractFrustum();
 
