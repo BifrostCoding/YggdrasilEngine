@@ -18,15 +18,16 @@ public:
 
     std::unique_ptr<yggdrasil::component::CStaticMeshComponent> pStaticMeshComponent;
 
-    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh(R"(C:\Users\patri\OneDrive\Desktop\House_1.fbx)", pStaticMeshComponent);
+    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./house.fbx", pStaticMeshComponent);
     if (result.IsError())
       return result;
 
     AddComponent("house", std::move(pStaticMeshComponent));
 
-    GetTransform().GetPosition() = glm::vec3(100, 2.5f, 100.0f);
-    GetTransform().GetScale() *= 3.0f;
-    GetTransform().Rotate(-90, glm::vec3(1.0f, 0.0f, 0.0f));
+    GetTransform().GetPosition() = glm::vec3(100, 2.8f, 91.6f);
+    //GetTransform().GetScale() *= 0.02f;
+    GetTransform().Rotate(90, glm::vec3(1.0f, 0.0f, 0.0f));
+    GetTransform().Rotate(120, glm::vec3(0.0f, 1.0f, 0.0f));
 
     return result;
   }

@@ -24,23 +24,37 @@ common::TResult CModelLoader::LoadStaticMesh(const std::filesystem::path& filena
 
   pComponent = std::make_unique<component::CStaticMeshComponent>();
 
+  aiNode* pNode = pScene->mRootNode;
+
   for (size_t i = 0; i < pScene->mNumMeshes; i++)
   {
     aiMesh* pMesh = pScene->mMeshes[i];
 
-    auto result = CreateStaticMesh(pMesh);
+    aiString texturePath;
+    std::filesystem::path textureFilename;
+
+    if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) != AI_SUCCESS)
+    {
+      textureFilename = texturePath.C_Str();
+    }
+    else
+    {
+      textureFilename = "./base.png";
+    }
+
+    auto result = CreateStaticMesh(pMesh, textureFilename);
     if (!result.has_value())
       return result.error();
 
     if (i == 0)
     {
-      pComponent->SetStaticMesh(std::move(result.value()));
+      pComponent->AddStaticMesh(std::move(result.value()));
       continue;
     }
 
     auto pChildComponent = std::make_unique<component::CStaticMeshComponent>();
 
-    pChildComponent->SetStaticMesh(std::move(result.value()));
+    pChildComponent->AddStaticMesh(std::move(result.value()));
 
     pComponent->AddChild(std::move(pChildComponent));
   }
@@ -101,15 +115,15 @@ rendering::CMeshData CModelLoader::ExtractMeshData(aiMesh* mesh) const
   return meshData;
 }
 
-std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CModelLoader::CreateStaticMesh(aiMesh* mesh) const
+std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CModelLoader::CreateStaticMesh(aiMesh* mesh, const std::filesystem::path& textureFilename) const
 {
-  yggdrasil::rendering::TMaterialDesc materialDesc{};
+  rendering::TMaterialDesc materialDesc{};
 
   materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
   materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-  materialDesc.m_textureFilename      = "./mario_block.jpg";
+  materialDesc.m_textureFilename      = textureFilename.string();
 
-  yggdrasil::rendering::TStaticMeshDesc desc{};
+  rendering::TStaticMeshDesc desc{};
 
   desc.m_meshData     = ExtractMeshData(mesh);
   desc.m_materialDesc = materialDesc;

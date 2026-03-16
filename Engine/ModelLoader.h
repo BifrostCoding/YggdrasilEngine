@@ -31,7 +31,7 @@ public:
 private:
 
   rendering::CMeshData ExtractMeshData(aiMesh* mesh) const;
-  std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CreateStaticMesh(aiMesh* mesh) const;
+  std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CreateStaticMesh(aiMesh* mesh, const std::filesystem::path& textureFilename) const;
 
   app::CEngine& m_engine;
 };

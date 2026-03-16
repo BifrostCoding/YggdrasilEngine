@@ -57,14 +57,12 @@ void CRenderProxy::UpdateAndRenderEntity(AEntity& entity, CScene& scene, float d
 
 void CRenderProxy::UpdateAndRenderStaticMeshComponent(component::CStaticMeshComponent& c, AEntity& entity, CCamera& camera)
 {
-  c.Update(entity.GetTransform().GetWorldMatrix(), camera);
-
   if (camera.SphereInFrustum(entity.GetTransform().GetPosition(), DEFAULT_FRUSTUM_CULLING_RADIUS))
   {
-    CStaticMesh* pStaticMesh = c.GetStaticMesh();
-
-    if (pStaticMesh != nullptr)
+    for (auto& pStaticMesh : c.GetStaticMeshes())
     {
+      pStaticMesh->Update(entity.GetTransform().GetWorldMatrix(), camera);
+
       m_renderer.RenderStaticMesh(*pStaticMesh->GetResources());
 
       for (auto& child : c.GetChilds())
@@ -77,12 +75,12 @@ void CRenderProxy::UpdateAndRenderStaticMeshComponent(component::CStaticMeshComp
 
 void CRenderProxy::UpdateAndRenderTerrainComponent(component::CTerrainComponent& c, AEntity& entity, CCamera& camera)
 {
-  c.Update(entity.GetTransform().GetWorldMatrix(), camera);
-
   CTerrain* pTerrain = c.GetTerrain();
 
   if (pTerrain != nullptr)
   {
+    pTerrain->Update(entity.GetTransform().GetWorldMatrix(), camera);
+
     m_renderer.RenderTerrain(*pTerrain->GetResources());
   }
 }

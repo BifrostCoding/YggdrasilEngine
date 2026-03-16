@@ -39,14 +39,14 @@ CStaticMeshComponent::CStaticMeshComponent()
 
 }
 
-void CStaticMeshComponent::SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh)
+void CStaticMeshComponent::AddStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh)
 {
-  m_pStaticMesh = std::move(pStaticMesh);
+  m_staticMeshes.push_back(std::move(pStaticMesh));
 }
 
-CStaticMesh* CStaticMeshComponent::GetStaticMesh()
+std::list<std::unique_ptr<CStaticMesh>>& CStaticMeshComponent::GetStaticMeshes()
 {
-  return m_pStaticMesh.get();
+  return m_staticMeshes;
 }
 
 bool CStaticMeshComponent::HasChilds() const
@@ -62,14 +62,6 @@ void CStaticMeshComponent::AddChild(std::unique_ptr<CStaticMeshComponent> pStati
 std::list<std::unique_ptr<CStaticMeshComponent>>& CStaticMeshComponent::GetChilds()
 {
   return m_childs;
-}
-
-void CStaticMeshComponent::Update(const glm::mat4& parentTransform, CCamera& camera)
-{
-  if (m_pStaticMesh == nullptr)
-    return;
-
-  m_pStaticMesh->Update(parentTransform * m_transform, camera);
 }
 
 //------------------------------------------------
@@ -88,14 +80,6 @@ void CTerrainComponent::SetTerrain(std::unique_ptr<CTerrain> pTerrain)
 CTerrain* CTerrainComponent::GetTerrain()
 {
   return m_pTerrain.get();
-}
-
-void CTerrainComponent::Update(const glm::mat4& parentTransform, CCamera& camera)
-{
-  if (m_pTerrain == nullptr)
-    return;
-
-  m_pTerrain->Update(parentTransform * m_transform, camera);
 }
 }
 }

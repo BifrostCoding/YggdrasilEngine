@@ -49,8 +49,6 @@ public:
   ASceneComponent(const EComponentType type);
   virtual ~ASceneComponent() = default;
 
-  virtual void Update(const glm::mat4& parentTransform, CCamera& camera) = 0;
-
 protected:
 
   glm::mat4 m_transform;
@@ -66,18 +64,16 @@ public:
   CStaticMeshComponent();
   virtual ~CStaticMeshComponent() = default;
 
-  void SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh);
-  CStaticMesh* GetStaticMesh();
+  void AddStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh);
+  std::list<std::unique_ptr<CStaticMesh>>& GetStaticMeshes();
 
   bool HasChilds() const;
   void AddChild(std::unique_ptr<CStaticMeshComponent> pStaticMeshComponent);
   std::list<std::unique_ptr<CStaticMeshComponent>>& GetChilds();
 
-  void Update(const glm::mat4& parentTransform, CCamera& camera) override;
-
 private:
 
-  std::unique_ptr<CStaticMesh> m_pStaticMesh;
+  std::list<std::unique_ptr<CStaticMesh>> m_staticMeshes;
   std::list<std::unique_ptr<CStaticMeshComponent>> m_childs;
 };
 
@@ -93,8 +89,6 @@ public:
 
   void SetTerrain(std::unique_ptr<CTerrain> pStaticMesh);
   CTerrain* GetTerrain();
-
-  void Update(const glm::mat4& parentTransform, CCamera& camera) override;
 
 private:
 
