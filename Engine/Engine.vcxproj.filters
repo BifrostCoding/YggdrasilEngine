@@ -60,6 +60,9 @@
     <ClInclude Include="ModelLoader.h">
       <Filter>Headerdateien\FileSystem</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -88,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="ModelLoader.cpp">
       <Filter>Quelldateien\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

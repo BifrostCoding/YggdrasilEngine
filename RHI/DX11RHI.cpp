@@ -13,6 +13,8 @@ CDX11RHI::CDX11RHI()
 
 CDX11RHI::~CDX11RHI()
 {
+  m_pSwapChain->SetFullscreenState(false, nullptr);
+
   RELEASE_PTR(m_pDeviceContext);
   RELEASE_PTR(m_pDevice);
   RELEASE_PTR(m_pSwapChain);

@@ -17,6 +17,8 @@ public:
   glm::quat& GetRotation();
   glm::vec3& GetScale();
 
+  glm::mat4 GetWorldMatrix();
+
   void Rotate(const float degrees, const glm::vec3& angle);
 
 private:
