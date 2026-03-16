@@ -6,13 +6,13 @@
 #include <Renderer/MeshData.h>
 #include <filesystem>
 #include <expected>
+#include "Component.h"
 
 #pragma comment(lib, "assimp-vc143-mt.lib")
 
 namespace yggdrasil
 {
 namespace app { class CEngine; }
-class CStaticMesh;
 
 namespace filesystem
 {
@@ -26,11 +26,12 @@ public:
   CModelLoader(app::CEngine& engine);
   virtual ~CModelLoader() = default;
 
-  std::expected<std::unique_ptr<CStaticMesh>, common::TResult> LoadStaticMesh(const std::filesystem::path& filename) const;
+  common::TResult LoadStaticMesh(const std::filesystem::path& filename, std::unique_ptr<component::CStaticMeshComponent>& pComponent) const;
 
 private:
 
   rendering::CMeshData ExtractMeshData(aiMesh* mesh) const;
+  std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CreateStaticMesh(aiMesh* mesh) const;
 
   app::CEngine& m_engine;
 };

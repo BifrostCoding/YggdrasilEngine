@@ -16,14 +16,11 @@ public:
   {
     yggdrasil::filesystem::CModelLoader modelLoader(engine);
 
-    auto staticMeshResult = modelLoader.LoadStaticMesh(R"(C:\Users\patri\OneDrive\Desktop\House_1.fbx)");
+    std::unique_ptr<yggdrasil::component::CStaticMeshComponent> pStaticMeshComponent;
 
-    if (!staticMeshResult.has_value())
-      return staticMeshResult.error();
-
-    auto pStaticMeshComponent = std::make_unique<yggdrasil::component::CStaticMeshComponent>();
-
-    pStaticMeshComponent->SetStaticMesh(std::move(staticMeshResult.value()));
+    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh(R"(C:\Users\patri\OneDrive\Desktop\House_1.fbx)", pStaticMeshComponent);
+    if (result.IsError())
+      return result;
 
     AddComponent("house", std::move(pStaticMeshComponent));
 
@@ -31,7 +28,7 @@ public:
     GetTransform().GetScale() *= 3.0f;
     GetTransform().Rotate(-90, glm::vec3(1.0f, 0.0f, 0.0f));
 
-    return yggdrasil::common::TResult();
+    return result;
   }
 
   void OnTick(float deltaTime) override
@@ -169,8 +166,8 @@ public:
 
 private:
 
-  yggdrasil::CTerrain* m_pTerrain;
-  yggdrasil::CScene* m_pScene;
+  yggdrasil::CTerrain* m_pTerrain = nullptr;
+  yggdrasil::CScene* m_pScene = nullptr;
   glm::vec3 velocity{ 0.0f };
   bool onGround = false;
   float acceleration = 0.0f;

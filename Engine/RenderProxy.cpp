@@ -66,6 +66,11 @@ void CRenderProxy::UpdateAndRenderStaticMeshComponent(component::CStaticMeshComp
     if (pStaticMesh != nullptr)
     {
       m_renderer.RenderStaticMesh(*pStaticMesh->GetResources());
+
+      for (auto& child : c.GetChilds())
+      {
+        UpdateAndRenderStaticMeshComponent(*child, entity, camera);
+      }
     }
   }
 }

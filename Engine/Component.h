@@ -69,6 +69,7 @@ public:
   void SetStaticMesh(std::unique_ptr<CStaticMesh> pStaticMesh);
   CStaticMesh* GetStaticMesh();
 
+  bool HasChilds() const;
   void AddChild(std::unique_ptr<CStaticMeshComponent> pStaticMeshComponent);
   std::list<std::unique_ptr<CStaticMeshComponent>>& GetChilds();
 

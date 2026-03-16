@@ -10,32 +10,42 @@ CModelLoader::CModelLoader(app::CEngine& engine)
 {
 }
 
-std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CModelLoader::LoadStaticMesh(const std::filesystem::path& filename) const
+common::TResult CModelLoader::LoadStaticMesh(const std::filesystem::path& filename, std::unique_ptr<component::CStaticMeshComponent>& pComponent) const
 {
   Assimp::Importer importer;
 
-  const aiScene* scene = importer.ReadFile (
+  const aiScene* pScene = importer.ReadFile (
     filename.string(),
     aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_CalcTangentSpace
   );
 
-  if (!scene || !scene->HasMeshes())
-    return std::unexpected(ERROR_RESULT("can't load model"));
+  if (!pScene || !pScene->HasMeshes())
+    return ERROR_RESULT("can't load model");
 
-  aiMesh* mesh = scene->mMeshes[0];
+  pComponent = std::make_unique<component::CStaticMeshComponent>();
 
-  yggdrasil::rendering::TMaterialDesc materialDesc{};
+  for (size_t i = 0; i < pScene->mNumMeshes; i++)
+  {
+    aiMesh* pMesh = pScene->mMeshes[i];
 
-  materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
-  materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-  materialDesc.m_textureFilename      = "./mario_block.jpg";
+    auto result = CreateStaticMesh(pMesh);
+    if (!result.has_value())
+      return result.error();
 
-  yggdrasil::rendering::TStaticMeshDesc desc{};
+    if (i == 0)
+    {
+      pComponent->SetStaticMesh(std::move(result.value()));
+      continue;
+    }
 
-  desc.m_meshData     = ExtractMeshData(mesh);
-  desc.m_materialDesc = materialDesc;
+    auto pChildComponent = std::make_unique<component::CStaticMeshComponent>();
 
-  return m_engine.CreateStaticMesh(desc);
+    pChildComponent->SetStaticMesh(std::move(result.value()));
+
+    pComponent->AddChild(std::move(pChildComponent));
+  }
+
+  return common::TResult();
 }
 
 rendering::CMeshData CModelLoader::ExtractMeshData(aiMesh* mesh) const
@@ -89,6 +99,22 @@ rendering::CMeshData CModelLoader::ExtractMeshData(aiMesh* mesh) const
   meshData.SetIndices(indices);
 
   return meshData;
+}
+
+std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CModelLoader::CreateStaticMesh(aiMesh* mesh) const
+{
+  yggdrasil::rendering::TMaterialDesc materialDesc{};
+
+  materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
+  materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
+  materialDesc.m_textureFilename      = "./mario_block.jpg";
+
+  yggdrasil::rendering::TStaticMeshDesc desc{};
+
+  desc.m_meshData     = ExtractMeshData(mesh);
+  desc.m_materialDesc = materialDesc;
+
+  return m_engine.CreateStaticMesh(desc);
 }
 }
 }

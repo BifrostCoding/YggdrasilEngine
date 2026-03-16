@@ -49,6 +49,11 @@ CStaticMesh* CStaticMeshComponent::GetStaticMesh()
   return m_pStaticMesh.get();
 }
 
+bool CStaticMeshComponent::HasChilds() const
+{
+  return !m_childs.empty();
+}
+
 void CStaticMeshComponent::AddChild(std::unique_ptr<CStaticMeshComponent> pStaticMeshComponent)
 {
   m_childs.push_back(std::move(pStaticMeshComponent));
