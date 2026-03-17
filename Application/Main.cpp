@@ -5,35 +5,44 @@
 //------------------------------------------------
 // custom - Entity
 //------------------------------------------------
-class CHouse : public yggdrasil::AEntity
+class CBlock : public yggdrasil::AEntity
 {
 public:
 
-  CHouse() = default;
-  virtual ~CHouse() = default;
+  CBlock() = default;
+  virtual ~CBlock() = default;
 
   yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
   {
-    yggdrasil::filesystem::CModelLoader modelLoader(engine);
+    yggdrasil::rendering::TMaterialDesc materialDesc{};
 
-    std::unique_ptr<yggdrasil::component::CStaticMeshComponent> pStaticMeshComponent;
+    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
+    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
+    materialDesc.m_textureFilename      = "mario_block.jpg";
 
-    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./casa.3DS", pStaticMeshComponent);
-    if (result.IsError())
-      return result;
+    yggdrasil::rendering::TStaticMeshDesc desc{};
 
-    AddComponent("house", std::move(pStaticMeshComponent));
+    desc.m_meshData     = yggdrasil::rendering::CBoxMesh();
+    desc.m_materialDesc = materialDesc;
 
-    GetTransform().GetScale() *= 0.1f;
-    GetTransform().GetPosition() = glm::vec3(100, 2.0f, 91.6f);
-    GetTransform().Rotate(-90, glm::vec3(1.0f, 0.0f, 0.0f));
-    GetTransform().Rotate(-190, glm::vec3(0.0f, 1.0f, 0.0f));
+    auto meshResult = engine.CreateStaticMesh(desc);
+    if (!meshResult.has_value())
+      return meshResult.error();
 
-    return result;
+    auto pStaticMeshComponent = std::make_unique<yggdrasil::component::CStaticMeshComponent>();
+
+    pStaticMeshComponent->AddStaticMesh(std::move(meshResult.value()));
+
+    AddComponent("mario_block", std::move(pStaticMeshComponent));
+
+    GetTransform().GetPosition() = glm::vec3(100.0f, 6.0f, 90.0f);
+
+    return yggdrasil::common::TResult();
   }
 
   void OnTick(float deltaTime) override
   {
+    GetTransform().Rotate(90.0f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
   }
 };
 
@@ -184,9 +193,16 @@ int main(int argv, char* argc[])
   yggdrasil::common::TApplicationData applicationData{};
 
   applicationData.m_hinstance = GetModuleHandle(nullptr);
+
+#ifdef _DEBUG
   applicationData.m_width     = 1024;
   applicationData.m_height    = 720;
   applicationData.m_windowed  = true;
+#else
+  applicationData.m_width    = 1920;
+  applicationData.m_height   = 1080;
+  applicationData.m_windowed = false;
+#endif
 
   yggdrasil::app::CEngine app(applicationData, yggdrasil::common::EBackend::DX11);
 
@@ -206,7 +222,7 @@ int main(int argv, char* argc[])
 
   yggdrasil::CScene* pScene = sceneResult.value();
 
-  result = pScene->AddEntity(std::make_unique<CHouse>());
+  result = pScene->AddEntity(std::make_unique<CBlock>());
   if (result.IsError())
   {
     YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);

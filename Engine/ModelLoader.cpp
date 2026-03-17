@@ -40,12 +40,11 @@ common::TResult CModelLoader::CreateStaticMeshComponentTree(const aiScene* pScen
     aiMesh* pMesh = pScene->mMeshes[pNode->mMeshes[i]];
 
     aiString texturePath;
-    std::filesystem::path textureFilename = "casa.jpg";
 
-   /* if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) == AI_SUCCESS)
-    {
-      textureFilename = texturePath.C_Str();
-    }*/
+    if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) != AI_SUCCESS)
+      return ERROR_RESULT("can't load texture");
+
+    std::filesystem::path textureFilename = texturePath.C_Str();
 
     auto result = CreateStaticMesh(pMesh, textureFilename);
     if (!result.has_value())
