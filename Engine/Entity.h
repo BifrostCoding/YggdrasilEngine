@@ -23,6 +23,7 @@ public:
 
   void AddComponent(const std::string& name, std::unique_ptr<component::AComponent> pComponent);
   std::unordered_map<std::string, std::unique_ptr<component::AComponent>>& GetComponents();
+  void RemoveComponent(const std::string& name);
 
   void Tick(float deltaTime);
 

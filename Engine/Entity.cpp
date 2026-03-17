@@ -25,4 +25,12 @@ std::unordered_map<std::string, std::unique_ptr<component::AComponent>>& AEntity
 {
   return m_components;
 }
+
+void AEntity::RemoveComponent(const std::string& name)
+{
+  if (m_components.find(name) == m_components.end())
+    return;
+
+  m_components.erase(name);
+}
 }

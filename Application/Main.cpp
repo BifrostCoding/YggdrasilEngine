@@ -2,6 +2,99 @@
 #include <Common/Keyboard.h>
 #include <Engine/ModelLoader.h>
 
+struct TOBB
+{
+  glm::vec3 center;
+  glm::vec3 axis[3];
+  glm::vec3 halfSize;
+};
+
+static bool IsColliding(const TOBB& A, const TOBB& B)
+{
+  const float EPSILON = 1e-6f;
+
+  float R[3][3], AbsR[3][3];
+
+  for (int i = 0;i < 3;i++)
+    for (int j = 0;j < 3;j++)
+    {
+      R[i][j] = glm::dot(A.axis[i], B.axis[j]);
+      AbsR[i][j] = std::abs(R[i][j]) + EPSILON;
+    }
+
+  glm::vec3 tvec = B.center - A.center;
+
+  float t[3] =
+  {
+      glm::dot(tvec, A.axis[0]),
+      glm::dot(tvec, A.axis[1]),
+      glm::dot(tvec, A.axis[2])
+  };
+
+  float ra, rb;
+
+  // A's axes
+  for (int i = 0;i < 3;i++)
+  {
+    ra = A.halfSize[i];
+    rb = B.halfSize[0] * AbsR[i][0] +
+      B.halfSize[1] * AbsR[i][1] +
+      B.halfSize[2] * AbsR[i][2];
+
+    if (std::abs(t[i]) > ra + rb) return false;
+  }
+
+  // B's axes
+  for (int i = 0;i < 3;i++)
+  {
+    ra = A.halfSize[0] * AbsR[0][i] +
+      A.halfSize[1] * AbsR[1][i] +
+      A.halfSize[2] * AbsR[2][i];
+
+    rb = B.halfSize[i];
+
+    if (std::abs(
+      t[0] * R[0][i] +
+      t[1] * R[1][i] +
+      t[2] * R[2][i]
+    ) > ra + rb) return false;
+  }
+
+  // cross products
+  for (int i = 0;i < 3;i++)
+    for (int j = 0;j < 3;j++)
+    {
+      ra =
+        A.halfSize[(i + 1) % 3] * AbsR[(i + 2) % 3][j] +
+        A.halfSize[(i + 2) % 3] * AbsR[(i + 1) % 3][j];
+
+      rb =
+        B.halfSize[(j + 1) % 3] * AbsR[i][(j + 2) % 3] +
+        B.halfSize[(j + 2) % 3] * AbsR[i][(j + 1) % 3];
+
+      float val =
+        std::abs(
+          t[(i + 2) % 3] * R[(i + 1) % 3][j] -
+          t[(i + 1) % 3] * R[(i + 2) % 3][j]
+        );
+
+      if (val > ra + rb) return false;
+    }
+
+  return true;
+}
+
+void SetAxis(TOBB& obb, const glm::mat4& transform)
+{
+  glm::vec3 col0 = glm::vec3(transform[0]);
+  glm::vec3 col1 = glm::vec3(transform[1]);
+  glm::vec3 col2 = glm::vec3(transform[2]);
+
+  obb.axis[0] = glm::normalize(col0);
+  obb.axis[1] = glm::normalize(col1);
+  obb.axis[2] = glm::normalize(col2);
+}
+
 //------------------------------------------------
 // custom - Entity
 //------------------------------------------------
@@ -14,6 +107,8 @@ public:
 
   yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
   {
+    m_pScene = &scene;
+
     yggdrasil::rendering::TMaterialDesc materialDesc{};
 
     materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
@@ -35,7 +130,7 @@ public:
 
     AddComponent("mario_block", std::move(pStaticMeshComponent));
 
-    GetTransform().GetPosition() = glm::vec3(100.0f, 6.0f, 90.0f);
+    GetTransform().GetPosition() = glm::vec3(100.0f, 5.0f, 90.0f);
 
     return yggdrasil::common::TResult();
   }
@@ -43,7 +138,29 @@ public:
   void OnTick(float deltaTime) override
   {
     GetTransform().Rotate(90.0f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
+
+    TOBB myOBB{};
+
+    myOBB.center = GetTransform().GetPosition();
+    myOBB.halfSize = GetTransform().GetScale() * 0.5f;
+    
+    SetAxis(myOBB, GetTransform().GetWorldMatrix());
+
+    TOBB cameraOBB = myOBB;
+
+    cameraOBB.center = m_pScene->GetCamera().GetTransform().GetPosition();
+    
+    SetAxis(cameraOBB, m_pScene->GetCamera().GetTransform().GetWorldMatrix());
+
+    if (IsColliding(myOBB, cameraOBB))
+    {
+      RemoveComponent("mario_block");
+    }
   }
+
+private:
+
+  yggdrasil::CScene* m_pScene = nullptr;
 };
 
 //------------------------------------------------
@@ -109,8 +226,8 @@ public:
   {
     constexpr static float MOVE_SPEED = 10.0f;
     constexpr static float ROT_SPEED  = glm::radians(100.0f);
-    constexpr static float GRAVITY    = 9.81f;
-    constexpr static float JUMP_FORCE = 5.0f;
+    constexpr static float GRAVITY    = 20.0f;
+    constexpr static float JUMP_FORCE = 10.0f;
     constexpr static float ACCEL      = 10.0f;
 
     yggdrasil::CCamera& camera = m_pScene->GetCamera();
@@ -199,8 +316,8 @@ int main(int argv, char* argc[])
   applicationData.m_height    = 720;
   applicationData.m_windowed  = true;
 #else
-  applicationData.m_width    = 1920;
-  applicationData.m_height   = 1080;
+  applicationData.m_width    = GetSystemMetrics(SM_CXSCREEN);
+  applicationData.m_height   = GetSystemMetrics(SM_CYSCREEN);
   applicationData.m_windowed = false;
 #endif
 
