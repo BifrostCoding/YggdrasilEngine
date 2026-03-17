@@ -132,7 +132,7 @@ void CTerrain::Update(const glm::mat4& transform, CCamera& camera)
   constantBufferData->m_World = glm::transpose(transform);
 }
 
-float CTerrain::GetHeight(glm::vec2 position)
+float CTerrain::GetHeight(const glm::vec2& position)
 {
   const float vertexCountPerSide = m_pTerrainMesh->m_fieldCount + 1;
 

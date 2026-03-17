@@ -30,8 +30,12 @@ public:
 
 private:
 
-  rendering::CMeshData ExtractMeshData(aiMesh* mesh) const;
+  common::TResult CreateStaticMeshComponentTree(const aiScene* pScene, aiNode* pNode, component::CStaticMeshComponent* pParentComponent) const;
+
+  rendering::CMeshData ExtractStaticMeshData(aiMesh* mesh) const;
   std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CreateStaticMesh(aiMesh* mesh, const std::filesystem::path& textureFilename) const;
+
+  glm::mat4 AssimpToGlmMatrix(const aiMatrix4x4& m) const;
 
   app::CEngine& m_engine;
 };

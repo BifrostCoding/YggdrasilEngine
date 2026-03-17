@@ -79,7 +79,7 @@ public:
   virtual ~CTerrain() = default;
 
   void Update(const glm::mat4& transform, CCamera& camera);
-  float GetHeight(glm::vec2 position);
+  float GetHeight(const glm::vec2& position);
 
 private:
 

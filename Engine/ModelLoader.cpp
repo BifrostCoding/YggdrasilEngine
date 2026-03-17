@@ -24,45 +24,42 @@ common::TResult CModelLoader::LoadStaticMesh(const std::filesystem::path& filena
 
   pComponent = std::make_unique<component::CStaticMeshComponent>();
 
-  aiNode* pNode = pScene->mRootNode;
+  return CreateStaticMeshComponentTree(pScene, pScene->mRootNode, pComponent.get());
+}
 
-  for (size_t i = 0; i < pScene->mNumMeshes; i++)
+common::TResult CModelLoader::CreateStaticMeshComponentTree(const aiScene* pScene, aiNode* pNode, component::CStaticMeshComponent* pParentComponent) const
+{
+  auto pComponent = std::make_unique<component::CStaticMeshComponent>();
+
+  pComponent->SetTransform(AssimpToGlmMatrix(pNode->mTransformation));
+
+  component::CStaticMeshComponent* pRawComponent = pComponent.get();
+
+  for (size_t i = 0; i < pNode->mNumMeshes; i++)
   {
-    aiMesh* pMesh = pScene->mMeshes[i];
+    aiMesh* pMesh = pScene->mMeshes[pNode->mMeshes[i]];
 
     aiString texturePath;
     std::filesystem::path textureFilename;
 
-    if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) != AI_SUCCESS)
-    {
-      textureFilename = texturePath.C_Str();
-    }
-    else
-    {
-      textureFilename = "./base.png";
-    }
-
-    auto result = CreateStaticMesh(pMesh, textureFilename);
+    auto result = CreateStaticMesh(pMesh, "cliff.jfif");
     if (!result.has_value())
       return result.error();
 
-    if (i == 0)
-    {
-      pComponent->AddStaticMesh(std::move(result.value()));
-      continue;
-    }
+    pComponent->AddStaticMesh(std::move(result.value()));
+  }
 
-    auto pChildComponent = std::make_unique<component::CStaticMeshComponent>();
+  pParentComponent->AddChild(std::move(pComponent));
 
-    pChildComponent->AddStaticMesh(std::move(result.value()));
-
-    pComponent->AddChild(std::move(pChildComponent));
+  for (size_t i = 0; i < pNode->mNumChildren; i++)
+  {
+    CreateStaticMeshComponentTree(pScene, pNode->mChildren[i], pRawComponent);
   }
 
   return common::TResult();
 }
 
-rendering::CMeshData CModelLoader::ExtractMeshData(aiMesh* mesh) const
+rendering::CMeshData CModelLoader::ExtractStaticMeshData(aiMesh* mesh) const
 {
   std::vector<rendering::TStaticMeshVertex> vertices;
   std::vector<uint32_t> indices;
@@ -125,10 +122,22 @@ std::expected<std::unique_ptr<CStaticMesh>, common::TResult> CModelLoader::Creat
 
   rendering::TStaticMeshDesc desc{};
 
-  desc.m_meshData     = ExtractMeshData(mesh);
+  desc.m_meshData     = ExtractStaticMeshData(mesh);
   desc.m_materialDesc = materialDesc;
 
   return m_engine.CreateStaticMesh(desc);
+}
+
+glm::mat4 CModelLoader::AssimpToGlmMatrix(const aiMatrix4x4& m) const
+{
+  glm::mat4 result{};
+
+  result[0][0] = m.a1; result[1][0] = m.a2; result[2][0] = m.a3; result[3][0] = m.a4;
+  result[0][1] = m.b1; result[1][1] = m.b2; result[2][1] = m.b3; result[3][1] = m.b4;
+  result[0][2] = m.c1; result[1][2] = m.c2; result[2][2] = m.c3; result[3][2] = m.c4;
+  result[0][3] = m.d1; result[1][3] = m.d2; result[2][3] = m.d3; result[3][3] = m.d4;
+
+  return result;
 }
 }
 }

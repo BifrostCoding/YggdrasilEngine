@@ -49,6 +49,8 @@ public:
   ASceneComponent(const EComponentType type);
   virtual ~ASceneComponent() = default;
 
+  void SetTransform(const glm::mat4& transform);
+
 protected:
 
   glm::mat4 m_transform;

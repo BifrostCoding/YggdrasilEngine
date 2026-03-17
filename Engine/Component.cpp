@@ -30,6 +30,11 @@ ASceneComponent::ASceneComponent(const EComponentType type)
 {
 }
 
+void ASceneComponent::SetTransform(const glm::mat4& transform)
+{
+  m_transform = transform;
+}
+
 //------------------------------------------------
 // CStaticMeshComponent
 //------------------------------------------------

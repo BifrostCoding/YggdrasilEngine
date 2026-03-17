@@ -64,11 +64,11 @@ void CRenderProxy::UpdateAndRenderStaticMeshComponent(component::CStaticMeshComp
       pStaticMesh->Update(entity.GetTransform().GetWorldMatrix(), camera);
 
       m_renderer.RenderStaticMesh(*pStaticMesh->GetResources());
+    }
 
-      for (auto& child : c.GetChilds())
-      {
-        UpdateAndRenderStaticMeshComponent(*child, entity, camera);
-      }
+    for (auto& child : c.GetChilds())
+    {
+      UpdateAndRenderStaticMeshComponent(*child, entity, camera);
     }
   }
 }

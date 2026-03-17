@@ -18,16 +18,16 @@ public:
 
     std::unique_ptr<yggdrasil::component::CStaticMeshComponent> pStaticMeshComponent;
 
-    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./house.fbx", pStaticMeshComponent);
+    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./stone_church.glb", pStaticMeshComponent);
     if (result.IsError())
       return result;
 
     AddComponent("house", std::move(pStaticMeshComponent));
 
-    GetTransform().GetPosition() = glm::vec3(100, 2.8f, 91.6f);
-    //GetTransform().GetScale() *= 0.02f;
-    GetTransform().Rotate(90, glm::vec3(1.0f, 0.0f, 0.0f));
-    GetTransform().Rotate(120, glm::vec3(0.0f, 1.0f, 0.0f));
+    GetTransform().GetPosition() = glm::vec3(100, 2.0f, 91.6f);
+    GetTransform().GetScale() *= 3.0f;
+    GetTransform().Rotate(-90, glm::vec3(1.0f, 0.0f, 0.0f));
+    GetTransform().Rotate(-190, glm::vec3(0.0f, 1.0f, 0.0f));
 
     return result;
   }
@@ -58,9 +58,9 @@ public:
     yggdrasil::TTerrainGenerationParams params{};
 
     params.m_seed          = 1234567890U;
-    params.m_fieldCount    = 200.0f;
+    params.m_fieldCount    = 250.0f;
     params.m_fieldWidth    = 1.0f;
-    params.m_repeatTexture = 50.0f;
+    params.m_repeatTexture = 30;
     params.m_noiseScale    = 0.01f;
     params.m_height        = 50.0f;
     params.m_octaves       = 6;
@@ -150,7 +150,7 @@ public:
 
     position += velocity * deltaTime;
 
-    float terrainHeight = m_pTerrain->GetHeight(glm::vec2(position.x, position.z)) + 0.75f;
+    float terrainHeight = m_pTerrain->GetHeight(glm::vec2(position.x, position.z)) + 1.0f;
     if (position.y <= terrainHeight)
     {
       position.y = terrainHeight;
