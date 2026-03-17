@@ -36,6 +36,10 @@ float4 PSMain(PS_INPUT input) : SV_TARGET
   float fogFactor = saturate((fogEnd - dist) / (fogEnd - fogStart));
 
   color = lerp(fogColor, color, fogFactor);
+  
+  float4 finalColor = float4(color, diffuse.a);
+  
+  clip(finalColor.a - 0.25f);
 
-  return float4(color, diffuse.a);
+  return finalColor;
 }

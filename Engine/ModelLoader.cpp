@@ -40,9 +40,14 @@ common::TResult CModelLoader::CreateStaticMeshComponentTree(const aiScene* pScen
     aiMesh* pMesh = pScene->mMeshes[pNode->mMeshes[i]];
 
     aiString texturePath;
-    std::filesystem::path textureFilename;
+    std::filesystem::path textureFilename = "casa.jpg";
 
-    auto result = CreateStaticMesh(pMesh, "cliff.jfif");
+   /* if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) == AI_SUCCESS)
+    {
+      textureFilename = texturePath.C_Str();
+    }*/
+
+    auto result = CreateStaticMesh(pMesh, textureFilename);
     if (!result.has_value())
       return result.error();
 

@@ -18,14 +18,14 @@ public:
 
     std::unique_ptr<yggdrasil::component::CStaticMeshComponent> pStaticMeshComponent;
 
-    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./stone_church.glb", pStaticMeshComponent);
+    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./casa.3DS", pStaticMeshComponent);
     if (result.IsError())
       return result;
 
     AddComponent("house", std::move(pStaticMeshComponent));
 
+    GetTransform().GetScale() *= 0.1f;
     GetTransform().GetPosition() = glm::vec3(100, 2.0f, 91.6f);
-    GetTransform().GetScale() *= 3.0f;
     GetTransform().Rotate(-90, glm::vec3(1.0f, 0.0f, 0.0f));
     GetTransform().Rotate(-190, glm::vec3(0.0f, 1.0f, 0.0f));
 
