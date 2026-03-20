@@ -86,5 +86,19 @@ CTerrain* CTerrainComponent::GetTerrain()
 {
   return m_pTerrain.get();
 }
+
+//------------------------------------------------
+// COrientedBoundingBoxComponent
+//------------------------------------------------
+COrientedBoundingBoxComponent::COrientedBoundingBoxComponent(std::unique_ptr<physic::COrientedBoundingBox> pOrientedBoundingBox)
+  : AComponent(EComponentType::OrientedBoundingBox)
+  , m_pOrientedBoundingBox(std::move(pOrientedBoundingBox))
+{
+}
+
+physic::COrientedBoundingBox* COrientedBoundingBoxComponent::GetOrientedBoundingBox()
+{
+  return m_pOrientedBoundingBox.get();
+}
 }
 }

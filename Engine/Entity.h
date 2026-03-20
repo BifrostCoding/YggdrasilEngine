@@ -22,8 +22,22 @@ public:
   common::CTransform& GetTransform();
 
   void AddComponent(const std::string& name, std::unique_ptr<component::AComponent> pComponent);
-  std::unordered_map<std::string, std::unique_ptr<component::AComponent>>& GetComponents();
   void RemoveComponent(const std::string& name);
+
+  template <typename TComponentType>
+  std::list<TComponentType*> GetComponents()
+  {
+    std::list<TComponentType*> components;
+    for (auto& keyValue : m_components)
+    {
+      component::AComponent& c = *keyValue.second.get();
+      if (c.GetType() == TComponentType().GetType())
+      {
+        components.push_back(dynamic_cast<TComponentType*>(&c));
+      }
+    }
+    return components;
+  }
 
   void Tick(float deltaTime);
 

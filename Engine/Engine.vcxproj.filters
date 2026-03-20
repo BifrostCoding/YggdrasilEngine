@@ -31,6 +31,12 @@
     <Filter Include="Quelldateien\FileSystem">
       <UniqueIdentifier>{c0bf8e5d-3799-4d7a-bc52-c3edd7362eb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Physic">
+      <UniqueIdentifier>{aab40f29-1956-4823-aac2-38354e4fa68e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Physic">
+      <UniqueIdentifier>{03be93fe-e6fe-4760-a34a-4482864652f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -63,6 +69,9 @@
     <ClInclude Include="Component.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Headerdateien\Physic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -94,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Quelldateien\Physic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

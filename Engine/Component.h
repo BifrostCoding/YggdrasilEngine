@@ -3,6 +3,7 @@
 #include <Common/Transform.h>
 #include "StaticMesh.h"
 #include "Terrain.h"
+#include "Collision.h"
 #include <list>
 
 namespace yggdrasil
@@ -17,7 +18,8 @@ namespace component
 enum class EComponentType
 {
   StaticMesh,
-  Terrain
+  Terrain,
+  OrientedBoundingBox,
 };
 
 //------------------------------------------------
@@ -80,7 +82,7 @@ private:
 };
 
 //------------------------------------------------
-// CStaticMeshComponent
+// CTerrainComponent
 //------------------------------------------------
 class CTerrainComponent : public ASceneComponent
 {
@@ -89,12 +91,29 @@ public:
   CTerrainComponent();
   virtual ~CTerrainComponent() = default;
 
-  void SetTerrain(std::unique_ptr<CTerrain> pStaticMesh);
+  void SetTerrain(std::unique_ptr<CTerrain> pTerrain);
   CTerrain* GetTerrain();
 
 private:
 
   std::unique_ptr<CTerrain> m_pTerrain;
+};
+
+//------------------------------------------------
+// COrientedBoundingBoxComponent
+//------------------------------------------------
+class COrientedBoundingBoxComponent : public AComponent
+{
+public:
+
+  COrientedBoundingBoxComponent(std::unique_ptr<physic::COrientedBoundingBox> pOrientedBoundingBox);
+  virtual ~COrientedBoundingBoxComponent() = default;
+
+  physic::COrientedBoundingBox* GetOrientedBoundingBox();
+
+private:
+
+  std::unique_ptr<physic::COrientedBoundingBox> m_pOrientedBoundingBox;
 };
 }
 }
