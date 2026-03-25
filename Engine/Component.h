@@ -52,6 +52,7 @@ public:
   virtual ~ASceneComponent() = default;
 
   void SetTransform(const glm::mat4& transform);
+  glm::mat4 GetTransform() const;
 
 protected:
 

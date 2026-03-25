@@ -16,7 +16,7 @@ common::TResult CModelLoader::LoadStaticMesh(const std::filesystem::path& filena
 
   const aiScene* pScene = importer.ReadFile (
     filename.string(),
-    aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_CalcTangentSpace
+    aiProcess_Triangulate | aiProcess_GenNormals | aiProcess_CalcTangentSpace | aiProcess_FlipUVs | aiProcess_GlobalScale
   );
 
   if (!pScene || !pScene->HasMeshes())
@@ -41,12 +41,12 @@ common::TResult CModelLoader::CreateStaticMeshComponentTree(const aiScene* pScen
 
     aiString texturePath;
 
-    if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) != AI_SUCCESS)
+  /*  if (pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0U, &texturePath) != AI_SUCCESS)
       return ERROR_RESULT("can't load texture");
 
-    std::filesystem::path textureFilename = texturePath.C_Str();
+    std::filesystem::path textureFilename = texturePath.C_Str();*/
 
-    auto result = CreateStaticMesh(pMesh, textureFilename);
+    auto result = CreateStaticMesh(pMesh, "Tree.png");
     if (!result.has_value())
       return result.error();
 
@@ -57,7 +57,9 @@ common::TResult CModelLoader::CreateStaticMeshComponentTree(const aiScene* pScen
 
   for (size_t i = 0; i < pNode->mNumChildren; i++)
   {
-    CreateStaticMeshComponentTree(pScene, pNode->mChildren[i], pRawComponent);
+    common::TResult result = CreateStaticMeshComponentTree(pScene, pNode->mChildren[i], pRawComponent);
+    if (result.IsError())
+      return result;
   }
 
   return common::TResult();

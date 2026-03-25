@@ -35,6 +35,11 @@ void ASceneComponent::SetTransform(const glm::mat4& transform)
   m_transform = transform;
 }
 
+glm::mat4 ASceneComponent::GetTransform() const
+{
+  return m_transform;
+}
+
 //------------------------------------------------
 // CStaticMeshComponent
 //------------------------------------------------

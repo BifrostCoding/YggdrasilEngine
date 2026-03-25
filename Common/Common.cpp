@@ -7,9 +7,9 @@ void YggWrite(const std::string& text, ETerminalColor color)
 {
   if (color == ETerminalColor::TERMINAL_COLOR_WHITE)
   {
-#ifdef _DEBUG
+//#ifdef _DEBUG
     std::cout << text << std::endl;
-#endif
+//#endif
     return;
   }
 
@@ -22,9 +22,9 @@ void YggWrite(const std::string& text, ETerminalColor color)
     case TERMINAL_COLOR_GREEN: start += "32m"; break;
     case TERMINAL_COLOR_BLUE : start += "34m"; break;
   }
-#ifdef _DEBUG
+//#ifdef _DEBUG
   std::cout << start + text + end << std::endl;
-#endif
+//#endif
 }
 
 namespace yggdrasil

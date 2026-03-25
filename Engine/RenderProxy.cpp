@@ -33,14 +33,21 @@ void CRenderProxy::UpdateAndRenderEntity(AEntity& entity, CScene& scene, float d
 {
   entity.Tick(deltaTime);
 
-  for (auto& c : entity.GetComponents<component::CStaticMeshComponent>())
+  for (auto& c : entity.GetComponents())
   {
-    UpdateAndRenderStaticMeshComponent(*c, entity, scene.GetCamera());
-  }
-
-  for (auto& c : entity.GetComponents<component::CTerrainComponent>())
-  {
-    UpdateAndRenderTerrainComponent(*c, entity, scene.GetCamera());
+    switch (c->GetType())
+    {
+      case component::EComponentType::StaticMesh:
+      {
+        UpdateAndRenderStaticMeshComponent(*dynamic_cast<component::CStaticMeshComponent*>(c.get()), entity, scene.GetCamera());
+        break;
+      }
+      case component::EComponentType::Terrain:
+      {
+        UpdateAndRenderTerrainComponent(*dynamic_cast<component::CTerrainComponent*>(c.get()), entity, scene.GetCamera());
+        break;
+      }
+    }
   }
 }
 

@@ -107,7 +107,7 @@ common::TResult CStaticMeshResources::CreateRasterizerState()
 {
   rhi::TRasterizerDesc rasterizerDesc{};
 
-  rasterizerDesc.m_cullMode  = rhi::ECullMode::Back;
+  rasterizerDesc.m_cullMode  = rhi::ECullMode::None;
   rasterizerDesc.m_fillMode  = rhi::EFillMode::Solid;
   rasterizerDesc.m_frontFace = rhi::EFrontFace::Clockwise;
 

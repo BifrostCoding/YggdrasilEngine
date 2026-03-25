@@ -15,17 +15,11 @@ common::CTransform& AEntity::GetTransform()
 
 void AEntity::AddComponent(const std::string& name, std::unique_ptr<component::AComponent> pComponent)
 {
-  if (m_components.find(name) != m_components.end())
-    return;
-
-  m_components[name] = std::move(pComponent);
+  m_components.push_back(std::move(pComponent));
 }
 
-void AEntity::RemoveComponent(const std::string& name)
+std::vector<std::unique_ptr<component::AComponent>>& AEntity::GetComponents()
 {
-  if (m_components.find(name) == m_components.end())
-    return;
-
-  m_components.erase(name);
+  return m_components;
 }
 }

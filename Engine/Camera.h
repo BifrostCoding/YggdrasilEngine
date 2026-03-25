@@ -5,7 +5,7 @@
 
 namespace yggdrasil
 {
-constexpr float DEFAULT_FRUSTUM_CULLING_RADIUS = 2.0f;
+constexpr float DEFAULT_FRUSTUM_CULLING_RADIUS = 10.0f;
 
 //------------------------------------------------
 // TFrustumPlane

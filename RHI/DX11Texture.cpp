@@ -30,25 +30,35 @@ common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& tex
   if (result.IsError())
     return result;
 
-  D3D11_TEXTURE2D_DESC desc = {};
+  D3D11_TEXTURE2D_DESC desc{};
   desc.Width            = imageData.m_width;
   desc.Height           = imageData.m_height;
-  desc.MipLevels        = 1;
+  desc.MipLevels        = 0;
   desc.ArraySize        = 1;
   desc.Format           = DXGI_FORMAT_R8G8B8A8_UNORM;
   desc.SampleDesc.Count = 1;
   desc.Usage            = D3D11_USAGE_DEFAULT;
-  desc.BindFlags        = D3D11_BIND_SHADER_RESOURCE;
+  desc.BindFlags        = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+  desc.MiscFlags        = D3D11_RESOURCE_MISC_GENERATE_MIPS;
 
-  D3D11_SUBRESOURCE_DATA initData = {};
+  D3D11_SUBRESOURCE_DATA initData{};
   initData.pSysMem     = imageData.m_data;
   initData.SysMemPitch = imageData.m_width * 4;
 
   ID3D11Texture2D* texture = nullptr;
-  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&desc, &initData, &texture);
+  HRESULT hr = pRHI->GetDevice()->CreateTexture2D(&desc, nullptr, &texture);
 
   if (hr != S_OK)
     return ERROR_RESULT("Failed to create Texture2D");
+
+  pRHI->GetDeviceContext()->UpdateSubresource(
+    texture,
+    0,
+    nullptr,
+    imageData.m_data,
+    imageData.m_width * 4,
+    0
+  );
 
   hr = pRHI->GetDevice()->CreateShaderResourceView(texture, nullptr, &m_pShaderResourceView);
 
@@ -56,6 +66,8 @@ common::TResult CDX11Texture::Initialize(CDX11RHI* pRHI, const TTextureDesc& tex
     return ERROR_RESULT("Failed to create ShaderResouceView");
 
   texture->Release();
+
+  pRHI->GetDeviceContext()->GenerateMips(m_pShaderResourceView);
 
   return common::TResult();
 }

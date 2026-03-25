@@ -55,7 +55,7 @@ enum ETerminalColor { TERMINAL_COLOR_WHITE, TERMINAL_COLOR_RED, TERMINAL_COLOR_G
 
 void YggWrite(const std::string& text, ETerminalColor color = TERMINAL_COLOR_WHITE);
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 
 #include <intrin.h>
 #include <iostream>
@@ -73,12 +73,12 @@ if (!(condition)) \
   __debugbreak(); \
 }
 
-#else
-
-#define YGG_ASSERT(condition, message)
-#define YGG_WRITE(message)
-
-#endif
+//#else
+//
+//#define YGG_ASSERT(condition, message)
+//#define YGG_WRITE(message)
+//
+//#endif
 
 namespace yggdrasil
 {

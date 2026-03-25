@@ -5,45 +5,37 @@
 //------------------------------------------------
 // custom - Entity
 //------------------------------------------------
-class CBlock : public yggdrasil::AEntity
+class CPalm : public yggdrasil::AEntity
 {
 public:
 
-  CBlock() = default;
-  virtual ~CBlock() = default;
+  CPalm(const glm::vec3& pos) : m_pos(pos) {};
+  virtual ~CPalm() = default;
 
   yggdrasil::common::TResult OnInitialize(yggdrasil::app::CEngine& engine, yggdrasil::CScene& scene) override
   {
-    yggdrasil::rendering::TMaterialDesc materialDesc{};
+    yggdrasil::filesystem::CModelLoader modelLoader(engine);
 
-    materialDesc.m_vertexShaderFilename = "./VS_StaticMesh.cso";
-    materialDesc.m_pixelShaderFilename  = "./PS_StaticMesh.cso";
-    materialDesc.m_textureFilename      = "mario_block.jpg";
+    std::unique_ptr<yggdrasil::component::CStaticMeshComponent> pStaticMeshComp;
 
-    yggdrasil::rendering::TStaticMeshDesc desc{};
+    yggdrasil::common::TResult result = modelLoader.LoadStaticMesh("./palm.fbx", pStaticMeshComp);
+    if (result.IsError())
+      return result;
 
-    desc.m_meshData = yggdrasil::rendering::CBoxMesh();
-    desc.m_materialDesc = materialDesc;
+    AddComponent("cowboy", std::move(pStaticMeshComp));
 
-    auto meshResult = engine.CreateStaticMesh(desc);
-    if (!meshResult.has_value())
-      return meshResult.error();
+    GetTransform().GetPosition() = m_pos;
+    //GetTransform().Rotate(-90.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 
-    auto pStaticMeshComponent = std::make_unique<yggdrasil::component::CStaticMeshComponent>();
-
-    pStaticMeshComponent->AddStaticMesh(std::move(meshResult.value()));
-
-    AddComponent("mario_block", std::move(pStaticMeshComponent));
-
-    GetTransform().GetPosition() = glm::vec3(100.0f, 3.5f, 90.0f);
-
-    return yggdrasil::common::TResult();
+    return result;
   }
 
   void OnTick(float deltaTime) override
   {
-    GetTransform().Rotate(90.0f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
+    //GetTransform().Rotate(90.0f * deltaTime, glm::vec3(0.0f, 1.0f, 0.0f));
   }
+
+  glm::vec3 m_pos;
 };
 
 //------------------------------------------------
@@ -294,18 +286,31 @@ int main(int argv, char* argc[])
 
   yggdrasil::CScene* pScene = sceneResult.value();
 
-  result = pScene->AddEntity(std::make_unique<CBlock>());
+  auto pl = std::make_unique<CLandscape>();
+  auto l = pl.get();
+
+  result = pScene->AddEntity(std::move(pl));
   if (result.IsError())
   {
     YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);
     return -1;
   }
 
-  result = pScene->AddEntity(std::make_unique<CLandscape>());
-  if (result.IsError())
+  auto t = l->GetComponents<yggdrasil::component::CTerrainComponent>().front()->GetTerrain();
+
+  for (int z = 0; z < 25; z++)
   {
-    YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);
-    return -1;
+    for (int x = 0; x < 25; x++)
+    {
+      glm::vec2 pos(x * 10 + (rand() % 20), z * 10 + (rand() % 20));
+
+      result = pScene->AddEntity(std::make_unique<CPalm>(glm::vec3(pos.x, t->GetHeight(pos) - 1.0f, pos.y)));
+      if (result.IsError())
+      {
+        YGG_WRITE(result.GetText(), TERMINAL_COLOR_RED);
+        return -1;
+      }
+    }
   }
 
   app.Start();

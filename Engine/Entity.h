@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component.h"
-#include <unordered_map>
 
 namespace yggdrasil
 {
@@ -22,18 +21,17 @@ public:
   common::CTransform& GetTransform();
 
   void AddComponent(const std::string& name, std::unique_ptr<component::AComponent> pComponent);
-  void RemoveComponent(const std::string& name);
+  std::vector<std::unique_ptr<component::AComponent>>& GetComponents();
 
   template <typename TComponentType>
-  std::list<TComponentType*> GetComponents()
+  std::vector<TComponentType*> GetComponents()
   {
-    std::list<TComponentType*> components;
-    for (auto& keyValue : m_components)
+    std::vector<TComponentType*> components;
+    for (auto& c : m_components)
     {
-      component::AComponent& c = *keyValue.second.get();
-      if (c.GetType() == TComponentType().GetType())
+      if (c->GetType() == TComponentType().GetType())
       {
-        components.push_back(dynamic_cast<TComponentType*>(&c));
+        components.push_back(dynamic_cast<TComponentType*>(c.get()));
       }
     }
     return components;
@@ -44,6 +42,6 @@ public:
 private:
 
   common::CTransform m_transform;
-  std::unordered_map<std::string, std::unique_ptr<component::AComponent>> m_components;
+  std::vector<std::unique_ptr<component::AComponent>> m_components;
 };
 }

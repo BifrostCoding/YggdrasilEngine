@@ -7,6 +7,8 @@ float4 PSMain(PS_INPUT input) : SV_TARGET
 
   // Texturfarbe
   float4 diffuse = ObjTexture.Sample(ObjSamplerState, input.TexCoord);
+  
+  clip(1.0 - all(diffuse.rgb == 1.0));
 
   // Ambient (leicht kühl, damit Schatten nicht neutral sind)
   float3 ambientColor = diffuse.rgb * light.ambient.rgb;
