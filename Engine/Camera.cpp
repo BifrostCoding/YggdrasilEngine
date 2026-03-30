@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-constexpr const float FOV = 0.4f;
+constexpr const float FOV = 60.0f;
 constexpr const float NEAR_PLANE = 0.1f;
 constexpr const float FAR_PLANE = 1000.0f;
 
@@ -16,7 +16,7 @@ CCamera::CCamera(float width, float height)
 
 void CCamera::Update()
 {
-  m_projectionMatrix = glm::perspectiveRH_ZO(FOV * glm::pi<float>(), static_cast<float>(m_width) / static_cast<float>(m_height), NEAR_PLANE, FAR_PLANE);
+  m_projectionMatrix = glm::perspectiveRH_ZO(glm::radians(FOV), static_cast<float>(m_width) / static_cast<float>(m_height), NEAR_PLANE, FAR_PLANE);
 
   glm::mat4 rotationMatrix = glm::mat4_cast(m_transform.GetRotation());
 
